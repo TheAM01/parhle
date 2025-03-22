@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Chelsea+Market&family=Space+Grotesk:wght@300..700&display=swap');
+@import "tailwindcss";
+
+@theme {
+    --font-primary: "Space Grotesk", sans-serif;
+    --font-logo: "Chelsea Market", system-ui;
+
+    --height-std: calc(100vh - 71px);
+
+    --color-logo: #e80038;
+    --color-gray-dark: /*#555;*/ #718096;
+    --color-gray-medium: #9DA3AF;
+    --color-gray-light: #F3F4F6;
+    --color-border-color: #1F2937;
+
+}
+
+div {
+    @apply flex;
+}
+
+@layer base {
+    * {
+        box-sizing: border-box;
+    }
+}
+
+
+/* Texture backgrounds */
+.texture-subtle-grid {
+    background-image: url("https://www.transparenttextures.com/patterns/subtle-dark-vertical.png");
+}
+
+.texture-carbon {
+    background-image: url("https://www.transparenttextures.com/patterns/carbon-fibre.png");
+}
+
+.texture-paper {
+    background-image: url("https://www.transparenttextures.com/patterns/paper-fibers.png");
+}
+
+.texture-light-grid {
+    background-image: url("https://www.transparenttextures.com/patterns/grid-me.png");
+}
+
+.texture-dots {
+    background-image: url("https://www.transparenttextures.com/patterns/dots.png");
+}
+
+.texture-hero {
+    background-image: url("https://www.transparenttextures.com/patterns/black-felt.png");
+}
+
+.texture-mosaic {
+    background-image: url("https://www.transparenttextures.com/patterns/dark-mosaic.png");
+}

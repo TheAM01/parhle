@@ -5,8 +5,9 @@ import {Search, Filter, FileText} from "lucide-react";
 import {motion} from "framer-motion";
 import {notesData} from "@/public/data";
 import Input from "@/components/ui/input";
+import {ScreenSizeGetter} from "@/components/utility";
 
-export default function Notes() {
+export default function Books() {
 
     const [searchTerm, setSearchTerm] = useState("")
     const [selectedResource, setSelectedResource] = useState("All")
@@ -21,10 +22,10 @@ export default function Notes() {
 
 
     return (
-        <div className="flex-col min-h-screen texture-subtle-grid text-white pt-16 bg-black items-center">
-            <div className="w-3/5 flex-col">
-                <div className="font-bold text-4xl mb-10">Explore Notes</div>
-                <div className=" mb-5">
+        <div className="flex-col min-h-screen texture-subtle-grid text-white pt-10 sm:pt-20 bg-black items-center">
+            <div className="w-full md:w-3/5 flex-col p-3">
+                <div className="font-bold text-4xl mb-3">Explore Notes</div>
+                <div className="mb-5 flex-col md:flex-row">
                     <Input
                         type="text"
                         placeholder="Search notes..."
@@ -32,22 +33,24 @@ export default function Notes() {
                         onChange={(e) => setSearchTerm(e.target.value)}
                         icon={<Search/>}
                     />
-                    <div className="p-2">
-                        <Filter/>
+                    <div className="flex-row-reverse mt-4 md:mt-0">
+                        <div className="p-2">
+                            <Filter/>
+                        </div>
+                        <select
+                            value={selectedResource}
+                            onChange={(e) => setSelectedResource(e.target.value)}
+                            className="bg-gray-900 border border-border-color text-white rounded-none px-4 py-2 focus:ring-white focus:border-white w-full md:w-auto"
+                        >
+                            <option value="All">All Notes</option>
+                            <option value="Psychology">Psychology</option>
+                            <option value="Chemistry">Chemistry</option>
+                            <option value="Mathematics">Mathematics</option>
+                            <option value="Economics">Economics</option>
+                            <option value="Computer Science">Computer Science</option>
+                            <option value="History">History</option>
+                        </select>
                     </div>
-                    <select
-                        value={selectedResource}
-                        onChange={(e) => setSelectedResource(e.target.value)}
-                        className="bg-gray-900 border border-border-color text-white rounded-none px-4 py-2 focus:ring-white focus:border-white w-full md:w-auto"
-                    >
-                        <option value="All">All Resources</option>
-                        <option value="Psychology">Psychology</option>
-                        <option value="Chemistry">Chemistry</option>
-                        <option value="Mathematics">Mathematics</option>
-                        <option value="Economics">Economics</option>
-                        <option value="Computer Science">Computer Science</option>
-                        <option value="History">History</option>
-                    </select>
                 </div>
 
                 <div className="grid! grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-2">

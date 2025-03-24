@@ -1,22 +1,22 @@
 "use client";
 
-export default function Home() {
+export default function About() {
 
     return (
-        <div className={"w-full bg-gray-light items-center p-20 flex-col text-black h-std texture-light-grid"}>
+        <div className={"w-full bg-black items-center flex-col text-white pt-10 sm:pt-22 min-h-screen texture-subtle-grid"}>
 
-            <div className="flex-col bg-white w-4/5 p-10">
+            <div className="flex-col bg-gray-900 w-full lg:w-4/5 p-4 md:p-10 border-2 border-border-color">
 
                 <div className="text-4xl mb-6 font-bold">
                     About <span className={"font-logo mx-2 text-gray-medium font-light!"}>Parhle</span>:
                 </div>
 
-                <div className="text-xl flex-col">
+                <div className="text-xl flex-col font-light">
 
                     <div className="text-2xl font-semibold mt-5">How It Started</div>
                     
                     <p className={"mb-4"}>
-                        It all began as an inside joke between me and my study partner—Parhle, fail hojayega! What started as a simple website for sharing notes quickly became something bigger. Initially, it was just for us, but soon our teacher found out, shared it with the whole class, and suddenly, everyone was using it.
+                        It all began as an inside joke between me and my study partner — Parhle, fail hojayega! What started as a simple website for sharing notes quickly became something bigger. Initially, it was just for us, but soon our teacher found out, shared it with the whole class, and suddenly, everyone was using it.
                     </p>
                     <p className={"mb-4"}>
                         Life got busy, and the site had to be taken down. But now, in university, Parhle is back—this time, better than ever. The goal remains the same: <span className="font-bold">make studying easier for everyone</span>.

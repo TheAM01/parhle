@@ -3,22 +3,17 @@
 // import Input from "@/components/ui/input";
 import {Upload} from "lucide-react";
 import {useState} from "react";
-import SideBar from "@/components/ui/sidebar";
-import {ScreenSizeGetter} from "@/components/utility";
 
-export default function AddResource() {
-
-    console.log("AddResource rendered");
-
+export default function AddBook() {
 
     const [formData, setFormData] = useState({
         title: "",
         subject: "",
         semester: "non-specific",
-        teacher: "",
+        bookAuthor: "",
         author: "",
         university: "University of Karachi",
-        resourceUrl: "",
+        bookUrl: "",
     });
 
     const handleChange = (e) => {
@@ -29,12 +24,12 @@ export default function AddResource() {
         event.preventDefault();
 
         // Extract form data
-        const { title, subject, semester, teacher, author, university, resourceUrl } = formData;
+        const { title, subject, semester, bookAuthor, author, university, bookUrl } = formData;
 
-        const response = await fetch("/api/resource/upload", {
+        const response = await fetch("/api/book/upload", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ title, subject, semester, teacher, author, university, resourceUrl }),
+            body: JSON.stringify({ title, subject, semester, bookAuthor, author, university, bookUrl }),
         });
 
         const result = await response.json();
@@ -44,29 +39,29 @@ export default function AddResource() {
             title: "",
             subject: "",
             semester: "non-specific",
-            teacher: "",
-            author: "labrdbms",
+            bookAuthor: "",
+            author: "",
             university: "University of Karachi",
-            resourceUrl: "",
+            bookUrl: "",
         })
     };
 
 
-    return (
-        <div className={"w-screen bg-black flex-row text-white min-h-screen pt-8 lg:pt-0"}>
 
-            <SideBar/>
-            <div className="flex-col w-full lg:mx-30 p-4 lg:p-10">
+    return (
+        <div className={"w-full bg-black p-20 flex-row text-white min-h-screen min-w-screen justify-center"}>
+
+            <div className="flex-col w-3/5 p-10">
 
                 <div className="text-4xl mb-3 font-bold">
-                    Add Resource
+                    Dashboard - Books
                 </div>
 
-                <div className="text-sm text-gray-dark mb-6">Index New Resources</div>
+                <div className="text-sm text-gray-dark mb-6">Index New Books</div>
 
                 <div className="flex-col bg-gray-900 border border-border-color p-5 w-full">
 
-                    <div className="font-semibold text-2xl">Upload New Resource</div>
+                    {/*<div className="font-semibold text-2xl">Upload New Book</div>*/}
 
                     <div className="flex-wrap gap-5 mb-5">
                         <div className="flex-col flex-1">
@@ -115,12 +110,12 @@ export default function AddResource() {
                             </select>
                         </div>
                         <div className="flex-col flex-1">
-                            <div className="font-light">Teacher</div>
+                            <div className="font-light">Book Author *</div>
                             <input
-                                name={"teacher"}
+                                name={"bookAuthor"}
                                 className={"flex-1 flex border-gray-700 border bg-gray-800 text-white placeholder-gray-medium p-2"}
                                 type={"text"}
-                                value={formData.teacher}
+                                value={formData.bookAuthor}
                                 onChange={handleChange}
                                 required={true}
                             />
@@ -153,12 +148,12 @@ export default function AddResource() {
                     </div>
 
                     <div className="flex-col flex-1">
-                        <div className="font-light">Resource URL *</div>
+                        <div className="font-light">Book URL *</div>
                         <input
-                            name={"resourceUrl"}
+                            name={"bookUrl"}
                             className={"flex-1 flex border-gray-700 border bg-gray-800 text-white placeholder-gray-medium p-2"}
                             type={"url"}
-                            value={formData.resourceUrl}
+                            value={formData.bookUrl}
                             onChange={handleChange}
                             required={true}
                             placeholder={"https://..."}
@@ -171,11 +166,12 @@ export default function AddResource() {
                         onClick={handleSubmit}
                     >
                         <Upload size={18}/>
-                        <div className="ml-2 text-sm">Upload Resource</div>
+                        <div className="ml-2 text-sm">Upload Book</div>
                     </button>
 
                 </div>
             </div>
+
         </div>
     )
 }

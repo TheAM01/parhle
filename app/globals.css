@@ -5,7 +5,7 @@
     --font-primary: "Space Grotesk", sans-serif;
     --font-logo: "Chelsea Market", system-ui;
 
-    --height-std: calc(100vh - 71px);
+    --height-std: calc(100vh - 70px);
 
     --color-logo: #e80038;
     --color-gray-dark: /*#555;*/ #718096;
@@ -53,4 +53,12 @@ div {
 
 .texture-mosaic {
     background-image: url("https://www.transparenttextures.com/patterns/dark-mosaic.png");
+}
+
+.texture-axiom {
+    background-image: url("https://www.transparenttextures.com/patterns/axiom-pattern.png");
+}
+
+.texture-cartographer {
+    background-image: url("https://www.transparenttextures.com/patterns/cartographer.png");
 }

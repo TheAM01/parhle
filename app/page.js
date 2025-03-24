@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from "react"
 import {LinkButton, Button} from "@/components/ui/button";
-import Navigation from "@/components/ui/navigation";
 import {motion, useScroll, useTransform} from "framer-motion"
 import * as data from "@/public/data"
 import Link from "next/link";
@@ -43,22 +42,22 @@ export default function Home() {
     return (
         <div className={"w-full bg-black flex-col"}>
 
-            <div className="bg-black flex-col items-center justify-center text-white h-std">
+            <div className="bg-black flex-col items-center justify-center text-white h-screen sm:h-screen">
                 <Hero targetRef={targetRef} opacity={opacity} scale={scale}/>
             </div>
 
-            <div className="h-std flex-col">
+            <div className="min-h-screen h-full flex-col">
 
-                <div className="bg-white flex-col items-center text-black flex-1 p-10 texture-light-grid" id={"features"}>
-                    <div className="font-semibold text-black text-3xl m-5">
+                <div className="bg-white flex-col items-center text-black flex-1 p-2 sm:p-5 lg:p-10 texture-light-grid" id={"features"}>
+                    <div className="font-semibold text-black text-2xl sm:text-3xl m-4">
                         Why <span className={"font-logo mx-2 text-gray-medium font-light"}>Parhle</span> Stands Out
                     </div>
-                    <div className="m-5 flex-wrap w-4/5 justify-center items-center">
+                    <div className="m-2 sm:m-5 flex-wrap w-full lg:w-4/5 justify-center items-center">
                         {
                             data.features.map((feature, index) => (
                                 <motion.div
                                     key={index}
-                                    className="flex flex-col items-center text-center w-2/10 mx-10"
+                                    className="flex flex-col items-center text-center lg:w-2/10 w-max lg:mx-10 mb-10 lg:mb-0"
                                     initial={{ opacity: 0, y: 20 }}
                                     whileInView={{ opacity: 1, y: 0 }}
                                     transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -72,8 +71,8 @@ export default function Home() {
                         }
                     </div>
                 </div>
-                <div className="bg-gray-light flex-col items-center text-black flex-1 p-10 texture-light-grid" id={"features"}>
-                    <div className="font-semibold text-black text-3xl m-5">
+                <div className="bg-gray-light flex-col items-center text-black flex-1 p-2 sm:p-5 lg:p-10 texture-light-grid" id={"features"}>
+                    <div className="font-semibold text-black text-2xl sm:text-3xl m-4">
                         What Our Users Say
                     </div>
                     <div className="m-5 w-4/5 grid! grid-cols-1 md:grid-cols-2 gap-8">
@@ -95,11 +94,11 @@ export default function Home() {
 
             </div>
 
-            <div className="bg-black h-min flex-col items-center p-10">
-                <div className="font-semibold text-white text-3xl m-5 ">
+            <div className="bg-black  flex-col items-center p-2 sm:p-5 lg:p-10">
+                <div className="font-semibold text-white text-2xl sm:text-3xl m-4 h-min">
                     <span className={"font-logo mx-2 text-gray-medium font-light"}>Parhle</span> - by the Numbers
                 </div>
-                <div className="justify-evenly w-4/5 m-5">
+                <div className="justify-evenly w-full sm:w-4/5 sm:m-5 m-2 mb-4">
                     {[
                         { number: "100+", label: "Active Users" },
                         { number: "500+", label: "Study Materials" },
@@ -109,20 +108,20 @@ export default function Home() {
                         <motion.div
                             key={index}
                             className="text-center flex-col items-center"
-                            initial={{ opacity: 0, y: 20 }}
+                            initial={{ opacity: 0, y: 0 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.5, delay: index * 0.1 }}
                             viewport={{ once: true }}
                         >
-                            <div className="text-white text-4xl font-bold mb-2">{stat.number}</div>
-                            <div className="text-gray-400">{stat.label}</div>
+                            <div className="text-white text-2xl sm:text-4xl font-bold mb-2">{stat.number}</div>
+                            <div className="text-gray-400 text-xs sm:text-base">{stat.label}</div>
                         </motion.div>
                     ))}
                 </div>
             </div>
 
-            <div className="bg-gray-light h-min flex-col items-center p-10 texture-paper">
-                <div className="font-semibold text-black text-3xl m-5">
+            <div className="bg-gray-light h-min flex-col items-center p-2 sm:p-5 lg:p-10 texture-axiom">
+                <div className="font-semibold text-black text-2xl sm:text-3xl m-4">
                     Frequently Asked Questions
                 </div>
                 <div className="flex-col items-center">
@@ -134,7 +133,7 @@ export default function Home() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.5, delay: index * 0.1 }}
                                 viewport={{ once: true }}
-                                className="bg-white p-6 shadow-sm flex-col w-2/5 m-5"
+                                className="bg-white p-6 shadow-sm flex-col lg:w-2/5 md:m-5 m-2 w-full"
                             >
                                 <h3 className="text-xl font-semibold mb-2 ">{faq.question}</h3>
                                 <p className="text-gray-dark text-lg ">{faq.answer}</p>
@@ -144,9 +143,9 @@ export default function Home() {
                 </div>
             </div>
 
-            <div className="bg-black h-min flex-col items-center p-10">
+            <div className="bg-black h-min flex-col items-center p-2 sm:p-5 lg:p-10">
                 <motion.div
-                    className="font-semibold text-white text-3xl m-5"
+                    className="font-semibold text-white text-2xl sm:text-3xl m-4 text-center"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
@@ -155,7 +154,7 @@ export default function Home() {
                     Ready to Revolutionize Your Study Experience?
                 </motion.div>
                 <motion.div
-                    className="text-gray-400 mb-8"
+                    className="text-gray-400 mb-8 text-center"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.1 }}
@@ -169,6 +168,7 @@ export default function Home() {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.2 }}
                     viewport={{ once: true }}
+                    className={"mb-4"}
                 >
                     <LinkButton href={"/signup"}>
                         Get Started
@@ -187,15 +187,15 @@ function Hero({targetRef, opacity, scale}) {
         <motion.div
             ref={targetRef}
             style={{ opacity, scale }}
-            className="flex-col w-min"
+            className="flex-col w-screen p-5 md:p-0 md:w-min"
         >
 
-            <div className="sm:text-red-500 text-8xl">Knowledge Shared is</div>
+            <div className="text-4xl lg:text-8xl">Knowledge Shared is</div>
             <motion.div
                 initial={{ clipPath: "inset(0 100% 0 0)" }}
                 animate={{ clipPath: "inset(0 0% 0 0)" }}
                 transition={{ duration: 0.8, delay: 0.5 }}
-                className="text-8xl inline-block whitespace-nowrap bg-white text-black font-medium"
+                className="text-4xl inline-block whitespace-nowrap bg-white text-black font-medium  lg:text-8xl"
             >
                 Power Multiplied
             </motion.div>

@@ -78,7 +78,7 @@ export const faqs = [
     },
     {
         "question": "Can I use Parhle if my university isn't listed?",
-        "answer": "While we partner with many universities, Parhle is open to all students. You can still access and contribute to our global knowledge base."
+        "answer": "While we try to partner with many universities, Parhle is open to all students. You can still access and contribute to our global knowledge base."
     },
     {
         "question": "How can I contribute my own study materials?",

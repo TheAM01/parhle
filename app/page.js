@@ -3,9 +3,10 @@
 import { useEffect, useRef } from "react"
 import {LinkButton, Button} from "@/components/ui/button";
 import {motion, useScroll, useTransform} from "framer-motion"
-import * as data from "@/public/data"
-import Link from "next/link";
-import Footer from "@/components/ui/footer";
+import * as data from "@/public/data";
+import { useSession, signOut, signIn } from 'next-auth/react';
+
+
 
 export default function Home() {
 
@@ -14,6 +15,9 @@ export default function Home() {
 
     const opacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
     const scale = useTransform(scrollYProgress, [0, 1], [1, 0.3]);
+
+
+
 
     useEffect(() => {
         const smoothScroll = (e) => {
@@ -36,8 +40,6 @@ export default function Home() {
             })
         }
     }, [])
-
-
 
     return (
         <div className={"w-full bg-black flex-col"}>

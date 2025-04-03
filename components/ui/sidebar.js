@@ -1,12 +1,11 @@
 import Link from "next/link"
-import {BookOpen, BookPlus, File, FilePlus, NotebookText, SquarePlus, ChevronLeft, ChevronRight, LogOut, Library, LibraryBig, Layers, Home} from "lucide-react";
+import {BookOpen, BookPlus, File, FilePlus, NotebookText, SquarePlus, ChevronLeft, ChevronRight, LogOut, Library, LibraryBig, Layers, Home, ListTodo, GitPullRequestArrow} from "lucide-react";
 import {usePathname} from "next/navigation";
 import {useState} from "react";
 import { motion } from "framer-motion";
 
 export default function SideBar() {
     const pathname = usePathname();
-    console.log(pathname)
 
     const pages = [
         {
@@ -40,7 +39,7 @@ export default function SideBar() {
                 {
                     title: "All Resources",
                     href: "/resources",
-                    icon: Library
+                    icon: Layers
                 },
             ]
         },
@@ -80,14 +79,33 @@ export default function SideBar() {
                 {
                     title: "All Notes",
                     href: "/notes",
-                    icon: Layers
+                    icon: Library
                 },
             ]
         },
-
+        {
+            title: "Requests",
+            items: [
+                {
+                    title: "Add Request",
+                    href: "/request",
+                    icon: GitPullRequestArrow
+                },
+                {
+                    title: "My Requests",
+                    href: "/request",
+                    icon: GitPullRequestArrow
+                },
+                {
+                    title: "All Requests",
+                    href: "/requests",
+                    icon: ListTodo
+                }
+            ]
+        }
     ]
 
-    const [isOpen, setIsOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(true);
 
     const sidebarVariants = {
         open: { x: 0, opacity: 1, transition: { type: "tween", duration: 0.3 } },
@@ -140,6 +158,7 @@ export default function SideBar() {
                             }
                         </div>
                     ))}
+
                 </div>
 
             </div>

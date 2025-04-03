@@ -22,7 +22,7 @@ export default function Footer() {
                 }
             </div>
             <div className="items-center justify-center p-3 sm:p-5 text-white flex-col text-center text-xs sm:text-sm md:text-base">
-                ⭐ Parhle (ParhleFailHojayega) - Made with ❤ by Abdul Mueed.
+                ⭐ Parhle (ParhleFailHojayega) - Made with ❤ by TheAM.
 
             </div>
             <div className="items-center justify-center p-3 sm:p-5 text-white flex-col text-center text-xs sm:text-sm md:text-base">

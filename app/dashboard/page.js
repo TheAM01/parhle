@@ -5,11 +5,12 @@ import {Upload} from "lucide-react";
 import {useState} from "react";
 import SideBar from "@/components/ui/sidebar";
 
+
 export default function Dashboard() {
 
 
     return (
-        <div className={"w-screen bg-black flex-row text-white min-h-screen pt-8 lg:pt-0"}>
+        <div className={"w-screen bg-black flex-row text-white min-h-screen pt-8 lg:pt-0 texture-mosaic"}>
 
             <SideBar/>
 

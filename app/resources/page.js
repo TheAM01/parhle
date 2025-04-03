@@ -52,10 +52,10 @@ export default function Resources() {
 
 
     return (
-        <div className="flex-col min-h-screen texture-subtle-grid text-white pt-10 sm:pt-20 bg-black items-center ">
+        <div className="flex-col min-h-screen texture-mosaic text-white pt-10 sm:pt-20 bg-black items-center ">
             <div className="w-full md:w-4/5 flex-col p-3">
                 <div className="font-bold text-4xl mb-5 md:mb-10">Explore Resources</div>
-                <div className="text-xl mb-5 md:mb-10">Click on card to view resource</div>
+                <div className="text-xl mb-5 md:mb-10">Click on card to open resource</div>
 
                 {/* Search and filter */}
 

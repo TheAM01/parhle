@@ -48,12 +48,14 @@ export default function AddResource() {
             author: "labrdbms",
             university: "University of Karachi",
             resourceUrl: "",
-        })
+        });
+
+
     };
 
 
     return (
-        <div className={"w-screen bg-black flex-row text-white min-h-screen pt-8 lg:pt-0"}>
+        <div className={"w-screen bg-black flex-row text-white min-h-screen pt-8 lg:pt-0 texture-mosaic"}>
 
             <SideBar/>
             <div className="flex-col w-full lg:mx-30 p-4 lg:p-10">

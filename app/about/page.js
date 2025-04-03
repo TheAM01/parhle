@@ -3,7 +3,7 @@
 export default function About() {
 
     return (
-        <div className={"w-full bg-black items-center flex-col text-white pt-10 sm:pt-22 min-h-screen texture-subtle-grid"}>
+        <div className={"w-full h-full bg-black items-center flex-col text-white pt-10 sm:pt-0 min-h-screen texture-mosaic justify-center"}>
 
             <div className="flex-col bg-gray-900 w-full lg:w-4/5 p-4 md:p-10 border-2 border-border-color">
 
@@ -11,7 +11,7 @@ export default function About() {
                     About <span className={"font-logo mx-2 text-gray-medium font-light!"}>Parhle</span>:
                 </div>
 
-                <div className="text-xl flex-col font-light">
+                <div className="text-lg flex-col font-light">
 
                     <div className="text-2xl font-semibold mt-5">How It Started</div>
                     

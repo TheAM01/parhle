@@ -5,10 +5,9 @@ import Link from "next/link";
 import {LinkButton} from "@/components/ui/button";
 import {Menu, LayoutDashboard, LogIn} from "lucide-react";
 import { motion } from "framer-motion";
-import {useSession} from "next-auth/react";
 
 export default function Navigation() {
-    const { data: session, status} = useSession();
+    const session = false;
     let button = <></>;
 
     if (!session) {

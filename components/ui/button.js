@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { LogOut } from "lucide-react";
-import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
 
 export function LinkButton({href, children}) {

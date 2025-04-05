@@ -4,7 +4,6 @@ import { useEffect, useRef } from "react"
 import {LinkButton, Button} from "@/components/ui/button";
 import {motion, useScroll, useTransform} from "framer-motion"
 import * as data from "@/public/data";
-import { useSession, signOut, signIn } from 'next-auth/react';
 
 
 
@@ -40,7 +39,7 @@ export default function Home() {
             })
         }
     }, [])
-
+    console.log("This should only print once.")
     return (
         <div className={"w-full bg-black flex-col"}>
 

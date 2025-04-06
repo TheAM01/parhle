@@ -119,20 +119,7 @@ export default function RequestResource() {
                                 <option value={"8"}>8</option>
                             </select>
                         </div>
-                        <div className="flex-col flex-1">
-                            <div className="font-light">Resource Type *</div>
-                            <select
-                                name={"resourceType"}
-                                className={"flex-1 flex border-gray-700 border bg-gray-800 text-white placeholder-gray-medium p-2 text-sm"}
-                                value={formData.resourceType}
-                                required={true}
-                                onChange={handleChange}
-                            >
-                                <option value={"Other"}>Other</option>
-                                <option value={"Book"}>Book</option>
-                                <option value={"Notes"}>Notes</option>
-                            </select>
-                        </div>
+
                     </div>
 
                     <div className="flex-col flex-1">
@@ -156,7 +143,7 @@ export default function RequestResource() {
                         {name: "Somewhat Urgent", value: "2"},
                         {name: "Very Urgent", value: "3"},
 
-                    ]} name={"resourceType"}/>
+                    ]} name={"urgency"}/>
                     
                     <div className="w-full border-b border-border-color mt-5 mb-2"></div>
 

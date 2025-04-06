@@ -14,7 +14,7 @@ export default function RadioGroup({options, name, extraClasses}) {
                     <input
                         type="radio"
                         id={item.value}
-                        name={"name"}
+                        name={name}
                         value={item.value}
                         checked={selectedOption === item.value}
                         onChange={() => setSelectedOption(item.value)}

@@ -1,20 +1,16 @@
-// "use client";
+"use client";
 
-import {useState} from "react";
+import {useEffect, useState} from "react";
+
 import Link from "next/link";
 import {LinkButton} from "@/components/ui/button";
 import {Menu, LayoutDashboard, LogIn} from "lucide-react";
-import { motion } from "framer-motion";
+import {useSession} from "next-auth/react";
+import Spinner from "@/components/ui/spinner";
 
 export default function Navigation() {
-    const session = false;
-    let button = <></>;
 
-    if (!session) {
-        button = <LinkButton href={"/signin"}> <LogIn size={17} className={"mr-2"} />Join Now</LinkButton>
-    } else {
-        button = <LinkButton href={"/dashboard"}> <LayoutDashboard size={17} className={"mr-2"} />Dashboard</LinkButton>
-    }
+    const button = <AuthButton/>
 
     // 38.5 px for mobiles
     // 70 px for sm+
@@ -65,24 +61,30 @@ export default function Navigation() {
     )
 }
 
-function Niggavation() {
-    const [open, setOpen] = useState(false)
-    return (
-        <div className={"p-3.5 align-center flex justify-evenly w-screen items-center sticky top-0 bg-black border-solid border-border border-b border-border-color z-10"}>
+function AuthButton() {
+    const { data: session, status } = useSession();
+    const [button, setButton] = useState(<></>); // Initial button is empty
 
-            <a className={"text-2xl text-gray-medium select-none font-logo hover:cursor-pointer hidden sm:flex"} href={"/"}>
-                Parhle
-            </a>
-            <div className={"flex"}>
-                <Link href={"/books"} className={"flex m-3.5 uppercase text-base no-underline text-gray-light font-normal duration-100 hover:text-gray-medium"}>Books</Link>
-                <Link href={"/notes"} className={"flex m-3.5 uppercase text-base no-underline text-gray-light font-normal duration-100 hover:text-gray-medium"}>Notes</Link>
-                <Link href={"/resources"} className={"flex m-3.5 uppercase text-base no-underline text-gray-light font-normal duration-100 hover:text-gray-medium"}>Resources</Link>
-                <Link href={"/about"} className={"flex m-3.5 uppercase text-base no-underline text-gray-light font-normal duration-100 hover:text-gray-medium"}>About</Link>
-            </div>
-            <div className="flex">
-                <LinkButton href={"/signup"}>Join Now</LinkButton>
-            </div>
+    useEffect(() => {
+        if (status === "loading" || status === "unauthenticated") {
+            setButton(
+                <LinkButton href="/user/signin">
+                    <LogIn size={16} /> Join Now
+                </LinkButton>
+            );
+        } else if (status === "authenticated") {
+            setButton(
+                <LinkButton href="/dashboard">
+                    <LayoutDashboard size={16} /> Dashboard
+                </LinkButton>
+            );
+        }
+    }, [status]);
 
-        </div>
-    )
+    if (status === "loading") {
+        return <Spinner/>
+    }
+
+    return button;
+
 }

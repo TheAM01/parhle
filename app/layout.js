@@ -13,11 +13,11 @@ export default function RootLayout({ children }) {
     return (
         <html lang="en" className={""}>
             <body className={`font-primary w-screen overflow-x-hidden bg-black`}>
-                <Suspense fallback={null}>
+                {/* <Suspense fallback={null}> */}
                     <ClientLayout>
                         {children}
                     </ClientLayout>
-                </Suspense>
+                {/* </Suspense> */}
             </body>
         </html>
     );

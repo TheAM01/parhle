@@ -2,7 +2,7 @@
 "use client";
 
 import { useEffect, useRef } from "react"
-import {LinkButton, Button} from "@/components/ui/button";
+import {LinkButton} from "@/components/ui/button";
 import {motion, useScroll, useTransform} from "framer-motion"
 import * as data from "@/public/data";
 
@@ -44,7 +44,7 @@ export default function Home() {
     return (
         <div className={"w-full bg-black flex-col"}>
 
-            <div className="bg-black flex-col items-center justify-center text-white h-screen sm:h-screen">
+            <div className="bg-black flex-col items-center justify-center text-white h-screen sm:h-screen noisy-bg">
                 <Hero targetRef={targetRef} opacity={opacity} scale={scale}/>
             </div>
 

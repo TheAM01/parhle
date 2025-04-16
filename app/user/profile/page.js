@@ -12,7 +12,7 @@ export default function Profile() {
 
     useEffect(() => {
         if (status === "unauthenticated") {
-            router.replace("/user/signin?login-first=true");
+            router.replace("/user/signin?login-first=true&redirect-to=%2Fuser%2Fprofile");
         }
     }, [status, router]);
 
@@ -21,14 +21,14 @@ export default function Profile() {
             <div className="text-white h-screen items-center justify-center w-full">
                 <Spinner/>
             </div>
-        ) // 🔇 No render at all
+        )
     }
 
-    // ✅ Only reaches here if user is authenticated
     return (
         <div className="text-white h-screen items-center justify-center w-full flex-col">
             Signed in as {session.user.email}<br/>
             <SignOutButton/>
         </div>
     );
+
 }

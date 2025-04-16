@@ -1,5 +1,5 @@
 import Link from "next/link"
-import {BookOpen, BookPlus, File, FilePlus, NotebookText, SquarePlus, ChevronLeft, ChevronRight, LogOut, Library, LibraryBig, Layers, Home, ListTodo, GitPullRequestArrow} from "lucide-react";
+import {BookOpen, BookPlus, File, FilePlus, NotebookText, SquarePlus, ChevronLeft, ChevronRight, LogOut, ListVideo, LibraryBig, Layers, Home, ListTodo, GitPullRequestArrow, MonitorPlay, CirclePlus} from "lucide-react";
 import {usePathname} from "next/navigation";
 import {useState} from "react";
 import { motion } from "framer-motion";
@@ -64,22 +64,22 @@ export default function SideBar() {
             ]
         },
         {
-            title: "Notes",
+            title: "Videos",
             items: [
                 {
-                    title: "Add Notes",
-                    href: "/dashboard/add-note",
+                    title: "Add Videos",
+                    href: "/dashboard/add-video",
                     icon: SquarePlus
                 },
                 {
-                    title: "My Notes",
+                    title: "My Videos",
                     href: "/dashboard/my-notes",
-                    icon: NotebookText
+                    icon: ListVideo
                 },
                 {
-                    title: "All Notes",
-                    href: "/notes",
-                    icon: Library
+                    title: "All Videos",
+                    href: "/videos",
+                    icon: MonitorPlay
                 },
             ]
         },

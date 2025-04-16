@@ -6,28 +6,29 @@ export default async function upload(req, res) {
     }
 
     try {
-        const collection = db.collection("books");
+        const collection = db.collection("videos");
 
-        const { title, subject, semester, bookAuthor, author, university, bookUrl } = req.body;
+        const { title, subject, author, university, description, videoUrl } = req.body;
 
-        if (!title || !subject || !semester || !bookAuthor || !author || !university || !bookUrl) {
+        console.log({ title, subject, author, university, description, videoUrl })
+
+        if (!title || !subject || !author || !university || !description || !videoUrl) {
             return res.status(400).json({ success: false, message: "Missing required fields" });
         }
 
         const newResource = {
             title,
             subject,
-            semester,
-            bookAuthor,
             author,
             university,
-            bookUrl,
+            description,
+            videoUrl,
             createdAt: new Date(),
         };
 
         const result = await collection.insertOne(newResource);
 
-        return res.status(201).json({ success: true, message: "Book uploaded successfully", insertedId: result.insertedId });
+        return res.status(201).json({ success: true, message: "Video uploaded successfully", insertedId: result.insertedId });
     } catch (error) {
         console.error("Upload error:", error);
         return res.status(500).json({ success: false, message: "Internal Server Error" });

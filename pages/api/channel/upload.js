@@ -6,13 +6,12 @@ export default async function upload(req, res) {
     }
 
     try {
-        const collection = db.collection("videos");
+        const collection = db.collection("channels");
 
-        const { title, subject, author, university, description, videoUrl } = req.body;
+        const { title, subject, author, university, description, url } = req.body;
 
-        console.log({ title, subject, author, university, description, videoUrl })
 
-        if (!title || !subject || !author || !university || !description || !videoUrl) {
+        if (!title || !subject || !author || !university || !description || !url) {
             return res.status(400).json({ success: false, message: "Missing required fields" });
         }
 
@@ -22,7 +21,7 @@ export default async function upload(req, res) {
             author,
             university,
             description,
-            videoUrl,
+            url,
             createdAt: new Date(),
         };
 

@@ -64,21 +64,21 @@ export default function SideBar() {
             ]
         },
         {
-            title: "Videos",
+            title: "Channels",
             items: [
                 {
-                    title: "Add Videos",
-                    href: "/dashboard/add-video",
+                    title: "Add Channels",
+                    href: "/dashboard/add-channel",
                     icon: SquarePlus
                 },
                 {
-                    title: "My Videos",
-                    href: "/dashboard/my-notes",
+                    title: "My Channels",
+                    href: "/dashboard/my-channels",
                     icon: ListVideo
                 },
                 {
-                    title: "All Videos",
-                    href: "/videos",
+                    title: "All Channels",
+                    href: "/channels",
                     icon: MonitorPlay
                 },
             ]

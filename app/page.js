@@ -44,7 +44,7 @@ export default function Home() {
     return (
         <div className={"w-full bg-black flex-col"}>
 
-            <div className="bg-black flex-col items-center justify-center text-white h-screen sm:h-screen noisy-bg">
+            <div className="bg-black flex-col items-center justify-center text-white h-screen sm:h-screen">
                 <Hero targetRef={targetRef} opacity={opacity} scale={scale}/>
             </div>
 

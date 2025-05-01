@@ -133,7 +133,7 @@ export default function RequestResource() {
                             rows={7}
                             placeholder={"Describe in detail about your request..."}
                         />
-                        <div className="mt-1 text-gray-dark text-xs">Your request is 80% more likely to be accepted if your description is concise informative. Requests with vague descriptions will be rejected.</div>
+                        <div className="mt-1 text-gray-dark text-xs">Your request is 80% more likely to be accepted if your description is concise & informative. Requests with vague descriptions will be rejected.</div>
                     </div>
 
                     <div className="mt-4 mb-2 text-sm">How urgent is your request?</div>

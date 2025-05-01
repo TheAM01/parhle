@@ -6,9 +6,10 @@ export default async function all(req, res) {
     }
 
     try {
-        const collection = db.collection("videos");
-        const allResources = await collection.find({}).toArray();
-        return res.status(200).json(allResources);
+        const collection = db.collection("channels");
+        const allChannels = await collection.find({}).toArray();
+        console.log(allChannels)
+        return res.status(200).json(allChannels);
     } catch (error) {
         console.error("Upload error:", error);
         return res.status(500).json({ success: false, message: "Internal Server Error" });

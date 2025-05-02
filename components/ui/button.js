@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { signIn, signOut } from "next-auth/react"
 
 export function LinkButton({href, children}) {
     return (
@@ -15,12 +14,12 @@ export function Button({children, onClick}) {
     )
 }
 
- 
-export function SignInButton() {
-  return <Button onClick={() => signIn("google", { redirectTo: "/user/profile" })}>Sign In</Button>
+
+export function LoginButton() {
+  return <Button onClick={() => {}}>Sign In</Button>
 }
 
 export function SignOutButton() {
-    return <Button onClick={() => signOut({ redirectTo: "/" })}>Sign Out</Button>
+    return <Button onClick={() => {}}>Sign Out</Button>
 }
 

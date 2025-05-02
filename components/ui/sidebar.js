@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link"
 import {BookOpen, BookPlus, File, FilePlus, NotebookText, SquarePlus, ChevronLeft, ChevronRight, LogOut, ListVideo, LibraryBig, Layers, Home, ListTodo, GitPullRequestArrow, MonitorPlay, CirclePlus} from "lucide-react";
 import {usePathname} from "next/navigation";

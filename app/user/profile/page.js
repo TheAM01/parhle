@@ -1,14 +1,12 @@
-"use client";
-
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
 import Spinner from "@/components/ui/spinner.js"
 import { SignOutButton } from "@/components/ui/button";
 
 export default function Profile() {
-    const { data: session, status } = useSession();
     const router = useRouter();
+
+    const status = "unauthenticated";
 
     useEffect(() => {
         if (status === "unauthenticated") {
@@ -26,7 +24,7 @@ export default function Profile() {
 
     return (
         <div className="text-white h-screen items-center justify-center w-full flex-col">
-            Signed in as {session.user.email}<br/>
+            Signed in as a nigga<br/>
             <SignOutButton/>
         </div>
     );

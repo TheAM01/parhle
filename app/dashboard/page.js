@@ -1,13 +1,13 @@
-"use client";
-
-// import Input from "@/components/ui/input";
-import {Upload} from "lucide-react";
-import {useState} from "react";
 import SideBar from "@/components/ui/sidebar";
+import { getSession } from "@/lib/get-session";
 
+export default async function Dashboard() {
 
-export default function Dashboard() {
+    const session = await getSession();
 
+    if (!session.user) {
+        return <p className={"text-white"}>Access Denied</p>;
+    }
 
     return (
         <div className={"w-screen bg-black flex-row text-white min-h-screen pt-8 lg:pt-0 texture-mosaic"}>

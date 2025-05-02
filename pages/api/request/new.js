@@ -1,4 +1,4 @@
-import db from "@/utils/database";
+import db from "@/lib/database";
 
 export default async function newRequest(req, res) {
     if (req.method !== "POST") {

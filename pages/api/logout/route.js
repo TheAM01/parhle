@@ -1,5 +1,5 @@
 // app/api/logout/route.js
-import { getSession } from "@/lib/getSession";
+import { getSession } from "@/lib/get-session";
 
 export async function POST() {
     const session = await getSession();

@@ -1,7 +1,7 @@
 // app/api/login/route.js
-import db from "@/lib/db";
+import db from "@/lib/database";
 import bcrypt from "bcrypt";
-import { getSession } from "@/lib/getSession";
+import { getSession } from "@/lib/get-session";
 
 export async function POST(req) {
     const { email, password } = await req.json();

@@ -2,9 +2,10 @@
 
 import {useState} from "react";
 import {useRouter} from "next/navigation";
+import Link from "next/link";
 
 export default function LoginClient() {
-    const [email, setEmail] = useState("");
+    const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const router = useRouter();
 
@@ -12,7 +13,7 @@ export default function LoginClient() {
         const res = await fetch("/api/login", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ username: email, password }),
+            body: JSON.stringify({ username, password }),
         });
 
         const data = await res.json();
@@ -29,14 +30,14 @@ export default function LoginClient() {
             <div className="bg-gray-900 p-4 border border-gray-700 flex-col w-9/10 sm:w-4/5 md:w-3/5 lg:w-2/5 xl:w-1/4">
                 <div className="text-2xl font-bold">Login to Parhle</div>
                 <div className="flex-col w-full mt-4">
-                    <div className="text-sm font-semibold">Email</div>
+                    <div className="text-sm font-semibold">Username</div>
                     <input
-                        value={email}
-                        name={"email"}
-                        type={"email"}
+                        value={username}
+                        name={"username"}
+                        type={"username"}
                         required={true}
                         className={"flex bg-gray-800 p-2 flex-1 border border-gray-700 text-base"}
-                        onChange={(e) => setEmail(e.target.value)}
+                        onChange={(e) => setUsername(e.target.value)}
                     />
                 </div>
                 <div className="flex-col w-full mt-4">
@@ -54,7 +55,7 @@ export default function LoginClient() {
                     onClick={handleLogin}
                     className={"flex bg-white text-black text-sm items-center justify-center p-2 font-semibold text-center mt-4 cursor-pointer duration-200 hover:shadow-lg shadow-white/20"}
                 >Login</button>
-                <div className="text-base text-gray-dark font-semibold justify-center mt-5">Don't have an account? Sign up</div>
+                <div className="text-base text-gray-dark font-semibold justify-center mt-5">Don't have an account? <Link href={"/user/signup"}>Sign up</Link></div>
             </div>
         </div>
     )

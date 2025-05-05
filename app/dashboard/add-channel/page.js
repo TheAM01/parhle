@@ -1,14 +1,13 @@
-import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import AddChannelClient from './add-channel.client'; // your client component
+import AddChannelClient from './add-channel.client';
+import {getSession} from "@/lib/get-session"; // your client component
 
 export default async function AddChannelPage() {
-    const cookieStore = await cookies();
-    const session = await cookieStore.get('s-connect-id');
+    const session = await getSession()
 
-    if (!session) {
-        redirect('/user//login');
+    if (!session.user) {
+        return redirect('/user/login?login-first=true&redirect-to=dashboard%2Fadd-book');
     }
 
-    return <AddChannelClient />;
+    return <AddChannelClient user={{username: session.user.username, email: session.user.email}}/>;
 }

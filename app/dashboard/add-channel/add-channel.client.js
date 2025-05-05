@@ -6,12 +6,12 @@ import SideBar from "@/components/ui/sidebar";
 import axios from "axios";
 import StatusToast from "@/components/ui/status-toast";
 
-export default function AddChannel() {
+export default function AddChannel({user}) {
 
     const [formData, setFormData] = useState({
         title: "",
         subject: "",
-        author: "n30nu11",
+        author: user.username,
         university: "University of Karachi",
         description: "",
         url: "",
@@ -73,7 +73,7 @@ export default function AddChannel() {
         setFormData({
             title: "",
             subject: "",
-            author: "n30nu11",
+            author: user.username,
             university: "University of Karachi",
             description: "",
             url: "",
@@ -130,17 +130,6 @@ export default function AddChannel() {
 
                     <div className="flex-wrap gap-5 mb-5">
 
-                        <div className="flex-col flex-1">
-                            <div className="font-light">Author *</div>
-                            <input
-                                name={"author"}
-                                className={"flex-1 flex border-gray-700 border bg-gray-800 text-white placeholder-gray-medium p-2 text-sm"}
-                                type={"text"}
-                                value={formData.author}
-                                onChange={handleChange}
-                                required={true}
-                            />
-                        </div>
                         <div className="flex-col flex-1">
                             <div className="font-light">University *</div>
                             <input

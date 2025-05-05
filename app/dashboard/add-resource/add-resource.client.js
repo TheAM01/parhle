@@ -6,7 +6,7 @@ import {useState} from "react";
 import SideBar from "@/components/ui/sidebar";
 import {ScreenSizeGetter} from "@/components/utility";
 
-export default function AddResource() {
+export default function AddResource({user}) {
 
     console.log("AddResource rendered");
 
@@ -16,7 +16,7 @@ export default function AddResource() {
         subject: "",
         semester: "non-specific",
         teacher: "",
-        author: "",
+        author: user.username,
         university: "University of Karachi",
         resourceUrl: "",
     });
@@ -45,7 +45,7 @@ export default function AddResource() {
             subject: "",
             semester: "non-specific",
             teacher: "",
-            author: "labrdbms",
+            author: user.username,
             university: "University of Karachi",
             resourceUrl: "",
         });
@@ -80,6 +80,7 @@ export default function AddResource() {
                                 value={formData.title}
                                 onChange={handleChange}
                                 required={true}
+                                placeholder={"[Resource Type] [Subject] [Teacher] [Year]"}
                             />
                         </div>
                         <div className="flex-col flex-1">
@@ -91,6 +92,7 @@ export default function AddResource() {
                                 value={formData.subject}
                                 onChange={handleChange}
                                 required={true}
+                                placeholder={"e.g. Software Requirements Engineering"}
                             />
                         </div>
                     </div>
@@ -117,7 +119,7 @@ export default function AddResource() {
                             </select>
                         </div>
                         <div className="flex-col flex-1">
-                            <div className="font-light">Teacher</div>
+                            <div className="font-light">Teacher *</div>
                             <input
                                 name={"teacher"}
                                 className={"flex-1 flex border-gray-700 border bg-gray-800 text-white placeholder-gray-medium p-2"}
@@ -125,22 +127,12 @@ export default function AddResource() {
                                 value={formData.teacher}
                                 onChange={handleChange}
                                 required={true}
+                                placeholder={"e.g. Sir Asim Ali"}
                             />
                         </div>
                     </div>
 
                     <div className="flex-wrap gap-5 mb-5">
-                        <div className="flex-col flex-1">
-                            <div className="font-light">Author *</div>
-                            <input
-                                name={"author"}
-                                className={"flex-1 flex border-gray-700 border bg-gray-800 text-white placeholder-gray-medium p-2"}
-                                type={"text"}
-                                value={formData.author}
-                                onChange={handleChange}
-                                required={true}
-                            />
-                        </div>
                         <div className="flex-col flex-1">
                             <div className="font-light">University *</div>
                             <input

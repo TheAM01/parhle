@@ -1,12 +1,13 @@
 import SideBar from "@/components/ui/sidebar";
 import { getSession } from "@/lib/get-session";
+import {redirect} from "next/navigation";
 
 export default async function Dashboard() {
 
     const session = await getSession();
-
+    console.log(session)
     if (!session.user) {
-        return <p className={"text-white"}>Access Denied</p>;
+        return redirect('/user/login?login-first=true&redirect-to=dashboard');
     }
 
     return (
@@ -27,9 +28,8 @@ export default async function Dashboard() {
                     TODOs:
 
                     <ul className={"list-disc"}>
-                        <li>Find and add books</li>
-                        <li>Find a use for dashboard and remove unnecessary stuff</li>
-                        <li>Add authentication</li>
+                        <li>Change author for every add page</li>
+                        <li>Add current user details in dashboard and logout button</li>
                     </ul>
 
                 </div>

@@ -1,14 +1,13 @@
-import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import AddResourceClient from './add-resource.client'; // your client component
+import AddResourceClient from './add-resource.client';
+import {getSession} from "@/lib/get-session"; // your client component
 
 export default async function AddResourcePage() {
-    const cookieStore = await cookies();
-    const session = await cookieStore.get('s-connect-id');
+    const session = await getSession()
 
-    if (!session) {
-        redirect('/user//login');
+    if (!session.user) {
+        return redirect('/user/login?login-first=true&redirect-to=dashboard%2Fadd-book');
     }
 
-    return <AddResourceClient />;
+    return <AddResourceClient user={{username: session.user.username, email: session.user.email}}/>;
 }

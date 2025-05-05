@@ -5,6 +5,7 @@ import {Search, Filter, BookOpen, Heart, Calendar, University, User} from "lucid
 import {motion} from "framer-motion";
 // import {notesData} from "@/public/data";
 import Input from "@/components/ui/input";
+import Spinner from "@/components/ui/spinner";
 
 
 export default function Resources() {
@@ -95,8 +96,8 @@ export default function Resources() {
 
 
 
-                <div className="grid! grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-2">
-                    {filteredNotes.map((note, index) => (
+                <div className={`${loading ? "justify-center pt-10" : "grid! grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"} mt-2`}>
+                    {(!loading ? filteredNotes.map((note, index) => (
                         <motion.a
                             download
                             target="_blank"
@@ -144,7 +145,7 @@ export default function Resources() {
                                 </div>
                             </div>
                         </motion.a>
-                    ))}
+                    )) : <Spinner/>)}
                 </div>
             </div>
         </div>

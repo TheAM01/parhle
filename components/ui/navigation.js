@@ -1,32 +1,51 @@
 "use client";
 
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 
 import Link from "next/link";
 import {LinkButton} from "@/components/ui/button";
 import {Menu, LayoutDashboard, LogIn} from "lucide-react";
 import Spinner from "@/components/ui/spinner";
 
-export default function Navigation() {
+export default function Navigation({}) {
 
-    const button = <AuthButton/>
+    const [open, setOpen] = useState(false);
+    const [session, setSession] = useState(null);
 
-    // 38.5 px for mobiles
-    // 70 px for sm+
-    const [open, setOpen] = useState(false)
+    const toggleMenu = useCallback(() => {
+        setOpen((prevState) => !prevState);
+    }, []);
+
+
+    useEffect(() => {
+        fetch('/api/session')
+            .then(res => res.json())
+            .then(data => {
+                if (!data.loggedIn) {
+                    setSession(null)
+                } else {
+                    setSession(data.session);
+                }
+            });
+    }, []);
+
+    const button = (!session ?
+        <LinkButton href="/user/login">
+            <LogIn size={16} /> Join Now
+        </LinkButton>
+        :
+        <LinkButton href="/dashboard">
+            <LayoutDashboard size={16} /> Dashboard
+        </LinkButton>
+    )
 
     const navigationItems = [
         <Link key={"1"} href={"/books"} onClick={() => setOpen(false)} className={"flex m-3.5 uppercase text-base no-underline text-gray-light font-normal duration-100 hover:text-gray-medium"}>Books</Link>,
         <Link key={"2"} href={"/channels"} onClick={() => setOpen(false)} className={"flex m-3.5 uppercase text-base no-underline text-gray-light font-normal duration-100 hover:text-gray-medium"}>Channels</Link>,
         <Link key={"3"} href={"/resources"} onClick={() => setOpen(false)} className={"flex m-3.5 uppercase text-base no-underline text-gray-light font-normal duration-100 hover:text-gray-medium"}>Resources</Link>,
-        // <Link key={"4"} href={"/dashboard"} className={"flex m-3.5 uppercase text-base no-underline text-gray-light font-normal duration-100 hover:text-gray-medium"}>Dashboard</Link>,
         <Link key={"5"} href={"/request"} onClick={() => setOpen(false)} className={"flex m-3.5 uppercase text-base no-underline text-gray-light font-normal duration-100 hover:text-gray-medium"}>Request</Link>,
-        <Link key={"6"} href={"/about"} onClick={() => setOpen(false)} className={"flex m-3.5 uppercase text-base no-underline text-gray-light font-normal duration-100 hover:text-gray-medium"}>About</Link>,
-        // <Link key={"7"} href={"/user/profile"} className={"flex m-3.5 uppercase text-base no-underline text-gray-light font-normal duration-100 hover:text-gray-medium"}>Profile</Link>,
-        // <Link key={"8"} href={"/user/signin"} className={"flex m-3.5 uppercase text-base no-underline text-gray-light font-normal duration-100 hover:text-gray-medium"}>Sign In</Link>,
-    ]
-
-
+        <Link key={"6"} href={"/about"} onClick={() => setOpen(false)} className={"flex m-3.5 uppercase text-base no-underline text-gray-light font-normal duration-100 hover:text-gray-medium"}>About</Link>
+    ];
 
     return (
         <div className="align-center flex-col w-screen fixed top-0 bg-black border-solid border-border border-b border-border-color z-10" id={"navigation"}>
@@ -37,7 +56,7 @@ export default function Navigation() {
                 <div className="w-min z-10 sm:hidden!">
                     <button
                         className=" text-3xl focus:outline-none text-white bg-black rounded-sm items-center"
-                        onClick={() => setOpen(!open)}
+                        onClick={toggleMenu}
                     >
                         <Menu/>
                     </button>
@@ -63,29 +82,25 @@ export default function Navigation() {
     )
 }
 
-function AuthButton() {
-    const [button, setButton] = useState(<></>); // Initial button is empty
-    const status = "unauthenticated";
+
+function AuthButton({ session }) {
+    const [button, setButton] = useState(<Spinner />);
+
     useEffect(() => {
-        if (status === "loading" || status === "unauthenticated") {
+        if (!session) {
             setButton(
                 <LinkButton href="/user/login">
                     <LogIn size={16} /> Join Now
                 </LinkButton>
             );
-        } else if (status === "authenticated") {
+        } else {
             setButton(
                 <LinkButton href="/dashboard">
                     <LayoutDashboard size={16} /> Dashboard
                 </LinkButton>
             );
         }
-    }, [status]);
-
-    if (status === "loading") {
-        return <Spinner/>
-    }
+    }, [session]); // Add session as a dependency
 
     return button;
-
 }

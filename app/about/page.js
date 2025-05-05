@@ -3,7 +3,7 @@
 export default function About() {
 
     return (
-        <div className={"w-full h-full bg-black items-center flex-col text-white pt-10 sm:pt-0 min-h-screen texture-mosaic justify-center"}>
+        <div className={"w-full h-full bg-black items-center flex-col text-white pt-10 sm:pt-30 min-h-screen texture-mosaic justify-center"}>
 
             <div className="flex-col bg-gray-900 w-full lg:w-4/5 p-4 md:p-10 border-2 border-border-color">
 

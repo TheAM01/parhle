@@ -5,14 +5,14 @@ import {Upload} from "lucide-react";
 import {useState} from "react";
 import SideBar from "@/components/ui/sidebar";
 
-export default function AddBook() {
-
+export default function AddBook({user}) {
+    console.log(user.username)
     const [formData, setFormData] = useState({
         title: "",
         subject: "",
         semester: "non-specific",
         bookAuthor: "",
-        author: "n30nu11",
+        author: user.username,
         university: "University of Karachi",
         bookUrl: "",
     });
@@ -41,7 +41,7 @@ export default function AddBook() {
             subject: "",
             semester: "non-specific",
             bookAuthor: "",
-            author: "n30nu11",
+            author: user.username,
             university: "University of Karachi",
             bookUrl: "",
         })
@@ -110,12 +110,12 @@ export default function AddBook() {
                             </select>
                         </div>
                         <div className="flex-col flex-1">
-                            <div className="font-light">Book Author *</div>
+                            <div className="font-light">University *</div>
                             <input
-                                name={"bookAuthor"}
+                                name={"university"}
                                 className={"flex-1 flex border-gray-700 border bg-gray-800 text-white placeholder-gray-medium p-2"}
                                 type={"text"}
-                                value={formData.bookAuthor}
+                                value={formData.university}
                                 onChange={handleChange}
                                 required={true}
                             />
@@ -124,23 +124,12 @@ export default function AddBook() {
 
                     <div className="flex-wrap gap-5 mb-5">
                         <div className="flex-col flex-1">
-                            <div className="font-light">Author *</div>
+                            <div className="font-light">Book Author *</div>
                             <input
-                                name={"author"}
+                                name={"bookAuthor"}
                                 className={"flex-1 flex border-gray-700 border bg-gray-800 text-white placeholder-gray-medium p-2"}
                                 type={"text"}
-                                value={formData.author}
-                                onChange={handleChange}
-                                required={true}
-                            />
-                        </div>
-                        <div className="flex-col flex-1">
-                            <div className="font-light">University *</div>
-                            <input
-                                name={"university"}
-                                className={"flex-1 flex border-gray-700 border bg-gray-800 text-white placeholder-gray-medium p-2"}
-                                type={"text"}
-                                value={formData.university}
+                                value={formData.bookAuthor}
                                 onChange={handleChange}
                                 required={true}
                             />

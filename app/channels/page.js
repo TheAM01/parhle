@@ -3,9 +3,9 @@
 import {useEffect, useState} from "react";
 import {Search, Filter, BookOpen, Heart, Calendar, University, User} from "lucide-react";
 import {motion} from "framer-motion";
-// import {notesData} from "@/public/data";
 import Input from "@/components/ui/input";
 import axios from "axios";
+import Spinner from "@/components/ui/spinner";
 
 
 export default function Resources() {
@@ -108,8 +108,8 @@ export default function Resources() {
 
 
 
-                <div className="grid! grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-2">
-                    {filteredNotes.map((channel, index) => (
+                <div className={`${loading ? "justify-center pt-10" : "grid! grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"} mt-2`}>
+                    {(!loading ? filteredNotes.map((channel, index) => (
 
                         <motion.a
                             download
@@ -154,7 +154,7 @@ export default function Resources() {
                                 </div>
                             </div>
                         </motion.a>
-                    ))}
+                    )) : <Spinner/>)}
                 </div>
             </div>
         </div>

@@ -1,14 +1,13 @@
-import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import AddBookClient from './add-book.client'; // your client component
+import AddBookClient from './add-book.client';
+import {getSession} from "@/lib/get-session"; // your client component
 
 export default async function AddBookPage() {
-    const cookieStore = await cookies();
-    const session = await cookieStore.get('s-connect-id');
+    const session = await getSession()
 
-    if (!session) {
-        redirect('/user/login');
+    if (!session.user) {
+        return redirect('/user/login?login-first=true&redirect-to=dashboard%2Fadd-book');
     }
-
-    return <AddBookClient />;
+    console.log(session)
+    return <AddBookClient user={{username: session.user.username, email: session.user.email}}/>;
 }

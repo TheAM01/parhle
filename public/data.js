@@ -96,7 +96,7 @@ export const links = [
         items: [
             {
                 name: "About",
-                href: "#"
+                href: "/about"
             },
             {
                 name: "Contribute",
@@ -113,15 +113,15 @@ export const links = [
         items: [
             {
                 name: "Login",
-                href: "#"
+                href: "/user/login"
             },
             {
                 name: "Sign Up",
-                href: "#"
+                href: "/user/signup"
             },
             {
-                name: "Account",
-                href: "#"
+                name: "Profile",
+                href: "/user/profile"
             }
         ]
     },

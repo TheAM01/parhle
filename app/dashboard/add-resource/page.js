@@ -9,5 +9,5 @@ export default async function AddResourcePage() {
         return redirect('/user/login?login-first=true&redirect-to=dashboard%2Fadd-book');
     }
 
-    return <AddResourceClient user={{username: session.user.username, email: session.user.email}}/>;
+    return <AddResourceClient user={{username: session.user.username, email: session.user.email, avatarImg: session.user.avatarImg}}/>;
 }

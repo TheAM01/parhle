@@ -1,13 +1,25 @@
+"use server";
+
 import { redirect } from 'next/navigation';
 import AddBookClient from './add-book.client';
-import {getSession} from "@/lib/get-session"; // your client component
+import {getSession} from "@/lib/get-session";
+import {cookies} from "next/headers";
 
 export default async function AddBookPage() {
     const session = await getSession()
+    const cookieStore = await cookies();
+    let sidebarStatus = cookieStore.get('sidebar-status');
 
+    if (sidebarStatus !== undefined) sidebarStatus.value = sidebarStatus.value !== "false";
     if (!session.user) {
         return redirect('/user/login?login-first=true&redirect-to=dashboard%2Fadd-book');
     }
-    console.log(session)
-    return <AddBookClient user={{username: session.user.username, email: session.user.email}}/>;
+    return <AddBookClient
+        user={{
+            username: session.user.username,
+            email: session.user.email,
+            avatarImg: session.user.avatarImg
+        }}
+        sidebarStatus={sidebarStatus.value}
+    />;
 }

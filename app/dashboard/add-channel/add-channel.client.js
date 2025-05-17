@@ -87,7 +87,7 @@ export default function AddChannel({user}) {
     return (
         <div className={"w-screen bg-black flex-row text-white min-h-screen pt-8 lg:pt-0 texture-mosaic"}>
 
-            <SideBar/>
+            <SideBar user={user}/>
             <div className="flex-col w-full md:w-4/5 lg:w-3/5 xl:w-2/5  p-4 lg:p-10 mx-auto">
 
                 <div className="text-4xl mb-3 font-bold">
@@ -169,6 +169,23 @@ export default function AddChannel({user}) {
                             placeholder={"(Optional) Describe in a few words about what this video/playlist does and why it's worth sharing..."}
                         />
                         <div className="mt-1 text-gray-dark text-xs">Your peers appreciate channels that are described about more. Try adding a description to reach more people.</div>
+                    </div>
+                    <div className="flex-col flex-1">
+                        <ReactTags
+                            tags={tags}
+                            suggestions={suggestions}
+                            separators={[SEPARATORS.ENTER, SEPARATORS.COMMA]}
+                            handleDelete={handleDelete}
+                            handleAddition={handleAddition}
+                            handleDrag={handleDrag}
+                            handleTagClick={handleTagClick}
+                            onTagUpdate={onTagUpdate}
+                            inputFieldPosition="bottom"
+                            editable
+                            clearAll
+                            onClearAll={onClearAll}
+                            maxTags={7}
+                        />
                     </div>
 
                     <div className="w-full border-b border-border-color mt-5 mb-2"></div>

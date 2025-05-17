@@ -5,7 +5,6 @@ import {redirect} from "next/navigation";
 export default async function Dashboard() {
 
     const session = await getSession();
-    console.log(session)
     if (!session.user) {
         return redirect('/user/login?login-first=true&redirect-to=dashboard');
     }
@@ -13,7 +12,7 @@ export default async function Dashboard() {
     return (
         <div className={"w-screen bg-black flex-row text-white min-h-screen pt-8 lg:pt-0 texture-mosaic"}>
 
-            <SideBar/>
+            <SideBar user={{username: session.user.username, email: session.user.email, avatarImg: session.user.avatarImg}}/>
 
             <div className="flex-col w-full lg:mx-30 p-4 lg:p-10">
 
@@ -28,8 +27,8 @@ export default async function Dashboard() {
                     TODOs:
 
                     <ul className={"list-disc"}>
-                        <li>Change author for every add page</li>
-                        <li>Add current user details in dashboard and logout button</li>
+                        <li>Finish dashboard</li>
+                        <li>Set cookie for dashboard sidebar open</li>
                     </ul>
 
                 </div>

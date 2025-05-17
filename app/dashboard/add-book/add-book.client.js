@@ -5,8 +5,7 @@ import {Upload} from "lucide-react";
 import {useState} from "react";
 import SideBar from "@/components/ui/sidebar";
 
-export default function AddBook({user}) {
-    console.log(user.username)
+export default function AddBook({user, sidebarStatus}) {
     const [formData, setFormData] = useState({
         title: "",
         subject: "",
@@ -34,7 +33,6 @@ export default function AddBook({user}) {
         });
 
         const result = await response.json();
-        console.log(result);
 
         setFormData({
             title: "",
@@ -50,7 +48,7 @@ export default function AddBook({user}) {
     return (
         <div className={"w-screen bg-black flex-row text-white min-h-screen pt-8 lg:pt-0 texture-mosaic"}>
 
-            <SideBar/>
+            <SideBar user={user} sidebarStatus={sidebarStatus}/>
             <div className="flex-col w-full lg:mx-30 p-4 lg:p-10">
 
                 <div className="text-4xl mb-3 font-bold">

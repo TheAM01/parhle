@@ -14,7 +14,7 @@ export async function POST(req) {
         }
 
         const session = await getSession();
-        session.user = { email: user.email, username: user.username };
+        session.user = { email: user.email, username: user.username, avatarImg: user.avatarImg };
         await session.save();
 
         return NextResponse.json({ success: true, message: "Logged in successfully", user: session.user }, { status: 201 });

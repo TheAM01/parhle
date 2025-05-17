@@ -24,8 +24,9 @@ export default function Resources() {
 
                 const response = await fetch("/api/resource/all");
                 const result = await response.json();
-                setNotesData(result);
-                const uniq = [...new Set(result.map(item => item.subject))];
+                const sorted = result.reverse()
+                setNotesData(sorted);
+                const uniq = [...new Set(sorted.map(item => item.subject))];
                 console.log(uniq);
                 setUniqueSubjects(uniq)
 

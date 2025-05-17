@@ -3,6 +3,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function SignupClient() {
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -39,6 +41,20 @@ export default function SignupClient() {
                 <input
                     type="text"
                     value={username}
+                    onChange={handleUsername}
+                    className="bg-gray-800 p-2 border border-gray-700 mb-4"
+                />
+                <label className="text-sm font-semibold mb-1">First Name</label>
+                <input
+                    type="text"
+                    value={firstName}
+                    onChange={handleUsername}
+                    className="bg-gray-800 p-2 border border-gray-700 mb-4"
+                />
+                <label className="text-sm font-semibold mb-1">Last Name</label>
+                <input
+                    type="text"
+                    value={lastName}
                     onChange={handleUsername}
                     className="bg-gray-800 p-2 border border-gray-700 mb-4"
                 />

@@ -1,10 +1,15 @@
 import SideBar from "@/components/ui/sidebar";
 import { getSession } from "@/lib/get-session";
 import {redirect} from "next/navigation";
+import {cookies} from "next/headers";
 
 export default async function Dashboard() {
 
     const session = await getSession();
+    const cookieStore = await cookies();
+    let sidebarStatus = cookieStore.get('sidebar-status');
+
+    if (sidebarStatus !== undefined) sidebarStatus.value = sidebarStatus.value !== "false";
     if (!session.user) {
         return redirect('/user/login?login-first=true&redirect-to=dashboard');
     }
@@ -12,7 +17,7 @@ export default async function Dashboard() {
     return (
         <div className={"w-screen bg-black flex-row text-white min-h-screen pt-8 lg:pt-0 texture-mosaic"}>
 
-            <SideBar user={{username: session.user.username, email: session.user.email, avatarImg: session.user.avatarImg}}/>
+            <SideBar user={{username: session.user.username, email: session.user.email, avatarImg: session.user.avatarImg}} sidebarStatus={sidebarStatus}/>
 
             <div className="flex-col w-full lg:mx-30 p-4 lg:p-10">
 

@@ -165,7 +165,7 @@ export default function SideBar({user, sidebarStatus}) {
                     <div className="gap-4 items-center justify-between flex-1">
                         <img src={user.avatarImg} alt="avatar_img" className="flex h-[2.5em] rounded-full border-3 border-gray-800"/>
                         <div className={`${!isOpen ? "hidden!" : "flex!"}  flex-col overflow-x-hidden flex-1`}>
-                            <div className="text-gray-medium font-semibold ">{user.fullname || "John Doe"}</div>
+                            <div className="text-gray-medium font-semibold ">{user.fullName || "John Doe"}</div>
                             <div className="text-gray-dark text-sm">{user.username}</div>
                         </div>
                     </div>

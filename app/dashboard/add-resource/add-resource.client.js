@@ -6,7 +6,7 @@ import {useState} from "react";
 import SideBar from "@/components/ui/sidebar";
 import {ScreenSizeGetter} from "@/components/utility";
 
-export default function AddResource({user}) {
+export default function AddResource({user, sidebarStatus}) {
 
     console.log("AddResource rendered");
 
@@ -57,7 +57,7 @@ export default function AddResource({user}) {
     return (
         <div className={"w-screen bg-black flex-row text-white min-h-screen pt-8 lg:pt-0 texture-mosaic"}>
 
-            <SideBar user={user}/>
+            <SideBar user={user} sidebarStatus={sidebarStatus}/>
             <div className="flex-col w-full lg:mx-30 p-4 lg:p-10">
 
                 <div className="text-4xl mb-3 font-bold">

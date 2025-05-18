@@ -1,13 +1,13 @@
 # Parhle
 **Knowledge Shared is Power Multiplied**
 
-Educational website for sharing notes and resources.
+Educational website for sharing notes and resources. More description coming in later versions.
 
 ---
 
 # Versions
 
-## v1.3:
+## v1.3 (Latest):
 
 #### Functional
 - Dashboard sidebar now shows the current logged-in user.
@@ -19,4 +19,4 @@ Educational website for sharing notes and resources.
 - Updated `ReadMe.md`
 - Fixed `SideBarLink` wrapping issue on small screens.
 - Added a minimal scrollbar.
-- Fixed bugs and enhanced security.
+- Fixed minor bugs and security issues.

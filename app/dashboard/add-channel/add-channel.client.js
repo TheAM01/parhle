@@ -170,7 +170,7 @@ export default function AddChannel({user, sidebarStatus}) {
                         />
                         <div className="mt-1 text-gray-dark text-xs">Your peers appreciate channels that are described about more. Try adding a description to reach more people.</div>
                     </div>
-                   
+
 
                     <div className="w-full border-b border-border-color mt-5 mb-2"></div>
 

@@ -15,11 +15,7 @@ export default async function AddBookPage() {
         return redirect('/user/login?login-first=true&redirect-to=dashboard%2Fadd-book');
     }
     return <AddBookClient
-        user={{
-            username: session.user.username,
-            email: session.user.email,
-            avatarImg: session.user.avatarImg
-        }}
+        user={session.user}
         sidebarStatus={sidebarStatus.value}
     />;
 }

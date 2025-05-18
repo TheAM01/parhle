@@ -13,5 +13,5 @@ export default async function AddChannelPage() {
         return redirect('/user/login?login-first=true&redirect-to=dashboard%2Fadd-book');
     }
 
-    return <AddChannelClient user={{username: session.user.username, email: session.user.email, avatarImg: session.user.avatarImg}} sidebarStatus={sidebarStatus}/>;
+    return <AddChannelClient user={session.user} sidebarStatus={sidebarStatus}/>;
 }

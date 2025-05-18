@@ -17,7 +17,7 @@ export default async function Dashboard() {
     return (
         <div className={"w-screen bg-black flex-row text-white min-h-screen pt-8 lg:pt-0 texture-mosaic"}>
 
-            <SideBar user={{username: session.user.username, email: session.user.email, avatarImg: session.user.avatarImg}} sidebarStatus={sidebarStatus}/>
+            <SideBar user={session.user} sidebarStatus={sidebarStatus}/>
 
             <div className="flex-col w-full lg:mx-30 p-4 lg:p-10">
 

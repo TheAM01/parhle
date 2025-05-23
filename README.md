@@ -1,5 +1,5 @@
 # Parhle
-![Build Status](https://img.shields.io/github/actions/workflow/status/yourusername/yourrepo/ci.yml?branch=main)
+![Build Status](https://img.shields.io/github/actions/workflow/status/TheAM01/parhle/ci.yml?branch=main)
 
 ![Vercel](https://vercelbadge.vercel.app/api/theam01/parhle)  
 [🚀 Live Site](https://parhle.mueed.xyz)

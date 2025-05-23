@@ -17,15 +17,15 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '22'  # change this to your node version
+          node-version: '22'
 
       - name: Install dependencies
         run: npm install
 
-#      - name: Run tests
-#        run: echo 'No tests yet
-        # If you don't have tests yet, you can comment out this step or replace with "echo 'No tests yet'"
+      - name: Create .env.local
+        run: |
+          echo "MONGO_URI=${{ secrets.MONGO_URI }}" >> .env.local
+          echo "SESSION_PASSWORD=${{ secrets.SESSION_PASSWORD }}" >> .env.local
 
       - name: Build project
         run: npm run build
-        # If your project does not have a build step, you can comment this out

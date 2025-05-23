@@ -6,6 +6,8 @@
 ![GitHub Tag](https://img.shields.io/github/v/tag/TheAM01/parhle)
 
 [![Deploy](https://img.shields.io/badge/Live%20Site-parhle.mueed.xyz-0C7DFF?style=for-the-badge&logo=vercel&logoColor=white)](https://parhle.mueed.xyz)
+
+
 **Knowledge Shared is Power Multiplied**
 
 Parhle is a collaborative educational platform designed to connect students and peers, providing easy access to curated study materials and resources. Our mission is to elevate your academic journey by breaking down barriers and making knowledge accessible to all.

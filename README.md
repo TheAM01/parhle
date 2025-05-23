@@ -1,22 +1,61 @@
 # Parhle
+![Build Status](https://img.shields.io/github/actions/workflow/status/yourusername/yourrepo/ci.yml?branch=main)
+
+![Vercel](https://vercelbadge.vercel.app/api/theam01/parhle)  
+[🚀 Live Site](https://parhle.mueed.xyz)
+
+
+
 **Knowledge Shared is Power Multiplied**
 
-Educational website for sharing notes and resources. More description coming in later versions.
+Parhle is a collaborative educational platform designed to connect students and peers, providing easy access to curated study materials and resources. Our mission is to elevate your academic journey by breaking down barriers and making knowledge accessible to all.
+
+Whether you're sharing notes, discovering new study content, or engaging with your academic community, Parhle is where knowledge knows no boundaries.
 
 ---
 
-# Versions
+## Features
 
-## v1.3 (Latest):
+- **Peer Connection:** Network and collaborate with fellow students.
+- **Resource Sharing:** Upload and access diverse study materials tailored for your courses.
+- **User Profiles:** Customize your profile with avatars and academic details.
+- **Persistent Sidebar:** Conveniently navigate with a sidebar that remembers your preferences.
+- **Secure Authentication:** Enhanced sign-up with additional fields to capture your academic info.
 
-#### Functional
-- Dashboard sidebar now shows the current logged-in user.
-- Sidebar maintains it's open/close state on refresh and revisit.
-- Added Name, Confirm Password, University, Semester & Course fields on Sign Up page.
-- Added Avatars to user data.
+---
 
-#### Non Functional
-- Updated `ReadMe.md`
-- Fixed `SideBarLink` wrapping issue on small screens.
-- Added a minimal scrollbar.
-- Fixed minor bugs and security issues.
+## Version History
+
+### v1.3 (Latest)
+
+**New Features:**
+- Dashboard sidebar now displays the currently logged-in user for a personalized experience.
+- Sidebar retains its open/close state even after page refreshes or revisits.
+- Expanded Sign Up form with Name, Confirm Password, University, Semester, and Course fields to better capture user info.
+- Added avatar support in user profiles to enhance personalization.
+- Updated user schema to support new profile fields and avatars.
+- Introduced a dedicated Profile page for users to view and edit their details.
+
+**Improvements & Fixes:**
+- Fixed `SideBarLink` text wrapping issues on smaller screens to improve mobile responsiveness.
+- Added a minimal scrollbar for a cleaner, less intrusive UI experience.
+- Addressed minor bugs and improved overall security.
+- Updated this README file for better documentation.
+
+---
+
+## Getting Started
+
+*(Optional section you can fill out later with install or usage instructions)*
+
+---
+
+## Contribution
+
+We welcome contributions! Feel free to open issues or submit pull requests to improve Parhle.
+
+---
+
+## Contact
+
+For feedback or support, please contact: [your email or contact info here]

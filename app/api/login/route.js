@@ -13,8 +13,11 @@ export async function POST(req) {
             return NextResponse.json({ success: false, message: "Invalid credentials" }, { status: 400 });
         }
 
+        delete user.password;
+        delete user._id;
+
         const session = await getSession();
-        session.user = { email: user.email, username: user.username, avatarImg: user.avatarImg, fullName: user.fullName };
+        session.user = user;
         await session.save();
 
         return NextResponse.json({ success: true, message: "Logged in successfully", user: session.user }, { status: 201 });

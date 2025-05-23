@@ -10,3 +10,35 @@ export function ScreenSizeGetter() {
         </div>
     )
 }
+
+export class User {
+    constructor(fullName, username, email, password, university, semester, course, role) {
+
+        this.fullName = fullName.trim();
+        this.username = username.trim();
+        this.avatarImg = `https://ui-avatars.com/api/?background=000&color=fff&name=${fullName.replaceAll(" ", "+")}`
+        this.email = email;
+        this.password = password;
+        this.role = role;
+
+        this.contributions = {
+            resources: [],
+            books: [],
+            channels: [],
+            requests: [],
+        };
+        this.academicDetails = {
+            university,
+            semester,
+            course,
+        }
+        this.likedItems = {
+            resources: [],
+            books: [],
+            channels: []
+        }
+        this.createdAt = Date.now()
+        this.isVerified = false;
+
+    }
+}

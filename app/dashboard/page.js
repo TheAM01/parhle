@@ -13,7 +13,7 @@ export default async function Dashboard() {
     if (!session.user) {
         return redirect('/user/login?login-first=true&redirect-to=dashboard');
     }
-
+    console.log(session.user)
     return (
         <div className={"w-screen bg-black flex-row text-white min-h-screen pt-8 lg:pt-0 texture-mosaic"}>
 

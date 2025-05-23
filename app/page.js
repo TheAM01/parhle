@@ -40,7 +40,7 @@ export default function Home() {
             })
         }
     }, [])
-    console.log("This should only print once.")
+    
     return (
         <div className={"w-full bg-black flex-col"}>
 
@@ -172,7 +172,7 @@ export default function Home() {
                     viewport={{ once: true }}
                     className={"mb-4"}
                 >
-                    <LinkButton href={"/signup"}>
+                    <LinkButton href={"/user/signup"}>
                         Get Started
                     </LinkButton>
                 </motion.div>
@@ -210,7 +210,7 @@ function Hero({targetRef, opacity, scale}) {
 
             </div>
             <div className="mt-4 text-gray-medium">
-                Connect with peers, access curated study materials,
+                Connect with peers, access curated study materials & resources
                 and elevate your academic journey. Parhle -
                 Where knowledge knows no boundaries.
             </div>

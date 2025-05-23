@@ -1,14 +1,33 @@
 "use client";
 
 import Link from "next/link"
-import {BookOpen, BookPlus, File, FilePlus, NotebookText, SquarePlus, ChevronLeft, ChevronRight, LogOut, ListVideo, LibraryBig, Layers, Home, ListTodo, GitPullRequestArrow, MonitorPlay, Pencil} from "lucide-react";
-import {usePathname} from "next/navigation";
+import {
+    BookOpen,
+    BookPlus,
+    File,
+    FilePlus,
+    SquarePlus,
+    ChevronLeft,
+    ChevronRight,
+    LogOut,
+    ListVideo,
+    LibraryBig,
+    Layers,
+    Home,
+    ListTodo,
+    GitPullRequestArrow,
+    MonitorPlay,
+    Pencil,
+    User
+} from "lucide-react";
+import {usePathname, useRouter} from "next/navigation";
 import {useEffect, useState} from "react";
 import Cookies from "js-cookie";
-import {IconButton} from "@/components/ui/button";
+import {IconButton, IconLinkButton} from "@/components/ui/button";
 
 export default function SideBar({user, sidebarStatus}) {
     const pathname = usePathname();
+    const router = useRouter();
 
     const pages = [
         {
@@ -105,6 +124,16 @@ export default function SideBar({user, sidebarStatus}) {
                     icon: ListTodo
                 }
             ]
+        },
+        {
+            title: "User",
+            items: [
+                {
+                    title: "Profile",
+                    href: "/dashboard/profile",
+                    icon: User
+                }
+            ]
         }
     ];
 
@@ -113,6 +142,23 @@ export default function SideBar({user, sidebarStatus}) {
         setIsOpen(newStatus);
         Cookies.set("sidebar-status", newStatus, { expires: 365 });
     };
+
+    const handleLogout = async () => {
+        try {
+            const res = await fetch('/api/logout', {
+                method: 'POST',
+            });
+
+            if (res.ok) {
+                router.push('/?logout-successful=true');
+            } else {
+                console.error('Logout failed');
+            }
+        } catch (error) {
+            console.error('An error occurred during logout:', error);
+        }
+    };
+
 
     const [isOpen, setIsOpen] = useState(sidebarStatus);
 
@@ -171,8 +217,8 @@ export default function SideBar({user, sidebarStatus}) {
                     </div>
 
                     <div className={`${!isOpen ? "hidden!" : "flex!"} gap-2`}>
-                        <IconButton Icon={LogOut} href={"/"}/>
-                        <IconButton Icon={Pencil} href={"/profile"}/>
+                        <IconButton Icon={LogOut} eventOnClick={handleLogout}/>
+                        <IconLinkButton Icon={Pencil} href={"/dashboard/profile"}/>
                     </div>
 
                 </div>

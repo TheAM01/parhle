@@ -72,7 +72,7 @@ export default function Navigation({}) {
             </div>
 
             {open && (
-                <div className="flex-col sm:hidden top-11 absolute w-full bg-black text-white border-solid border-border border-b border-border-color z-10">
+                <div className="flex-col sm:hidden top-11 absolute w-full bg-black text-white border-solid border-border border-b border-border-color z-10" onClick={() => setOpen(false)}>
                     {navigationItems}
                     {button}
                 </div>
@@ -80,27 +80,4 @@ export default function Navigation({}) {
 
         </div>
     )
-}
-
-
-function AuthButton({ session }) {
-    const [button, setButton] = useState(<Spinner />);
-
-    useEffect(() => {
-        if (!session) {
-            setButton(
-                <LinkButton href="/user/login">
-                    <LogIn size={16} /> Join Now
-                </LinkButton>
-            );
-        } else {
-            setButton(
-                <LinkButton href="/dashboard">
-                    <LayoutDashboard size={16} /> Dashboard
-                </LinkButton>
-            );
-        }
-    }, [session]); // Add session as a dependency
-
-    return button;
 }

@@ -2,6 +2,7 @@
 import db from "@/lib/database";
 import bcrypt from "bcrypt";
 import { NextResponse } from "next/server";
+import {User} from "@/components/utility";
 
 export async function POST(req) {
     try {
@@ -27,7 +28,8 @@ export async function POST(req) {
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
-        await db.collection("users").insertOne({ fullName, username, email, password: hashedPassword, university, semester, course, avatarImg: `https://ui-avatars.com/api/?background=000&color=fff&name=${fullName.replaceAll(" ", "+")}` });
+        const createdUser = new User(fullName, username, email, hashedPassword, university, semester, course, "student")
+        await db.collection("users").insertOne(createdUser);
 
         return NextResponse.json({ success: true, message: "User registered successfully", user: username }, { status: 201 });
     } catch (error) {

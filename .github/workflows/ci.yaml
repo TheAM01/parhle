@@ -22,8 +22,8 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run tests
-        run: echo 'No tests yet
+#      - name: Run tests
+#        run: echo 'No tests yet
         # If you don't have tests yet, you can comment out this step or replace with "echo 'No tests yet'"
 
       - name: Build project

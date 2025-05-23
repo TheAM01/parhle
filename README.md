@@ -1,11 +1,11 @@
 # Parhle
-![Build Status](https://img.shields.io/github/actions/workflow/status/TheAM01/parhle/ci.yml?branch=main)
-
+![Build Status](https://img.shields.io/github/actions/workflow/status/TheAM01/parhle/ci.yaml?branch=main)
+![GitHub Workflow Status](https://github.com/TheAM01/parhle/actions/workflows/ci.yaml/badge.svg)
 ![Vercel](https://vercelbadge.vercel.app/api/theam01/parhle)  
-[🚀 Live Site](https://parhle.mueed.xyz)
+![Chat](https://img.shields.io/discord/866452029948821537)
+![GitHub Tag](https://img.shields.io/github/v/tag/TheAM01/parhle)
 
-
-
+[![Deploy](https://img.shields.io/badge/Live%20Site-parhle.mueed.xyz-0C7DFF?style=for-the-badge&logo=vercel&logoColor=white)](https://parhle.mueed.xyz)
 **Knowledge Shared is Power Multiplied**
 
 Parhle is a collaborative educational platform designed to connect students and peers, providing easy access to curated study materials and resources. Our mission is to elevate your academic journey by breaking down barriers and making knowledge accessible to all.

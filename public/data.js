@@ -19,7 +19,7 @@ export const quotes = [
     {
         quote:
             "I love how this site connects me with students from around the world. It's expanded my perspective and improved my learning experience.",
-        author: "Anonymous",
+        author: "M. Abdullah, UBIT",
     },
 
 ];

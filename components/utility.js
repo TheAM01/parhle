@@ -26,6 +26,7 @@ export class User {
             books: [],
             channels: [],
             requests: [],
+            count: 0,
         };
         this.academicDetails = {
             university,

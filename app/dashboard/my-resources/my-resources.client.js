@@ -1,14 +1,15 @@
 "use client";
 
 import {useEffect, useState} from "react";
-import {Search, Filter, BookOpen, Heart, Calendar, University, User} from "lucide-react";
+import {Search, Filter, BookOpen, Heart, Calendar, University, User, FileText, SquareCheck} from "lucide-react";
 import {motion} from "framer-motion";
 // import {notesData} from "@/public/data";
 import Input from "@/components/ui/input";
 import Spinner from "@/components/ui/spinner";
+import SideBar from "@/components/ui/sidebar";
 
 
-export default function Resources() {
+export default function Resources({user, sidebarStatus}) {
 
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedResource, setSelectedResource] = useState("All");
@@ -17,12 +18,13 @@ export default function Resources() {
     const [uniqueSubjects, setUniqueSubjects] = useState([])
 
     useEffect(() => {
+        // return console.log(user.username)
 
         async function fetchData() {
 
             try {
 
-                const response = await fetch("/api/resource/all");
+                const response = await fetch(`/api/resource/user/${user.username}`);
                 const result = await response.json();
                 const sorted = result.reverse()
                 setNotesData(sorted);
@@ -51,12 +53,14 @@ export default function Resources() {
     );
 
 
-
-
     return (
-        <div className="flex-col min-h-screen texture-mosaic text-white pt-10 sm:pt-20 bg-black items-center ">
-            <div className="w-full md:w-4/5 flex-col p-3">
-                <div className="font-bold text-4xl mb-5 md:mb-10">Explore Resources</div>
+        <div className={"w-screen bg-black flex-row text-white min-h-screen pt-8 lg:pt-0 texture-mosaic"}>
+
+            <SideBar user={user} sidebarStatus={sidebarStatus}/>
+
+            <div className="flex-col w-full md:w-4/5 lg:w-3/5 p-4 lg:p-10 mx-auto">
+
+                <div className="font-bold text-4xl mb-5 md:mb-10">My Resources</div>
                 <div className="text-xl mb-5 md:mb-10">Click on card to open resource</div>
 
                 {/* Search and filter */}
@@ -97,7 +101,7 @@ export default function Resources() {
 
 
 
-                <div className={`${loading ? "justify-center pt-10" : "grid! grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"} mt-2`}>
+                <div className={`${loading ? "justify-center pt-10" : "grid! grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3"} mt-2`}>
                     {(!loading ? filteredNotes.map((note, index) => (
                         <motion.a
                             target="_blank"
@@ -114,8 +118,6 @@ export default function Resources() {
                                 <div className={"text-xl font-semibold"}>{note.title}</div>
                                 <div className={"text-gray-400 text-sm"}><Heart size={14} className={"mr-1"}/> {note.likes ? note.likes : "2"}</div>
                             </div>
-
-                            <span className="text-gray-dark text-xs mb-4 hover:underline">{note.author}</span>
 
                             <div className={"flex-col mt-4"}>
 
@@ -144,10 +146,15 @@ export default function Resources() {
                                     </div>
                                 </div>
                             </div>
+                            <div className="w-full border-b border-border-color mt-2 mb-2"></div>
+                            <a href={`/dashboard/resources/edit/${note._id}`} className=""></a>
                         </motion.a>
                     )) : <Spinner/>)}
                 </div>
+
+
             </div>
+
         </div>
     )
 }

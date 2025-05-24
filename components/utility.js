@@ -40,6 +40,6 @@ export class User {
         }
         this.createdAt = Date.now()
         this.isVerified = false;
-
+        this.receivedLikes = 0;
     }
 }

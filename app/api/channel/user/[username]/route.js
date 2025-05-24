@@ -5,7 +5,7 @@ export async function GET(_, { params }) {
     const { username } = await params;
 
     try {
-        const resources = await db.collection("resources").find({ author: username }).toArray();
+        const resources = await db.collection("channels").find({ author: username }).toArray();
         return NextResponse.json(resources, { status: 200 });
     } catch (error) {
         console.error("Error fetching user resources:", error);

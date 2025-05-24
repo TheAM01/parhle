@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
     try {
-        const collection = db.collection("books");
+        const collection = db.collection("requests");
         const allResources = await collection.find({}).toArray();
         return NextResponse.json(allResources);
     } catch (error) {

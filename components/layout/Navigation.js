@@ -3,9 +3,9 @@
 import {useCallback, useEffect, useState} from "react";
 
 import Link from "next/link";
-import {LinkButton} from "@/components/ui/button";
+import {LinkButton} from "@/components/ui/Buttons";
 import {Menu, LayoutDashboard, LogIn} from "lucide-react";
-import Spinner from "@/components/ui/spinner";
+import Spinner from "@/components/ui/Spinner";
 
 export default function Navigation({}) {
 

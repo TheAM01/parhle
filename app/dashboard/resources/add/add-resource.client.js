@@ -1,10 +1,9 @@
 "use client";
 
-// import Input from "@/components/ui/input";
+
 import {Upload} from "lucide-react";
 import {useState} from "react";
-import SideBar from "@/components/ui/sidebar";
-import {ScreenSizeGetter} from "@/components/utility";
+import Sidebar from "@/components/layout/Sidebar";
 
 export default function AddResource({user, sidebarStatus}) {
 
@@ -57,7 +56,7 @@ export default function AddResource({user, sidebarStatus}) {
     return (
         <div className={"w-screen bg-black flex-row text-white min-h-screen pt-8 lg:pt-0 texture-mosaic"}>
 
-            <SideBar user={user} sidebarStatus={sidebarStatus}/>
+            <Sidebar user={user} sidebarStatus={sidebarStatus}/>
             <div className="flex-col w-full lg:mx-30 p-4 lg:p-10">
 
                 <div className="text-4xl mb-3 font-bold">

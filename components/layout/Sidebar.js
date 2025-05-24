@@ -21,11 +21,11 @@ import {
     User
 } from "lucide-react";
 import {usePathname, useRouter} from "next/navigation";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import Cookies from "js-cookie";
-import {IconButton, IconLinkButton} from "@/components/ui/button";
+import {IconButton, IconLinkButton} from "@/components/ui/Buttons";
 
-export default function SideBar({user, sidebarStatus}) {
+export default function Sidebar({user, sidebarStatus}) {
     const pathname = usePathname();
     const router = useRouter();
 
@@ -50,12 +50,12 @@ export default function SideBar({user, sidebarStatus}) {
             items: [
                 {
                     title: "Add Resources",
-                    href: "/dashboard/add-resource",
+                    href: "/dashboard/resources/add",
                     icon: FilePlus
                 },
                 {
                     title: "My Resources",
-                    href: "/dashboard/my-resources",
+                    href: "/dashboard/resources/my",
                     icon: File
                 },
                 {
@@ -70,12 +70,12 @@ export default function SideBar({user, sidebarStatus}) {
             items: [
                 {
                     title: "Add Books",
-                    href: "/dashboard/add-book",
+                    href: "/dashboard/books/add",
                     icon: BookPlus
                 },
                 {
                     title: "My Books",
-                    href: "/dashboard/my-books",
+                    href: "/dashboard/books/my",
                     icon: BookOpen
                 },
                 {
@@ -90,12 +90,12 @@ export default function SideBar({user, sidebarStatus}) {
             items: [
                 {
                     title: "Add Channels",
-                    href: "/dashboard/add-channel",
+                    href: "/dashboard/channels/add",
                     icon: SquarePlus
                 },
                 {
                     title: "My Channels",
-                    href: "/dashboard/my-channels",
+                    href: "/dashboard/channels/my",
                     icon: ListVideo
                 },
                 {
@@ -120,7 +120,7 @@ export default function SideBar({user, sidebarStatus}) {
                 },
                 {
                     title: "All Requests",
-                    href: "/requests",
+                    href: "/dashboard/requests/all",
                     icon: ListTodo
                 }
             ]

@@ -4,25 +4,27 @@ import { NextResponse } from "next/server";
 
 export async function POST(req) {
     try {
-        const { title, subject, semester, resourceType, priority, description } = await req.json();
+        const { title, subject, university,  semester, resourceType, author, priority, description } = await req.json();
 
-        if (!title || !subject || !semester || !resourceType || !priority || !description) {
+        if (!title || !subject || !university || !semester || !resourceType || !author || !priority || !description) {
             return NextResponse.json({ success: false, message: "Missing required fields" }, { status: 400 });
         }
 
         const collection = db.collection("requests");
 
-        const newResource = {
+        const newRequest = {
             title,
             subject,
+            university,
             semester,
             resourceType,
+            author,
             priority,
             description,
             createdAt: new Date(),
         };
-
-        const result = await collection.insertOne(newResource);
+        // return console.log(newRequest)
+        const result = await collection.insertOne(newRequest);
 
         return NextResponse.json({ success: true, message: "Request added successfully", insertedId: result.insertedId }, { status: 201 });
     } catch (error) {

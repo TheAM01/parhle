@@ -3,9 +3,10 @@
 import {useEffect, useState} from "react";
 import {Search, Filter, BookOpen, Heart, Calendar, University, User} from "lucide-react";
 import {motion} from "framer-motion";
-import Input from "@/components/ui/input";
+import {Input} from "@/components/ui/Inputs";
 import axios from "axios";
-import Spinner from "@/components/ui/spinner";
+import Spinner from "@/components/ui/Spinner";
+import {HorizontalRule} from "@/components/ui/HorizontalRule";
 
 
 export default function Resources() {
@@ -147,7 +148,7 @@ export default function Resources() {
                                     </div>
                                 </div>
 
-                                <div className="w-full border-b border-border-color mt-2 mb-2"></div>
+                                <HorizontalRule/>
 
                                 <div className="text-sm font-light items-center text-gray-dark ">
                                         {channel.description}

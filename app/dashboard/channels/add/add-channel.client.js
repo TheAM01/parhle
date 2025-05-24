@@ -2,9 +2,9 @@
 
 import {Upload, Check, X} from "lucide-react";
 import {useState} from "react";
-import SideBar from "@/components/ui/sidebar";
+import Sidebar from "@/components/layout/Sidebar";
 import axios from "axios";
-import StatusToast from "@/components/ui/status-toast";
+import StatusToast from "@/components/ui/StatusToast";
 
 export default function AddChannel({user, sidebarStatus}) {
 
@@ -87,7 +87,7 @@ export default function AddChannel({user, sidebarStatus}) {
     return (
         <div className={"w-screen bg-black flex-row text-white min-h-screen pt-8 lg:pt-0 texture-mosaic"}>
 
-            <SideBar user={user} sidebarStatus={sidebarStatus}/>
+            <Sidebar user={user} sidebarStatus={sidebarStatus}/>
             <div className="flex-col w-full md:w-4/5 lg:w-3/5 xl:w-2/5  p-4 lg:p-10 mx-auto">
 
                 <div className="text-4xl mb-3 font-bold">

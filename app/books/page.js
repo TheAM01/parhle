@@ -3,9 +3,8 @@
 import {useEffect, useState} from "react";
 import {Search, Filter, BookOpen, Heart, Calendar, University, User} from "lucide-react";
 import {motion} from "framer-motion";
-// import {notesData} from "@/public/data";
-import Input from "@/components/ui/input";
-import Spinner from "@/components/ui/spinner";
+import {Input} from "@/components/ui/Inputs";
+import Spinner from "@/components/ui/Spinner";
 
 
 export default function Resources() {

@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export function LinkButton({href, children}) {
     return (
-        <Link href={href} className={"flex items-center leading-none px-3.5 py-2.5 capitalize bg-white text-black sm:text-gray-dark duration-100 text-sm font-semibold no-underline hover:scale-105 hover:text-black transition-transform"}>{children}</Link>
+        <Link href={href} className={"flex items-center leading-none px-3.5 py-2.5 capitalize bg-white text-black sm:text-gray-dark duration-100 text-sm font-semibold no-underline hover:scale-105 hover:text-black transition-transform gap-2"}>{children}</Link>
     )
 }
 
@@ -27,11 +27,4 @@ export function IconButton({eventOnClick, Icon}) {
 }
 
 
-export function LoginButton() {
-  return <Button onClick={() => {}}>Sign In</Button>
-}
-
-export function SignOutButton() {
-    return <Button onClick={() => {}}>Sign Out</Button>
-}
 

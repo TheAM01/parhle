@@ -7,7 +7,6 @@
 
 [![Deploy](https://img.shields.io/badge/Live%20Site-parhle.mueed.xyz-0C7DFF?style=for-the-badge&logo=vercel&logoColor=white)](https://parhle.mueed.xyz)
 
-
 **Knowledge Shared is Power Multiplied**
 
 Parhle is a collaborative educational platform designed to connect students and peers, providing easy access to curated study materials and resources. Our mission is to elevate your academic journey by breaking down barriers and making knowledge accessible to all.
@@ -35,8 +34,11 @@ Whether you're sharing notes, discovering new study content, or engaging with yo
 - Sidebar retains its open/close state even after page refreshes or revisits.
 - Expanded Sign Up form with Name, Confirm Password, University, Semester, and Course fields to better capture user info.
 - Added avatar support in user profiles to enhance personalization.
-- Updated user schema to support new profile fields and avatars.
 - Introduced a dedicated Profile page for users to view and edit their details.
+- Dashboard landing page successfully developed.
+- "My ..." pages successfully developed.
+- Successfully integrated cookies for saving sidebar's state.
+- Successfully built page to list requests.
 
 **Improvements & Fixes:**
 - Fixed `SideBarLink` text wrapping issues on smaller screens to improve mobile responsiveness.
@@ -48,7 +50,7 @@ Whether you're sharing notes, discovering new study content, or engaging with yo
 
 ## Getting Started
 
-*(Optional section you can fill out later with install or usage instructions)*
+*Coming soon...*
 
 ---
 
@@ -60,4 +62,4 @@ We welcome contributions! Feel free to open issues or submit pull requests to im
 
 ## Contact
 
-For feedback or support, please contact: [your email or contact info here]
+For feedback or support, please contact: *coming soon...*

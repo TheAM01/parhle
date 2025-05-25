@@ -41,6 +41,8 @@ Whether you're sharing notes, discovering new study content, or engaging with yo
 - Successfully built page to list requests.
 
 **Improvements & Fixes:**
+- Signup now has `<select>` instead of a string input.
+- Added components for commonly used JSX.
 - Fixed `SideBarLink` text wrapping issues on smaller screens to improve mobile responsiveness.
 - Added a minimal scrollbar for a cleaner, less intrusive UI experience.
 - Addressed minor bugs and improved overall security.

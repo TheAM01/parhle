@@ -7,6 +7,7 @@ import {Input} from "@/components/ui/Inputs";
 import axios from "axios";
 import Spinner from "@/components/ui/Spinner";
 import {HorizontalRule} from "@/components/ui/HorizontalRule";
+import {DashboardWorkspace} from "@/components/ui/Structure";
 
 
 export default function Resources() {
@@ -66,12 +67,10 @@ export default function Resources() {
 
     return (
         <div className="flex-col min-h-screen texture-mosaic text-white pt-10 sm:pt-20 bg-black items-center ">
-            <div className="w-full md:w-4/5 flex-col p-3">
+            <DashboardWorkspace>
 
                 <div className="font-bold text-4xl mb-3">Explore Channels</div>
                 <div className="text-sm text-gray-dark mb-6">Browse YouTube channels for lectures, guides and other miscellaneous videos for all subjects</div>
-
-                {/* Search and filter */}
 
                 <div className="mb-5 flex-col lg:flex-row">
 
@@ -106,8 +105,6 @@ export default function Resources() {
                     </div>
 
                 </div>
-
-
 
                 <div className={`${loading ? "justify-center pt-10" : "grid! grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"} mt-2`}>
                     {(!loading ? filteredNotes.map((channel, index) => (
@@ -157,7 +154,8 @@ export default function Resources() {
                         </motion.a>
                     )) : <Spinner/>)}
                 </div>
-            </div>
+
+            </DashboardWorkspace>
         </div>
     )
 }

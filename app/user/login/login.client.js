@@ -55,7 +55,7 @@ export default function LoginClient() {
                     onClick={handleLogin}
                     className={"flex bg-white text-black text-sm items-center justify-center p-2 font-semibold text-center mt-4 cursor-pointer duration-200 hover:shadow-lg shadow-white/20"}
                 >Login</button>
-                <div className="text-base text-gray-dark font-semibold justify-center mt-5">Don't have an account? <Link href={"/user/signup"}>Sign up</Link></div>
+                <div className="text-base text-gray-dark font-semibold justify-center mt-5 gap-1">Don't have an account? <Link href={"/user/signup"} className={"hover:text-white"}>Sign up</Link></div>
             </div>
         </div>
     )

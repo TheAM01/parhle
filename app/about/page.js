@@ -1,11 +1,13 @@
 "use client";
 
+import {DashboardWorkspace} from "@/components/ui/Structure";
+
 export default function About() {
 
     return (
         <div className={"w-full h-full bg-black items-center flex-col text-white pt-10 sm:pt-30 min-h-screen texture-mosaic justify-center"}>
 
-            <div className="flex-col bg-gray-900 w-full lg:w-4/5 p-4 md:p-10 border-2 border-border-color">
+            <DashboardWorkspace extraClasses={"bg-gray-900 border border-gray-800"}>
 
                 <div className="text-4xl mb-6 font-bold">
                     About <span className={"font-logo mx-2 text-gray-medium font-light!"}>Parhle</span>:
@@ -35,7 +37,7 @@ export default function About() {
                     </p>
                 </div>
 
-            </div>
+            </DashboardWorkspace>
 
         </div>
     )

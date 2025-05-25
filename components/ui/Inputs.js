@@ -19,7 +19,7 @@ export function Input({type, placeholder, value, onChange, icon, required=false}
 
 export function RadioGroup({ options, name, value, onChange, extraClasses }) {
     return (
-        <div className={`${extraClasses} grid grid-cols-1 sm:grid-cols-3 gap-4`}>
+        <div className={`${extraClasses} grid grid-cols-1 sm:grid-cols-3 gap-4 flex-wrap w-full`}>
             {options.map((item, i) => (
                 <div key={i} className="flex items-center space-x-2">
                     <input

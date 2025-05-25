@@ -1,8 +1,10 @@
 "use client";
 
-import {Upload} from "lucide-react";
+import {Check, Upload} from "lucide-react";
 import {useState} from "react";
 import Sidebar from "@/components/layout/Sidebar";
+import {DashboardScrollable, DashboardWorkspace, PageTitle} from "@/components/ui/Structure";
+import StatusToast from "@/components/ui/StatusToast";
 
 export default function AddBook({user, sidebarStatus}) {
     const [formData, setFormData] = useState({
@@ -14,6 +16,7 @@ export default function AddBook({user, sidebarStatus}) {
         university: "University of Karachi",
         bookUrl: "",
     });
+    const [toast, setToast] = useState(null);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -31,7 +34,7 @@ export default function AddBook({user, sidebarStatus}) {
             body: JSON.stringify({ title, subject, semester, bookAuthor, author, university, bookUrl }),
         });
 
-        const result = await response.json();
+        const status = response.status;
 
         setFormData({
             title: "",
@@ -42,22 +45,22 @@ export default function AddBook({user, sidebarStatus}) {
             university: "University of Karachi",
             bookUrl: "",
         })
+        setToast({ message: 'Upload successful!', icon: Check });
+        return status;
     };
 
     return (
         <div className={"w-screen bg-black flex-row text-white min-h-screen pt-8 lg:pt-0 texture-mosaic"}>
 
             <Sidebar user={user} sidebarStatus={sidebarStatus}/>
-            <div className="w-full h-screen overflow-y-scroll">
+            <DashboardScrollable>
 
 
-                <div className="flex-col w-full lg:mx-30 p-4 lg:p-10">
-
-                    <div className="text-4xl mb-3 font-bold">
-                        Add Book
-                    </div>
-
-                    <div className="text-sm text-gray-dark mb-6">Index New Books</div>
+                <DashboardWorkspace>
+                    <PageTitle
+                        heading={"Add Book"}
+                        description={"Index New Books"}
+                    />
 
                     <div className="flex-col bg-gray-900 border border-border-color p-5 w-full">
 
@@ -159,8 +162,16 @@ export default function AddBook({user, sidebarStatus}) {
                         </button>
 
                     </div>
-                </div>
-            </div>
+                    {toast && (
+                        <StatusToast
+                            message={toast.message}
+                            type={toast.type}
+                            icon={toast.icon}
+                            onClose={() => setToast(null)}
+                        />
+                    )}
+                </DashboardWorkspace>
+            </DashboardScrollable>
         </div>
     )
 

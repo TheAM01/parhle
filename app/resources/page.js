@@ -5,6 +5,9 @@ import {Search, Filter, BookOpen, Heart, Calendar, University, User} from "lucid
 import {motion} from "framer-motion";
 import {Input} from "@/components/ui/Inputs";
 import Spinner from "@/components/ui/Spinner";
+import {DashboardWorkspace} from "@/components/ui/Structure";
+import {HorizontalRule} from "@/components/ui/HorizontalRule";
+import {VisitResourceButton} from "@/components/ui/Buttons";
 
 
 export default function Resources() {
@@ -54,7 +57,7 @@ export default function Resources() {
 
     return (
         <div className="flex-col min-h-screen texture-mosaic text-white pt-10 sm:pt-20 bg-black items-center ">
-            <div className="w-full md:w-4/5 flex-col p-3">
+            <DashboardWorkspace>
                 <div className="font-bold text-4xl mb-5 md:mb-10">Explore Resources</div>
                 <div className="text-xl mb-5 md:mb-10">Click on card to open resource</div>
 
@@ -96,17 +99,15 @@ export default function Resources() {
 
 
 
-                <div className={`${loading ? "justify-center pt-10" : "grid! grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"} mt-2`}>
+                <div className={`${loading ? "justify-center pt-10" : "grid! grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3"} mt-2`}>
                     {(!loading ? filteredNotes.map((note, index) => (
-                        <motion.a
-                            target="_blank"
-                            rel="noopener noreferrer"
+                        <motion.div
                             href={note.resourceUrl}
                             key={note._id}
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.3, delay: index * 0.1 }}
-                            className="flex-col justify-between bg-gray-900 p-6 border border-border-color hover:border-gray-700 transition-colors hover:cursor-pointer"
+                            className="flex-col justify-between bg-gray-900 p-4 border border-border-color hover:border-gray-700 transition-colors hover:cursor-pointer"
                         >
 
                             <div className={"justify-between flex-1 items-center"}>
@@ -120,33 +121,35 @@ export default function Resources() {
 
                                 <div className="text-base font-light items-center text-gray-dark mb-3">
                                     <BookOpen size={16}/>
-                                    <div className="flex-col ml-2 text-gray-light text-sm">
+                                    <div className="flex-col ml-2 text-white text-sm">
                                         {note.subject}
                                     </div>
                                 </div>
                                 <div className="text-base font-light items-center text-gray-dark mb-3">
                                     <Calendar size={16}/>
-                                    <div className="flex-col ml-2 text-gray-light text-sm">
+                                    <div className="flex-col ml-2 text-white text-sm">
                                         {note.semester}
                                     </div>
                                 </div>
                                 <div className="text-base font-light items-center text-gray-dark mb-3">
                                     <User size={16}/>
-                                    <div className="flex-col ml-2 text-gray-light text-sm">
+                                    <div className="flex-col ml-2 text-white text-sm">
                                         {note.teacher}
                                     </div>
                                 </div>
                                 <div className="text-base font-light items-center text-gray-dark">
                                     <University size={16}/>
-                                    <div className="flex-col ml-2 text-gray-light text-sm">
+                                    <div className="flex-col ml-2 text-white text-sm">
                                         {note.university}
                                     </div>
                                 </div>
+                                <HorizontalRule/>
+                                <VisitResourceButton href={note.resourceUrl}>View Resource</VisitResourceButton>
                             </div>
-                        </motion.a>
+                        </motion.div>
                     )) : <Spinner/>)}
                 </div>
-            </div>
+            </DashboardWorkspace>
         </div>
     )
 }

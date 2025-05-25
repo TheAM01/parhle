@@ -228,4 +228,27 @@ export const notesData = [
         likes: 156,
         href: "#"
     },
-]
+];
+
+
+export const universityData = {
+    "uok": {
+        name: "University of Karachi",
+        programs: [
+            {id: "se", name: "Software Engineering"},
+            {id: "cs", name: "Computer Science"},
+        ]
+    },
+    "ned": {
+        name: "NED University of Engineering & Technology",
+        programs: [
+            {id: "cise", name: "Computer & Information Systems Engineering"},
+            {id: "se", name: "Software Engineering"},
+            {id: "csit", name: "Computer Science & Information Technology"},
+            {id: "ai", name: "Artificial Intelligence"},
+            {id: "ds", name: "Data Sciences"},
+            {id: "cs0", name: "Cyber Security"},
+            {id: "ga", name: "Gaming & Animations"},
+        ],
+    }
+}

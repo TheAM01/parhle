@@ -6,9 +6,9 @@ import {User} from "@/components/utility";
 
 export async function POST(req) {
     try {
-        const { fullName, username, email, password, confirmPassword, university, semester, course } = await req.json();
+        const { fullName, username, email, password, confirmPassword, university, semester, degree, course } = await req.json();
 
-        if ( !fullName || !username || !email || !password || !confirmPassword || !university || !semester || !course ) {
+        if ( !fullName || !username || !email || !password || !confirmPassword || !university || !semester || !degree || !course ) {
             return NextResponse.json({ success: false, message: "Missing parameters" }, { status: 400 });
         }
 
@@ -19,16 +19,16 @@ export async function POST(req) {
 
         const existingEmail = await db.collection("users").findOne({ email });
         if (existingEmail) {
-            return NextResponse.json({ success: false, message: "User already exists" }, { status: 400 });
+            return NextResponse.json({ success: false, message: "Email already exists" }, { status: 400 });
         }
 
         const existingUser = await db.collection("users").findOne({ username });
         if (existingUser) {
-            return NextResponse.json({ success: false, message: "User already exists" }, { status: 400 });
+            return NextResponse.json({ success: false, message: "Username already exists" }, { status: 400 });
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
-        const createdUser = new User(fullName, username, email, hashedPassword, university, semester, course, "student")
+        const createdUser = new User(fullName, username, email, hashedPassword, university, semester, degree, course, "student")
         await db.collection("users").insertOne(createdUser);
 
         return NextResponse.json({ success: true, message: "User registered successfully", user: username }, { status: 201 });

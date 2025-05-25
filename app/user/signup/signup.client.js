@@ -1,6 +1,10 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import {HorizontalRule} from "@/components/ui/HorizontalRule";
+import StatusToast from "@/components/ui/StatusToast";
+import Spinner from "@/components/ui/Spinner";
+import { universityData} from "@/public/data";
 
 export default function SignupClient() {
     const [formData, setFormData] = useState({
@@ -11,14 +15,21 @@ export default function SignupClient() {
         confirmPassword: "",
         university: "",
         semester: "",
+        degree: "",
         course: ""
     });
     const [error, setError] = useState("")
+    const [toast, setToast] = useState(null);
+    const [loading, setLoading] = useState(false);
+
     const router = useRouter();
 
     const handleSignup = async () => {
 
+        setLoading(true)
+
         if (Object.values(formData).some((val) => val.trim() === "")) {
+            setLoading(false)
             return setError("All fields are required.");
         }
 
@@ -29,20 +40,21 @@ export default function SignupClient() {
             body: JSON.stringify(formData),
         });
 
-        // const data = await res.json();
+        const data = await res.json();
 
         if (res.ok) {
             router.push("/user/login"); // or wherever you want
         } else {
-            if (res.status === 400) {
-                console.log("USer already exists")
-            }
+            setError(data.message)
+            setLoading(false)
         }
     };
 
     const handleChange = (e) => {
         console.log(formData)
         const { name, value } = e.target;
+
+        // Generic update
         setFormData((prev) => ({ ...prev, [name]: value }));
 
         if (name === "username") {
@@ -66,8 +78,15 @@ export default function SignupClient() {
         }
 
         if (name === "password") {
-            const same = formData.confirmPassword === value;
-            setError(same ? "" : "Passwords do not match");
+            let error = "";
+
+            if (value.length < 8) {
+                error = "Password must be at least 8 characters long";
+            } else if (formData.confirmPassword && formData.confirmPassword !== value) {
+                error = "Passwords do not match";
+            }
+
+            setError(error);
 
             setFormData((prev) => ({
                 ...prev,
@@ -75,9 +94,8 @@ export default function SignupClient() {
             }));
             return;
         }
+    };
 
-
-    }
 
     return (
         <div className="flex flex-col min-h-screen items-center justify-center bg-black text-white pt-14 sm:pt-24">
@@ -90,7 +108,7 @@ export default function SignupClient() {
                     type="text"
                     value={formData.fullName}
                     onChange={handleChange}
-                    className="bg-gray-800 p-2 border border-gray-700 mb-4"
+                    className="bg-gray-800 p-2 border border-gray-700 mb-4 text-sm"
                 />
 
                 <label className="text-sm font-semibold mb-1">Username</label>
@@ -99,7 +117,7 @@ export default function SignupClient() {
                     type="text"
                     value={formData.username}
                     onChange={handleChange}
-                    className="bg-gray-800 p-2 border border-gray-700 mb-4"
+                    className="bg-gray-800 p-2 border border-gray-700 mb-4 text-sm"
                 />
 
                 <label className="text-sm font-semibold mb-1">Email</label>
@@ -108,7 +126,7 @@ export default function SignupClient() {
                     type="email"
                     value={formData.email}
                     onChange={handleChange}
-                    className="bg-gray-800 p-2 border border-gray-700 mb-4"
+                    className="bg-gray-800 p-2 border border-gray-700 mb-4 text-sm"
                 />
 
                 <label className="text-sm font-semibold mb-1">Password</label>
@@ -117,7 +135,7 @@ export default function SignupClient() {
                     type="password"
                     value={formData.password}
                     onChange={handleChange}
-                    className="bg-gray-800 p-2 border border-gray-700 mb-4"
+                    className="bg-gray-800 p-2 border border-gray-700 mb-4 text-sm"
                 />
 
                 <label className="text-sm font-semibold mb-1">Confirm Password</label>
@@ -126,44 +144,102 @@ export default function SignupClient() {
                     type="password"
                     value={formData.confirmPassword}
                     onChange={handleChange}
-                    className="bg-gray-800 p-2 border border-gray-700 mb-4"
+                    className="bg-gray-800 p-2 border border-gray-700 mb-4 text-sm"
                 />
 
-                <div className="w-full border-b border-border-color mt-5 mb-2"></div>
+                <HorizontalRule/>
 
                 <label className="text-sm font-semibold mb-1">University</label>
-                <input
+                <select
                     name={"university"}
-                    type="text"
+                    className={"flex-1 flex border-gray-700 border bg-gray-800 text-white placeholder-gray-medium p-2 text-sm mb-4"}
                     value={formData.university}
+                    required={true}
                     onChange={handleChange}
-                    className="bg-gray-800 p-2 border border-gray-700 mb-4"
-                />
+                >
+                    <option value="" disabled={true}>Select a university...</option>
+                    {Object.keys(universityData).map((d, i) => (
+                        <option value={d} key={i+"x"}>{universityData[d].name}</option>
+                    ))}
+                    <option value={"other"}>Other</option>
+                </select>
 
                 <label className="text-sm font-semibold mb-1">Semester</label>
-                <input
+                <select
                     name={"semester"}
-                    type="text"
+                    className={"flex-1 flex border-gray-700 border bg-gray-800 text-white placeholder-gray-medium p-2 text-sm mb-4"}
                     value={formData.semester}
+                    required={true}
                     onChange={handleChange}
-                    className="bg-gray-800 p-2 border border-gray-700 mb-4"
-                />
+                >
+                    <option value="" disabled={true}>Select a semester...</option>
+                    <option value={"1"}>1</option>
+                    <option value={"2"}>2</option>
+                    <option value={"3"}>3</option>
+                    <option value={"4"}>4</option>
+                    <option value={"5"}>5</option>
+                    <option value={"6"}>6</option>
+                    <option value={"7"}>7</option>
+                    <option value={"8"}>8</option>
+                    <option value={"non-specific"}>Non-Specific</option>
+                </select>
+
+                <label className="text-sm font-semibold mb-1">Degree</label>
+                <select
+                    name={"degree"}
+                    className={"flex-1 flex border-gray-700 border bg-gray-800 text-white placeholder-gray-medium p-2 text-sm mb-4"}
+                    value={formData.degree}
+                    required={true}
+                    onChange={handleChange}
+                >
+                    <option value="" disabled={true}>Select a degree type...</option>
+                    <option value={"bs"}>Bachelor of Science</option>
+                    <option value={"be"}>Bachelor of Engineering</option>
+                    <option value={"other"}>Other</option>
+                    <option value={"non-specific"}>Non-Specific</option>
+                </select>
 
                 <label className="text-sm font-semibold mb-1">Course</label>
-                <input
+                <select
                     name={"course"}
-                    type="text"
+                    className={"flex-1 flex border-gray-700 border bg-gray-800 text-white placeholder-gray-medium p-2 text-sm mb-4"}
                     value={formData.course}
+                    required={true}
                     onChange={handleChange}
-                    className="bg-gray-800 p-2 border border-gray-700 mb-4"
-                />
-                {error && <div className="text-red-500 mb-4 text-sm">{error}</div>}
-                <button
-                    onClick={handleSignup}
-                    className="bg-white text-black p-2 font-semibold hover:shadow-lg shadow-white/20"
                 >
-                    Sign Up
-                </button>
+                    <option value="" disabled={true} selected={true}>Select a course...</option>
+                    {universityData[formData.university] && universityData[formData.university].programs.map((course, i) => (
+                        <option key={i} value={course.id}>{course.name}</option>
+                    ))}
+                    <option value={"other"}>Other</option>
+                    <option value={"non-specific"}>Non-Specific</option>
+                </select>
+
+                {error && <div className="text-red-500 mb-2 text-sm">{error}</div>}
+
+                <HorizontalRule/>
+
+                {loading ?
+                    <div className="justify-center">
+                        <Spinner/>
+                    </div>
+                    :
+                    <button
+                        onClick={!loading && handleSignup}
+                        className="bg-white text-black p-2 font-semibold hover:shadow-lg shadow-white/20"
+                    >
+                        Sign Up
+                    </button>
+                }
+
+                {toast && (
+                    <StatusToast
+                        message={toast.message}
+                        type={toast.type}
+                        icon={toast.icon}
+                        onClose={() => setToast(null)}
+                    />
+                )}
             </div>
         </div>
     );

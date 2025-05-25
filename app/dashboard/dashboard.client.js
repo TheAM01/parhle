@@ -1,24 +1,23 @@
 "use client";
 
+
 import Sidebar from "@/components/layout/Sidebar";
 import {FileText, Heart, SquareCheck} from "lucide-react";
 import {DashboardNotification} from "@/components/ui/Notification";
 import {HorizontalRule} from "@/components/ui/HorizontalRule";
+import {DashboardScrollable, DashboardWorkspace, PageTitle} from "@/components/ui/Structure";
+
 
 export default function DashboardClient({user, sidebarStatus}) {
     return (
         <div className={"w-screen bg-black flex-row text-white min-h-screen pt-8 lg:pt-0 texture-mosaic"}>
-
             <Sidebar user={user} sidebarStatus={sidebarStatus}/>
-            <div className="w-full h-screen overflow-y-scroll">
-
-                <div className="flex-col w-full md:w-4/5 lg:w-3/5 p-4 lg:p-10 mx-auto">
-
-                    <div className="text-4xl mb-3 font-bold">
-                        Dashboard - Home
-                    </div>
-
-                    <div className="text-sm text-gray-dark mb-6">Welcome back, {user.fullName}</div>
+            <DashboardScrollable>
+                <DashboardWorkspace>
+                    <PageTitle
+                        heading={"Dashboard - Home"}
+                        description={`Welcome back, ${user.fullName}`}
+                    />
 
                     <div className="flex-col justify-evenly gap-6 mb-6 sm:flex-row">
 
@@ -88,11 +87,17 @@ export default function DashboardClient({user, sidebarStatus}) {
                     </div>
 
                     <div className="flex-col bg-gray-900 border border-border-color p-5 w-full gap-2 mb-6">
-
                         <div className="text-2xl mb-1 font-bold justify-between w-full">
                             Dev Notifications
                         </div>
-
+                        <DashboardNotification
+                            sender={"System"}
+                            message={"Dropdowns added on SignUp page."}
+                        />
+                        <DashboardNotification
+                            sender={"System"}
+                            message={"Components incorporated in most pages."}
+                        />
                         <DashboardNotification
                             sender={"System"}
                             message={"Dashboard landing page successfully developed."}
@@ -129,14 +134,9 @@ export default function DashboardClient({user, sidebarStatus}) {
                             sender={"Requests"}
                             message={<>Your request has been fulfilled by <div className="text-gray-dark font-semibold">M. Abdullah (abdullah)</div>.</>}
                         />
-
                     </div>
-
-
-                </div>
-
-            </div>
-
+                </DashboardWorkspace>
+            </DashboardScrollable>
         </div>
     )
 }

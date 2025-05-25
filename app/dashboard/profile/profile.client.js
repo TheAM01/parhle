@@ -143,6 +143,9 @@ export default function AddBook({user, sidebarStatus}) {
                         <div className="text-sm font-semibold">Current Semester</div>
                         <div className="mb-3 text-gray-medium">{user.academicDetails?.semester}</div>
 
+                        <div className="text-sm font-semibold">Degree</div>
+                        <div className="mb-3 text-gray-medium">{user.academicDetails?.degree}</div>
+
                         <div className="text-sm font-semibold">University</div>
                         <div className="mb-3 text-gray-medium">{user.academicDetails?.university}</div>
                     </div>

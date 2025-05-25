@@ -6,6 +6,7 @@ import {motion} from "framer-motion";
 import {Input} from "@/components/ui/Inputs";
 import Spinner from "@/components/ui/Spinner";
 import Sidebar from "@/components/layout/Sidebar";
+import {DashboardScrollable, DashboardWorkspace, PageTitle} from "@/components/ui/Structure";
 
 
 export default function Resources({user, sidebarStatus}) {
@@ -60,12 +61,12 @@ export default function Resources({user, sidebarStatus}) {
         <div className="w-screen bg-black flex-row text-white min-h-screen pt-8 lg:pt-0 texture-mosaic">
             <Sidebar user={user} sidebarStatus={sidebarStatus}/>
 
-            <div className="w-full h-screen overflow-y-scroll">
-                <div className="flex-col w-full md:w-4/5 lg:w-3/5 p-4 lg:p-10 mx-auto">
-                    <div className="font-bold text-4xl mb-5">Pending Requests</div>
-                    <div className="text-sm text-gray-dark mb-5 md:mb-10">Resources requested by users that aren't available on the site currently</div>
-
-                    {/* Search and filter */}
+            <DashboardScrollable>
+                <DashboardWorkspace>
+                    <PageTitle
+                        heading={"Pending Requests"}
+                        description={"Resources requested by users that aren't available on the site currently"}
+                    />
 
                     <div className="mb-5 flex-col lg:flex-row">
 
@@ -100,9 +101,7 @@ export default function Resources({user, sidebarStatus}) {
                         </div>
 
                     </div>
-
-
-
+                    
                     <div className={`${loading ? "justify-center pt-10" : "grid! grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"} mt-2`}>
                         {(!loading ? filteredNotes.map((note, index) => (
                             <motion.div
@@ -154,8 +153,8 @@ export default function Resources({user, sidebarStatus}) {
                             </motion.div>
                         )) : <Spinner/>)}
                     </div>
-                </div>
-            </div>
+                </DashboardWorkspace>
+            </DashboardScrollable>
         </div>
     )
 }

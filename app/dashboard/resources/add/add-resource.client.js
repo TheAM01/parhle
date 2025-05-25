@@ -1,15 +1,16 @@
 "use client";
 
 
-import {Upload} from "lucide-react";
+import {Check, Upload} from "lucide-react";
 import {useState} from "react";
 import Sidebar from "@/components/layout/Sidebar";
+import {DashboardScrollable, DashboardWorkspace, PageTitle} from "@/components/ui/Structure";
+import StatusToast from "@/components/ui/StatusToast";
+
 
 export default function AddResource({user, sidebarStatus}) {
 
-    console.log("AddResource rendered");
-
-
+    const [toast, setToast] = useState(null);
     const [formData, setFormData] = useState({
         title: "",
         subject: "",
@@ -36,8 +37,7 @@ export default function AddResource({user, sidebarStatus}) {
             body: JSON.stringify({ title, subject, semester, teacher, author, university, resourceUrl }),
         });
 
-        const result = await response.json();
-        console.log(result);
+        const status = response.status;
 
         setFormData({
             title: "",
@@ -49,6 +49,9 @@ export default function AddResource({user, sidebarStatus}) {
             resourceUrl: "",
         });
 
+        setToast({ message: 'Upload successful!', icon: Check });
+
+        return status;
 
     };
 
@@ -57,15 +60,14 @@ export default function AddResource({user, sidebarStatus}) {
         <div className={"w-screen bg-black flex-row text-white min-h-screen pt-8 lg:pt-0 texture-mosaic"}>
 
             <Sidebar user={user} sidebarStatus={sidebarStatus}/>
-            <div className="flex-col w-full lg:mx-30 p-4 lg:p-10">
+            <DashboardScrollable>
+                <DashboardWorkspace>
+                    <PageTitle
+                        heading={"Add Resource"}
+                        description={"Index New Resources"}
+                    />
 
-                <div className="text-4xl mb-3 font-bold">
-                    Add Resource
-                </div>
-
-                <div className="text-sm text-gray-dark mb-6">Index New Resources</div>
-
-                <div className="flex-col bg-gray-900 border border-border-color p-5 w-full">
+                    <div className="flex-col bg-gray-900 border border-border-color p-5 w-full">
 
                     <div className="font-semibold text-2xl">Upload New Resource</div>
 
@@ -168,7 +170,16 @@ export default function AddResource({user, sidebarStatus}) {
                     </button>
 
                 </div>
-            </div>
+                    {toast && (
+                        <StatusToast
+                            message={toast.message}
+                            type={toast.type}
+                            icon={toast.icon}
+                            onClose={() => setToast(null)}
+                        />
+                    )}
+                </DashboardWorkspace>
+            </DashboardScrollable>
         </div>
     )
 }

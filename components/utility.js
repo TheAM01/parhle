@@ -1,3 +1,5 @@
+import {universityData} from "@/public/data";
+
 export function ScreenSizeGetter() {
     return (
         <div className="bg-white p-2 uppercase text-black font-bold duration-300 h-min">
@@ -12,7 +14,7 @@ export function ScreenSizeGetter() {
 }
 
 export class User {
-    constructor(fullName, username, email, password, university, semester, course, role) {
+    constructor(fullName, username, email, password, university, semester, degree, course, role) {
 
         this.fullName = fullName.trim();
         this.username = username.trim();
@@ -29,9 +31,10 @@ export class User {
             count: 0,
         };
         this.academicDetails = {
-            university,
-            semester,
-            course,
+            university: (universityData[university] ? universityData[university].name : "Other"),
+            semester: parseInt(semester),
+            degree: {"bs": "Bachelor of Science", "be": "Bachelor of Engineering"}[degree],
+            course: (universityData[university] ? universityData[university].programs.find(c => c.id === course).name : "Other"),
         }
         this.likedItems = {
             resources: [],

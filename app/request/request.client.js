@@ -1,9 +1,11 @@
 "use client";
 
-import {Send} from "lucide-react";
+import {Check, Send} from "lucide-react";
 import {useState} from "react";
 import {RadioGroup} from "@/components/ui/Inputs";
 import {HorizontalRule} from "@/components/ui/HorizontalRule";
+import {PageTitle} from "@/components/ui/Structure";
+import StatusToast from "@/components/ui/StatusToast";
 
 export default function RequestResource({user}) {
 
@@ -17,16 +19,15 @@ export default function RequestResource({user}) {
         priority: "",
         description: ""
     });
-
+    const [toast, setToast] = useState(null);
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
     const handleSubmit = async (event) => {
-        console.log(formData)
+
         event.preventDefault();
 
-        // Extract form data
         const { title, subject, university, semester, resourceType, author, priority, description } = formData;
 
         const response = await fetch("/api/request/new", {
@@ -35,8 +36,7 @@ export default function RequestResource({user}) {
             body: JSON.stringify({ title, subject, university, semester, resourceType, author, priority, description }),
         });
 
-        const result = await response.json();
-        console.log(result);
+        const status = response.status;
 
         setFormData({
             title: "",
@@ -47,7 +47,10 @@ export default function RequestResource({user}) {
             author: (user?.username || "anonymous"),
             priority: "",
             description: ""
-        })
+        });
+
+        setToast({ message: 'Request added successfully!', icon: Check });
+        return status;
     };
 
     return (
@@ -55,11 +58,10 @@ export default function RequestResource({user}) {
 
             <div className="flex-col w-full md:w-4/5 lg:w-3/5 xl:w-2/5 lg:mx-30 p-4 lg:p-10">
 
-                <div className="text-4xl mb-3 font-bold">
-                    Request a Resource
-                </div>
-
-                <div className="text-sm text-gray-dark mb-6">If you can’t find a resource you need, request it here! Our contributors will review your request and add it to the platform if possible. Please visit our guidelines for requesting a resource.</div>
+                <PageTitle
+                    heading={"Request a Resource"}
+                    description={"If you can’t find a resource you need, request it here! Our contributors will review your request and add it to the platform if possible. Please visit our guidelines for requesting a resource."}
+                />
 
                 <div className="flex-col bg-gray-900 border border-border-color p-5 w-full">
 
@@ -186,7 +188,6 @@ export default function RequestResource({user}) {
 
                 </div>
 
-
                 <div className="flex-col bg-gray-900 border border-border-color p-5 w-full mt-7">
                     <div className="text-2xl mb-2">How Resource Requests Work</div>
 
@@ -212,6 +213,15 @@ export default function RequestResource({user}) {
 
                 </div>
             </div>
+            {toast && (
+                <StatusToast
+                    marginTop={10}
+                    message={toast.message}
+                    type={toast.type}
+                    icon={toast.icon}
+                    onClose={() => setToast(null)}
+                />
+            )}
         </div>
     );
 }

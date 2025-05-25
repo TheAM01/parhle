@@ -10,7 +10,12 @@ export default async function AddBookPage() {
     const cookieStore = await cookies();
     let sidebarStatus = cookieStore.get('sidebar-status');
 
-    if (sidebarStatus !== undefined) sidebarStatus.value = sidebarStatus.value !== "false";
+
+    if (sidebarStatus !== undefined) {
+        sidebarStatus.value = sidebarStatus.value !== "false";
+    } else {
+        sidebarStatus = {value: null};
+    }
     if (!session.user) {
         return redirect('/user/login?login-first=true&redirect-to=dashboard%2Fprofile');
     }

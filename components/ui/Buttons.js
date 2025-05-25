@@ -8,6 +8,12 @@ export function LinkButton({href, children}) {
     )
 }
 
+export function VisitResourceButton({href, children}) {
+    return (
+        <Link href={href} target="_blank" rel="noopener noreferrer" className={"flex items-center leading-none p-3 justify-center capitalize bg-white text-black sm:text-gray-dark text-sm font-semibold no-underline duration-200! hover:text-black transition-transform gap-2"}>{children}</Link>
+    )
+}
+
 export function Button({children, onClick}) {
     return (
         <button onClick={onClick} className={"px-3.5 py-2.5 capitalize bg-white text-gray-dark duration-100 text-sm font-semibold no-underline border-0 hover:text-black hover:cursor-pointer"}>{children}</button>

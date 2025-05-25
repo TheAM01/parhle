@@ -5,6 +5,7 @@ import {Search, Filter, BookOpen, Heart, Calendar, University, User} from "lucid
 import {motion} from "framer-motion";
 import {Input} from "@/components/ui/Inputs";
 import Spinner from "@/components/ui/Spinner";
+import {DashboardWorkspace} from "@/components/ui/Structure";
 
 
 export default function Resources() {
@@ -53,7 +54,7 @@ export default function Resources() {
 
     return (
         <div className="flex-col min-h-screen texture-mosaic text-white pt-10 sm:pt-20 bg-black items-center ">
-            <div className="w-full md:w-4/5 flex-col p-3">
+            <DashboardWorkspace>
                 <div className="font-bold text-4xl mb-5 md:mb-10">Explore Books</div>
                 <div className="text-xl mb-5 md:mb-10">Click on card to open book in new tab</div>
 
@@ -146,7 +147,7 @@ export default function Resources() {
                         </motion.a>
                     )) : <Spinner/>)}
                 </div>
-            </div>
+            </DashboardWorkspace>
         </div>
     )
 }

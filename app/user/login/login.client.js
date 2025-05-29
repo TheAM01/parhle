@@ -10,7 +10,7 @@ export default function LoginClient() {
     const router = useRouter();
 
     const handleLogin = async () => {
-        const res = await fetch("/api/login", {
+        const res = await fetch("/api/user/login", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ username, password }),

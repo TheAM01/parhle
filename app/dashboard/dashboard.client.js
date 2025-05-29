@@ -19,7 +19,7 @@ export default function DashboardClient({user, sidebarStatus}) {
                         description={`Welcome back, ${user.fullName}`}
                     />
 
-                    <div className="flex-col justify-evenly gap-6 mb-6 sm:flex-row">
+                    <div className="flex-col justify-evenly gap-6 mb-6 sm:flex-row flex-wrap">
 
                         <div className="bg-gray-900 border border-gray-800 p-5 flex-1">
                             <div className="justify-between items-center w-full">
@@ -63,9 +63,9 @@ export default function DashboardClient({user, sidebarStatus}) {
                         <div className="text-gray-dark mb-3">These are features that will probably be incorporated in the next update.</div>
 
                         <ul className={"list-disc ml-5"}>
+                            <li className={"text-gray-medium mb-2"}>Notifications</li>
+                            <li className={"text-gray-medium mb-2"}>An announcements page.</li>
                             <li className={"text-gray-medium mb-2"}>Ability to Edit & Delete items on "My ... " pages.</li>
-                            <li className={"text-gray-medium mb-2"}>Ability to edit profile.</li>
-                            <li className={"text-gray-medium mb-2"}>StatusToast messages on every page.</li>
                         </ul>
 
                     </div>
@@ -74,10 +74,6 @@ export default function DashboardClient({user, sidebarStatus}) {
 
                         <div className="text-2xl mb-3 font-bold justify-between w-full">
                             Requests
-                        </div>
-
-                        <div className="bg-black p-3 text-sm text-gray-medium mb-2">
-                            There are supposed to be pending requests here...
                         </div>
 
                         <div className="bg-black p-3 text-sm text-gray-medium">
@@ -90,6 +86,10 @@ export default function DashboardClient({user, sidebarStatus}) {
                         <div className="text-2xl mb-1 font-bold justify-between w-full">
                             Dev Notifications
                         </div>
+                        <DashboardNotification
+                            sender={"System"}
+                            message={"Added the ability to edit profile."}
+                        />
                         <DashboardNotification
                             sender={"System"}
                             message={"Dropdowns added on SignUp page."}
@@ -116,11 +116,16 @@ export default function DashboardClient({user, sidebarStatus}) {
                         />
                         <HorizontalRule/>
                         <div className="text-2xl mb-1 font-bold justify-between w-full">
-                            Prod Notifications
+                            Notifications
                         </div>
                         <DashboardNotification
                             sender={"Contributions"}
-                            message={<>Your request has been fulfilled by <div className="text-gray-dark font-semibold">Wahaj Ali Khan (wahaj)</div>.</>}
+                            message={
+                                <span>
+                                    Your request has been fulfilled by{" "}
+                                    <span className="text-gray-dark font-semibold">Wahaj Ali Khan (@wahaj)</span>.
+                                </span>
+                            }
                         />
                         <DashboardNotification
                             sender={"Contributions"}
@@ -132,7 +137,12 @@ export default function DashboardClient({user, sidebarStatus}) {
                         />
                         <DashboardNotification
                             sender={"Requests"}
-                            message={<>Your request has been fulfilled by <div className="text-gray-dark font-semibold">M. Abdullah (abdullah)</div>.</>}
+                            message={
+                                <span>
+                                    Your request has been fulfilled by{" "}
+                                    <span className="text-gray-dark font-semibold">M. Abdullah (@abdullah)</span>.
+                                </span>
+                            }
                         />
                     </div>
                 </DashboardWorkspace>

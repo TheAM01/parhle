@@ -34,7 +34,7 @@ export default function SignupClient() {
         }
 
 
-        const res = await fetch("/api/signup", {
+        const res = await fetch("/api/user/signup", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(formData),
@@ -207,7 +207,7 @@ export default function SignupClient() {
                     required={true}
                     onChange={handleChange}
                 >
-                    <option value="" disabled={true} selected={true}>Select a course...</option>
+                    <option value="" disabled={true}>Select a course...</option>
                     {universityData[formData.university] && universityData[formData.university].programs.map((course, i) => (
                         <option key={i} value={course.id}>{course.name}</option>
                     ))}

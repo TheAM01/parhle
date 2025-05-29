@@ -39,6 +39,8 @@ Whether you're sharing notes, discovering new study content, or engaging with yo
 - "My ..." pages successfully developed.
 - Successfully integrated cookies for saving sidebar's state.
 - Successfully built page to list requests.
+- **Added ability to edit profile for existing users.**
+- **Replaced form inputs with dropdowns on signup page for better UX.**
 
 **Improvements & Fixes:**
 - Signup now has `<select>` instead of a string input.

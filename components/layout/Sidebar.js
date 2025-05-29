@@ -46,6 +46,16 @@ export default function Sidebar({user, sidebarStatus}) {
             ]
         },
         {
+            title: "User",
+            items: [
+                {
+                    title: "Profile",
+                    href: "/dashboard/profile",
+                    icon: User
+                }
+            ]
+        },
+        {
             title: 'Resources',
             items: [
                 {
@@ -124,16 +134,6 @@ export default function Sidebar({user, sidebarStatus}) {
                     icon: ListTodo
                 }
             ]
-        },
-        {
-            title: "User",
-            items: [
-                {
-                    title: "Profile",
-                    href: "/dashboard/profile",
-                    icon: User
-                }
-            ]
         }
     ];
 
@@ -145,7 +145,7 @@ export default function Sidebar({user, sidebarStatus}) {
 
     const handleLogout = async () => {
         try {
-            const res = await fetch('/api/logout', {
+            const res = await fetch('/api/user/logout', {
                 method: 'POST',
             });
 
@@ -212,7 +212,7 @@ export default function Sidebar({user, sidebarStatus}) {
                         <img src={user.avatarImg} alt="avatar_img" className="flex h-[2.5em] rounded-full border-3 border-gray-800"/>
                         <div className={`${!isOpen ? "hidden!" : "flex!"}  flex-col overflow-x-hidden flex-1`}>
                             <div className="text-gray-medium font-semibold ">{user.fullName || "John Doe"}</div>
-                            <div className="text-gray-dark text-sm">{user.username}</div>
+                            <div className="text-gray-dark text-sm">@{user.username}</div>
                         </div>
                     </div>
 

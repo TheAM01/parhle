@@ -1,61 +1,121 @@
 "use client";
 
 
-import {Pencil} from "lucide-react";
+import {Pencil, Save, Trash, X, Check} from "lucide-react";
 import {useState} from "react";
 import Sidebar from "@/components/layout/Sidebar";
 import {HorizontalRule} from "@/components/ui/HorizontalRule";
+import {degreeData, universityData} from "@/public/data";
+import { useRouter } from "next/navigation";
+import Spinner from "@/components/ui/Spinner";
+import Preference from "@/components/ui/Preference";
+import StatusToast from "@/components/ui/StatusToast";
 
-export default function AddBook({user, sidebarStatus}) {
-    const [profileData, setProfileData] = useState({
-        course: "",
-        fullName: "",
-        semester: 0,
-        university: ""
-    })
+export default function ProfileClient({user, sidebarStatus}) {
 
+    const router = useRouter();
+    const [editing, setEditing] = useState(false);
+    const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [toast, setToast] = useState(null);
 
+    const [formData, setFormData] = useState({
+        fullName: user.fullName,
+        username: user.username,
+        university: user.academicDetails.university,
+        semester: user.academicDetails.semester,
+        degree: user.academicDetails.degree,
+        course: user.academicDetails.course,
+        uniId: "",
+    });
 
     const handleChange = (e) => {
-        setProfileData({ ...profileData, [e.target.name]: e.target.value });
+        if (!editing) return;
+
+        const { name, value } = e.target;
+        let cleanedValue = value;
+
+        if (name === "username") {
+            cleanedValue = value.replace(/[^a-zA-Z0-9_]/g, "");
+            setFormData((prev) => ({ ...prev, username: cleanedValue }));
+            return;
+        }
+
+        if (name === "university") {
+            const uni = universityData[value];
+            if (uni) {
+                setFormData((prev) => ({
+                    ...prev,
+                    university: uni.name,
+                    uniId: value,
+                }));
+            }
+            return;
+        }
+
+        if (name === "course") {
+            const course = universityData[formData.uniId].programs.find(c => c.id === value);
+            if (course) {
+                setFormData((prev) => ({
+                    ...prev,
+                    course: course.name
+                }))
+            }
+            return;
+        }
+
+        if (name === "degree") {
+            const degree = degreeData[value];
+            if (degree) {
+                setFormData((prev) => ({
+                    ...prev,
+                    degree: degree
+                }))
+            }
+            return;
+        }
+
+        setFormData((prev) => ({ ...prev, [name]: cleanedValue }));
     };
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
 
-        const { course, fullName, semester, university } = profileData;
+    const handleEdit = async () => {
+        setLoading(true);
+
+        if (Object.values(formData).some((val) => String(val).trim() === "")) {
+            setLoading(false);
+            return setError("All fields are required.");
+        }
 
         try {
-            const response = await fetch("/api/profile/update", {
+            const res = await fetch("/api/user/edit", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ course, fullName, semester, university }),
+                body: JSON.stringify({ ...formData, currentUsername: user.username }),
             });
 
-            if (!response.ok) {
-                const err = await response.json();
-                console.error("Failed to update profile:", err.message || "Unknown error");
-                return;
+            const data = await res.json();
+
+            if (!res.ok) {
+                setError(data.message || "Something went wrong.");
+            } else {
+                setEditing(false);
+                setToast({message: "Profile updated successfully", icon: Check})
+                router.push('/dashboard/profile')
             }
+        } catch (err) {
+            console.error("Fetch error:", err);
+            setToast({message: "Error", icon: X})
+            setError("Failed to update user. Please try again later.");
+        } finally {
+            setLoading(false);
 
-            // Optionally show success message
-            console.log("Profile updated successfully");
-
-            // Clear form only on success
-            setProfileData({
-                course: "",
-                fullName: "",
-                semester: 0,
-                university: ""
-            });
-        } catch (error) {
-            console.error("Network or server error:", error);
         }
     };
 
-    const userDate = (new Date(user.createdAt)).toString().split(" ")
 
-    console.log(user)
+    const userDate = (new Date(user.createdAt)).toString().split(" ");
+
     return (
         <div className={"w-screen bg-black flex-row text-white min-h-screen pt-8 lg:pt-0 texture-mosaic"}>
 
@@ -66,7 +126,7 @@ export default function AddBook({user, sidebarStatus}) {
                     <div className="text-4xl mb-3 font-bold">
                         Profile
                     </div>
-                    <button onClick={() => {}} className={"flex items-center leading-none p-2 h-[2.5em] bg-gray-950 cursor-pointer hover:text-black duration-200 justify-center gap-2 border border-white hover:bg-white"}>
+                    <button onClick={() => setEditing(true)} className={"flex items-center leading-none p-2 h-[2.5em] bg-gray-950 cursor-pointer hover:text-black duration-200 justify-center gap-2 border border-white hover:bg-white"}>
                         <Pencil size={15}/> Edit Profile
                     </button>
                 </div>
@@ -79,9 +139,17 @@ export default function AddBook({user, sidebarStatus}) {
 
                         <img src={user.avatarImg} alt="avatar" className={"flex w-[125px] border-2 border-gray-700 bg-gray-800 mb-2"}/>
 
-                        <div className="font-bold text-2xl">{user.fullName}</div>
-                        <div className="text-gray-dark">@{user.username}</div>
-                        <div className="text-gray-dark">{user.university}</div>
+                        <div className="font-bold text-2xl">{editing ? formData.fullName : user.fullName}</div>
+                        <div className="text-gray-dark">@{editing ? formData.username : user.username}</div>
+                        <div className="text-gray-dark">
+                            {
+                                editing
+                                ? (formData.university === "other"
+                                    ? "Other"
+                                    : universityData[formData.university]?.name || user.academicDetails.university)
+                                : user.academicDetails.university
+                            }
+                        </div>
 
                         <div className="w-full border-b border-border-color mt-5 mb-2"></div>
 
@@ -124,77 +192,165 @@ export default function AddBook({user, sidebarStatus}) {
                         <div className="text-gray-dark text-sm">Member since {user.createdAt ? `${userDate[1]} ${userDate[3]}` : "the OG days"}</div>
 
                     </div>
+                    {editing ? (
+                        <div className="flex-col bg-gray-900 border border-border-color p-5 w-full gap-1">
+                            <div className="font-semibold text-2xl mb-2">Profile Details</div>
 
-                    <div className="flex-col bg-gray-900 border border-border-color p-5 w-full gap-1">
-                        <div className="font-semibold text-2xl mb-2">Profile Details</div>
+                            <div className="text-sm font-semibold">Username</div>
+                            <StdInput name={"username"} placeholder={"e.g. johndoe01"} value={formData.username} onChange={handleChange}/>
 
-                        <div className="text-sm font-semibold">Username</div>
-                        <div className="mb-3 text-gray-medium">@{user.username}</div>
+                            <div className="text-sm font-semibold">Name</div>
+                            <StdInput name={"fullName"} placeholder={"e.g. John Doe"} value={formData.fullName} onChange={handleChange}/>
 
-                        <div className="text-sm font-semibold">Name</div>
-                        <div className="mb-3 text-gray-medium">{user.fullName}</div>
+                            <div className="text-sm font-semibold">University</div>
+                            <select
+                                name={"university"}
+                                className={"flex-1 flex border-gray-700 border bg-gray-800 text-white placeholder-gray-medium p-2 text-sm mb-4"}
+                                defaultValue={""}
+                                required={true}
+                                onChange={handleChange}
+                            >
+                                <option value="" disabled={true}>Select a university...</option>
+                                {Object.keys(universityData).map((d, i) => (
+                                    <option value={d} key={i+"x"}>{universityData[d].name}</option>
+                                ))}
+                                <option value={"other"}>Other</option>
+                            </select>
 
-                        <div className="text-sm font-semibold">Role</div>
-                        <div className="mb-3 text-gray-medium">{user.role === "student" ? "Student" : "Administrator"}</div>
+                            <div className="text-sm font-semibold">Current Semester</div>
+                            <select
+                                name={"semester"}
+                                className={"flex-1 flex border-gray-700 border bg-gray-800 text-white placeholder-gray-medium p-2 text-sm mb-4"}
+                                defaultValue={""}
+                                required={true}
+                                onChange={handleChange}
+                            >
+                                <option value="" disabled={true}>Select a semester...</option>
+                                <option value={"1"}>1</option>
+                                <option value={"2"}>2</option>
+                                <option value={"3"}>3</option>
+                                <option value={"4"}>4</option>
+                                <option value={"5"}>5</option>
+                                <option value={"6"}>6</option>
+                                <option value={"7"}>7</option>
+                                <option value={"8"}>8</option>
+                                <option value={"non-specific"}>Non-Specific</option>
+                            </select>
 
-                        <div className="text-sm font-semibold">Enrolled Course</div>
-                        <div className="mb-3 text-gray-medium">{user.academicDetails?.course}</div>
+                            <div className="text-sm font-semibold">Degree</div>
+                            <select
+                                name={"degree"}
+                                className={"flex-1 flex border-gray-700 border bg-gray-800 text-white placeholder-gray-medium p-2 text-sm mb-4"}
+                                // value={formData.degree}
+                                required={true}
+                                onChange={handleChange}
+                                defaultValue={""}
+                            >
+                                <option value="" disabled={true}>Select a degree type...</option>
+                                <option value={"bs"}>Bachelor of Science</option>
+                                <option value={"be"}>Bachelor of Engineering</option>
+                                <option value={"other"}>Other</option>
+                                <option value={"non-specific"}>Non-Specific</option>
+                            </select>
 
-                        <div className="text-sm font-semibold">Current Semester</div>
-                        <div className="mb-3 text-gray-medium">{user.academicDetails?.semester}</div>
+                            <div className="text-sm font-semibold">Enrolled Course</div>
+                            <select
+                                name={"course"}
+                                className={"flex-1 flex border-gray-700 border bg-gray-800 text-white placeholder-gray-medium p-2 text-sm mb-4"}
+                                defaultValue={""}
+                                required={true}
+                                onChange={handleChange}
+                            >
+                                <option value="" disabled={true}>Select a course...</option>
+                                {universityData[formData.uniId] && universityData[formData.uniId].programs.map((course, i) => (
+                                    <option key={i} value={course.id}>{course.name}</option>
+                                ))}
+                                <option value={"other"}>Other</option>
+                                <option value={"non-specific"}>Non-Specific</option>
+                            </select>
 
-                        <div className="text-sm font-semibold">Degree</div>
-                        <div className="mb-3 text-gray-medium">{user.academicDetails?.degree}</div>
+                            {!!error &&
+                                <div className="text-sm text-red-500">{error}</div>
+                            }
 
-                        <div className="text-sm font-semibold">University</div>
-                        <div className="mb-3 text-gray-medium">{user.academicDetails?.university}</div>
-                    </div>
+                            {loading ? <Spinner/> :
+                                <div className="w-full justify-end gap-2">
+                                    <button onClick={() => setEditing(false)}
+                                            className={"flex items-center leading-none p-2 h-[2.5em] bg-transparent cursor-pointer hover:text-black duration-200 justify-center gap-2 border border-white hover:bg-white"}>
+                                        <Trash size={15}/> Cancel
+                                    </button>
+                                    <button onClick={handleEdit}
+                                            className={"flex items-center leading-none p-2 h-[2.5em] bg-transparent cursor-pointer hover:text-black duration-200 justify-center gap-2 border border-white hover:bg-white"}>
+                                        <Save size={15}/> Save
+                                    </button>
+                                </div>
+                            }
+                        </div>
+                    ) : (
+                        <div className="flex-col bg-gray-900 border border-border-color p-5 w-full gap-1">
+                            <div className="font-semibold text-2xl mb-2">Profile Details</div>
 
+                            <div className="text-sm font-semibold">Username</div>
+                            <div className="mb-3 text-gray-medium">@{user.username}</div>
+
+                            <div className="text-sm font-semibold">Name</div>
+                            <div className="mb-3 text-gray-medium">{user.fullName}</div>
+
+                            <div className="text-sm font-semibold">Role</div>
+                            <div
+                                className="mb-3 text-gray-medium">{user.role === "student" ? "Student" : "Administrator"}</div>
+
+                            <div className="text-sm font-semibold">University</div>
+                            <div className="mb-3 text-gray-medium">{user.academicDetails?.university}</div>
+
+                            <div className="text-sm font-semibold">Current Semester</div>
+                            <div className="mb-3 text-gray-medium">{user.academicDetails?.semester}</div>
+
+                            <div className="text-sm font-semibold">Degree</div>
+                            <div className="mb-3 text-gray-medium">{user.academicDetails?.degree}</div>
+
+                            <div className="text-sm font-semibold">Enrolled Course</div>
+                            <div className="mb-3 text-gray-medium">{user.academicDetails?.course}</div>
+                        </div>
+                    )}
                 </div>
-
 
                 <div className="flex-col bg-gray-900 border border-border-color p-5 w-full mb-6 gap-3">
                     <div className="font-semibold text-2xl mb-2">Account Preferences</div>
 
-                    <div className="items-center w-full justify-between">
-                        <div className="flex-col">
-                            <div className="font-semibold">Email Notifications</div>
-                            <div className="text-sm text-gray-dark">Receive notifications about new resources and messages</div>
-                        </div>
+                    <Preference
+                        title={"Email Notifications"}
+                        description={"Receive notifications about new resources and messages"}
+                        defaultChecked={true}
+                    />
 
-                        [Y/N]
-
-                    </div>
-
-                    <div className="items-center w-full justify-between">
-                        <div className="flex-col">
-                            <div className="font-semibold">Public Profile</div>
-                            <div className="text-sm text-gray-dark">Allow others to view your profile and contributions</div>
-                        </div>
-
-                        [Y/N]
-
-                    </div>
-
-                    <div className="items-center w-full justify-between">
-                        <div className="flex-col">
-                            <div className="font-semibold">Resource Recommendations</div>
-                            <div className="text-sm text-gray-dark">Get personalized resource recommendations</div>
-                        </div>
-
-                        [Y/N]
-
-                    </div>
-
-
+                    <Preference
+                        title={"Public Profile"}
+                        description={"Allow others to view your profile and contributions"}
+                    />
 
                 </div>
-
-
             </div>
+            {toast && (
+                <StatusToast
+                    marginTop={10}
+                    message={toast.message}
+                    type={toast.type}
+                    icon={toast.icon}
+                    onClose={() => setToast(null)}
+                />
+            )}
         </div>
     )
+}
 
-
-
+function StdInput({name, placeholder = "Input", value, onChange}) {
+    return <input
+        type={"text"}
+        placeholder={placeholder}
+        className={"mb-3 p-2 bg-gray-800 border border-gray-700 text-sm"}
+        value={value}
+        onChange={onChange}
+        name={name}
+    />
 }

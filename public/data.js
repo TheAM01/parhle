@@ -252,3 +252,10 @@ export const universityData = {
         ],
     }
 }
+
+export const degreeData = {
+    "bs": "Bachelor of Science",
+    "be": "Bachelor of Engineering",
+    "other": "Other",
+    "non-specific": "Non Specific"
+}

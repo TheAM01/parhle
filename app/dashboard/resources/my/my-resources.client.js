@@ -2,16 +2,17 @@
 
 
 import {useEffect, useState} from "react";
-import {Search, Filter, BookOpen, Heart, Calendar, University, User} from "lucide-react";
+import {Search, Filter, BookOpen, Heart, Calendar, University, User, Link as LinkIcon} from "lucide-react";
 import {motion} from "framer-motion";
 import {Input} from "@/components/ui/Inputs";
 import Spinner from "@/components/ui/Spinner";
 import Sidebar from "@/components/layout/Sidebar";
 import {HorizontalRule} from "@/components/ui/HorizontalRule";
-import {DashboardScrollable, DashboardWorkspace, PageTitle} from "@/components/ui/Structure";
+import {DashboardScrollable, DashboardWorkspace, PageTitle, SmallIconTextButton} from "@/components/ui/Structure";
+import Link from "next/link"
 
 
-export default function Resources({user, sidebarStatus}) {
+export default function MyResourcesClient({user, sidebarStatus}) {
 
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedResource, setSelectedResource] = useState("All");
@@ -99,14 +100,13 @@ export default function Resources({user, sidebarStatus}) {
 
                     </div>
 
-                    <div className={`${loading ? "justify-center pt-10" : "grid! grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3"} mt-2`}>
-                        {(!loading ? filteredNotes.map((note, index) => (
-                            <motion.div
+                    <div className={`${loading ? "justify-center pt-10" : "grid! grid-cols-1 gap-6"} mt-2`}>
+                        {!loading ? filteredNotes.map((note, index) => <motion.div
                                 key={note._id}
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.3, delay: index * 0.1 }}
-                                className="flex-col justify-between bg-gray-900 p-6 border border-border-color hover:border-gray-700 transition-colors hover:cursor-pointer"
+                                className="flex-col justify-between bg-gray-900 p-6 border border-border-color hover:border-gray-700 transition-colors"
                             >
 
                                 <div className={"justify-between flex-1 items-center"}>
@@ -134,17 +134,25 @@ export default function Resources({user, sidebarStatus}) {
                                             {note.teacher}
                                         </div>
                                     </div>
-                                    <div className="text-base font-light items-center text-gray-dark">
+                                    <div className="text-base font-light items-center text-gray-dark mb-3">
                                         <University size={16}/>
                                         <div className="flex-col ml-2 text-gray-light text-sm">
                                             {note.university}
                                         </div>
                                     </div>
+                                    <div className="text-base font-light items-center text-gray-dark">
+                                        <LinkIcon size={16}/>
+                                        <div className="flex-col ml-2 text-gray-light text-sm">
+                                            {note.url}
+                                        </div>
+                                    </div>
                                 </div>
                                 <HorizontalRule/>
-                                {/*<a href={`/dashboard/resources/edit/${note._id}`} className=""></a>*/}
-                            </motion.div>
-                        )) : <Spinner/>)}
+                                <div className={"gap-2"}>
+                                    <Link href={`/dashboard/resources/edit/${note._id}`} className={"bg-white justify-center flex p-2 cursor-pointer flex-1 sm:flex-none sm:w-[100px] font-semibold text-sm text-gray-600 hover:text-black duration-100"}>Edit</Link>
+                                    <Link href={note.url} className={"bg-white justify-center flex p-2 cursor-pointer flex-1 sm:flex-none sm:w-[100px] font-semibold text-sm text-gray-600 hover:text-black duration-100"}>View</Link>
+                                </div>
+                            </motion.div>) : <Spinner/>}
                     </div>
 
                 </DashboardWorkspace>

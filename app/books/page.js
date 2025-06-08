@@ -6,9 +6,13 @@ import {motion} from "framer-motion";
 import {Input} from "@/components/ui/Inputs";
 import Spinner from "@/components/ui/Spinner";
 import {DashboardWorkspace} from "@/components/ui/Structure";
+import {ScreenSizeGetter} from "@/components/utility";
+import {HorizontalRule} from "@/components/ui/HorizontalRule";
+import {VisitResourceButton} from "@/components/ui/Buttons";
+import {BooksCard} from "@/components/ui/Cards";
 
 
-export default function Resources() {
+export default function BooksPage() {
 
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedResource, setSelectedResource] = useState("All");
@@ -54,6 +58,7 @@ export default function Resources() {
 
     return (
         <div className="flex-col min-h-screen texture-mosaic text-white pt-10 sm:pt-20 bg-black items-center ">
+
             <DashboardWorkspace>
                 <div className="font-bold text-4xl mb-5 md:mb-10">Explore Books</div>
                 <div className="text-xl mb-5 md:mb-10">Click on card to open book in new tab</div>
@@ -94,57 +99,11 @@ export default function Resources() {
 
                 </div>
 
-
-
-                <div className={`${loading ? "justify-center pt-10" : "grid! grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"} mt-2`}>
-                    {(!loading ? filteredNotes.map((note, index) => (
-                        <motion.a
-                            download
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            href={note.bookUrl}
-                            key={note._id}
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.3, delay: index * 0.1 }}
-                            className="flex-col justify-between bg-gray-900 p-6 border border-border-color hover:border-gray-700 transition-colors hover:cursor-pointer"
-                        >
-
-                            <div className={"justify-between flex-1 items-center"}>
-                                <div className={"text-xl font-semibold"}>{note.title}</div>
-                                <div className={"text-gray-400 text-sm"}><Heart size={14} className={"mr-1"}/> {note.likes ? note.likes : "2"}</div>
-                            </div>
-
-                            <span className="text-gray-dark text-xs mb-4">{note.author}</span>
-
-                            <div className={"flex-col mt-4"}>
-
-                                <div className="text-base font-light items-center text-gray-dark mb-3">
-                                    <BookOpen size={16}/>
-                                    <div className="flex-col ml-2 text-gray-light text-sm">
-                                        {note.subject}
-                                    </div>
-                                </div>
-                                <div className="text-base font-light items-center text-gray-dark mb-3">
-                                    <Calendar size={16}/>
-                                    <div className="flex-col ml-2 text-gray-light text-sm">
-                                        {note.semester}
-                                    </div>
-                                </div>
-                                <div className="text-base font-light items-center text-gray-dark mb-3">
-                                    <University size={16}/>
-                                    <div className="flex-col ml-2 text-gray-light text-sm">
-                                        {note.university}
-                                    </div>
-                                </div>
-                                <div className="text-base font-light items-center text-gray-dark">
-                                    <User size={16}/>
-                                    <div className="flex-col ml-2 text-gray-light text-sm">
-                                        {note.bookAuthor}
-                                    </div>
-                                </div>
-                            </div>
-                        </motion.a>
+                <ScreenSizeGetter/>
+                {/*grid! grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4*/}
+                <div className={`${loading ? "justify-center pt-10" : "flex-col gap-6"} mt-2`}>
+                    {(!loading ? filteredNotes.map((book, index) => (
+                        <BooksCard book={book} index={index}/>
                     )) : <Spinner/>)}
                 </div>
             </DashboardWorkspace>

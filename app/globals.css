@@ -13,7 +13,10 @@
     --color-gray-light: #F3F4F6;
     --color-border-color: #1F2937;
 
+    --breakpoint-3xl: 120rem;
+
 }
+
 
 div {
     @apply flex;

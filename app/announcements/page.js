@@ -1,6 +1,6 @@
 "use client";
 
-export default function Announcements() {
+export default function AnnouncementsPage() {
     return (
         <div className=""></div>
     )

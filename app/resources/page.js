@@ -102,7 +102,7 @@ export default function Resources() {
                 <div className={`${loading ? "justify-center pt-10" : "grid! grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3"} mt-2`}>
                     {(!loading ? filteredNotes.map((note, index) => (
                         <motion.div
-                            href={note.resourceUrl}
+                            href={note.url}
                             key={note._id}
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
@@ -144,7 +144,7 @@ export default function Resources() {
                                     </div>
                                 </div>
                                 <HorizontalRule/>
-                                <VisitResourceButton href={note.resourceUrl}>View Resource</VisitResourceButton>
+                                <VisitResourceButton href={note.url}>View Resource</VisitResourceButton>
                             </div>
                         </motion.div>
                     )) : <Spinner/>)}

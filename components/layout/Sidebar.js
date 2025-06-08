@@ -18,7 +18,7 @@ import {
     GitPullRequestArrow,
     MonitorPlay,
     Pencil,
-    User
+    User, Send, ClipboardList, FileText, Upload, FilePenLine
 } from "lucide-react";
 import {usePathname, useRouter} from "next/navigation";
 import {useState} from "react";
@@ -66,7 +66,7 @@ export default function Sidebar({user, sidebarStatus}) {
                 {
                     title: "My Resources",
                     href: "/dashboard/resources/my",
-                    icon: File
+                    icon: FileText,
                 },
                 {
                     title: "All Resources",
@@ -101,7 +101,7 @@ export default function Sidebar({user, sidebarStatus}) {
                 {
                     title: "Add Channels",
                     href: "/dashboard/channels/add",
-                    icon: SquarePlus
+                    icon: Upload
                 },
                 {
                     title: "My Channels",
@@ -121,12 +121,12 @@ export default function Sidebar({user, sidebarStatus}) {
                 {
                     title: "Add Request",
                     href: "/request",
-                    icon: GitPullRequestArrow
+                    icon: FilePenLine,
                 },
                 {
                     title: "My Requests",
-                    href: "/request",
-                    icon: GitPullRequestArrow
+                    href: "/dashboard/requests/my",
+                    icon: ClipboardList
                 },
                 {
                     title: "All Requests",
@@ -166,14 +166,14 @@ export default function Sidebar({user, sidebarStatus}) {
         <>
 
             {!isOpen && (
-                <div className={"fixed top-0 w-screen h-min flex-1 border-b border-border-color bg-black items-center lg:hidden!"}>
+                <div className={"z-200 fixed top-0 w-screen h-min flex-1 border-b border-border-color bg-black items-center lg:hidden!"}>
                     <button onClick={toggleSidebar} className={"flex p-1 items-center"}>
                         <ChevronRight className={"duration-100 hover:cursor-pointer"} size={30}/>
                     </button>
                 </div>
             )}
 
-            <div className={`${isOpen ? "flex! pt-2" : "hidden! lg:flex! w-min!"} shadow-[0px_5px_15px_rgba(0,0,0,0.35)] flex-col fixed lg:static top-0 w-3/5 lg:w-2/7 xl:w-2/10 2xl:w-1/7 md:w-1/4 bg-gray-900 lg:border-r lg:border-border-color h-screen overflow-x-hidden`}>
+            <div className={`${isOpen ? "flex! pt-2" : "hidden! lg:flex! w-min!"} shadow-[0px_5px_15px_rgba(0,0,0,0.35)] flex-col fixed lg:static top-0 w-3/5 lg:w-2/7 xl:w-2/10 2xl:w-1/7 md:w-1/4 bg-gray-900 lg:border-r lg:border-border-color h-screen overflow-x-hidden z-200`}>
 
                 <div className={`font-logo  text-gray-medium font-light text-2xl lg:text-4xl p-2 ${isOpen ? "border-b" : ""} border-border-color justify-between items-center`}>
 

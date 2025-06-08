@@ -1,4 +1,19 @@
-import { File, Book, Share2, Users, Zap, Globe, Shield, Award } from "lucide-react"
+import {
+    File,
+    Book,
+    Share2,
+    Users,
+    Zap,
+    Globe,
+    Shield,
+    Award,
+    Flame,
+    Timer,
+    CircleAlert,
+    X,
+    Check,
+    Clock
+} from "lucide-react"
 
 export const quotes = [
     {
@@ -78,7 +93,7 @@ export const faqs = [
     },
     {
         "question": "Can I use Parhle if my university isn't listed?",
-        "answer": "While we try to partner with many universities, Parhle is open to all students. You can still access and contribute to our global knowledge base."
+        "answer": "While we aim to partner with as many universities as possible, Parhle is open to all students. You can access and contribute to our global knowledge base regardless of affiliation. You're also encouraged to upload your university’s resources and build an unofficial presence by actively contributing."
     },
     {
         "question": "How can I contribute my own study materials?",
@@ -86,9 +101,68 @@ export const faqs = [
     },
     {
         "question": "Are there any copyright concerns with shared materials?",
-        "answer": "🤫😏"
+        "answer": "All materials go through a verification process. We strongly discourage uploading copyrighted content without permission. If flagged, such content may be removed immediately."
     }
 ];
+
+export const rewards = {
+    resource: 300,
+    book: 200,
+    channel: 100,
+    request: {
+        low: 100,
+        medium: 200,
+        high: 400,
+    }
+}
+
+export const priorities = {
+    low: {
+        name: "Not Urgent",
+        classes: "bg-green-200 text-green-800 border border-green-500",
+        alt: "Low",
+        icon: CircleAlert,
+        reward: 100
+
+    },
+    medium: {
+        name: "Somewhat Urgent",
+        classes: "bg-yellow-200 text-yellow-800 border border-yellow-500",
+        alt: "Medium",
+        icon: Timer,
+        reward: 200
+    },
+    high: {
+        name: "Very Urgent",
+        classes: "bg-red-200 text-red-800 border border-red-500",
+        alt: "High",
+        icon: Flame,
+        reward: 400
+    },
+}
+
+export const requestStatuses = [
+    {
+        name: "Open",
+        classes: "text-black bg-white border border-white",
+        alt: "Pending",
+        icon: Clock
+    },
+    {
+        name: "Closed",
+        classes: "text-white bg-gray-800 border border-gray-700",
+        alt: "Fulfilled",
+        icon: Check
+    }
+    ,
+    {
+        name: "Rejected",
+        classes: "text-white bg-black border border-black",
+        alt: "Rejected",
+        icon: X
+    }
+]
+
 
 export const links = [
     {
@@ -121,7 +195,7 @@ export const links = [
             },
             {
                 name: "Profile",
-                href: "/user/profile"
+                href: "/dashboard/profile"
             }
         ]
     },

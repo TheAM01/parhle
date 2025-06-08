@@ -2,7 +2,7 @@ import {degreeData, universityData} from "@/public/data";
 
 export function ScreenSizeGetter() {
     return (
-        <div className="bg-white p-2 uppercase text-black font-bold duration-300 h-min">
+        <div className="bg-white p-2 uppercase text-black font-bold duration-300 h-min fixed! top-1 right-1 z-600">
             <div className="hidden! sm:hidden! md:hidden! lg:hidden! xl:hidden! 2xl:flex!">2xl (1344)</div>
             <div className="hidden! sm:hidden! md:hidden! lg:hidden! xl:flex! 2xl:hidden!">xl (1120)</div>
             <div className="hidden! sm:hidden! md:hidden! lg:flex! xl:hidden! 2xl:hidden!">lg (896)</div>
@@ -23,6 +23,7 @@ export class User {
         this.email = email;
         this.password = password;
         this.role = role;
+        this.aura = 0;
 
         this.contributions = {
             resources: [],

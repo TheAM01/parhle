@@ -8,10 +8,18 @@ export function LinkButton({href, children}) {
     )
 }
 
-export function VisitResourceButton({href, children}) {
-    return (
-        <Link href={href} target="_blank" rel="noopener noreferrer" className={"flex items-center leading-none p-3 justify-center capitalize bg-white text-black sm:text-gray-dark text-sm font-semibold no-underline duration-200! hover:text-black transition-transform gap-2"}>{children}</Link>
-    )
+export function VisitResourceButton({ href, extraClasses, children, openInNew = true }) {
+    const commonProps = {
+        href,
+        className: `${extraClasses} flex items-center leading-none p-3 justify-center capitalize bg-white text-black sm:text-gray-dark text-sm font-semibold no-underline duration-200! hover:text-black transition-transform gap-2`,
+        ...(openInNew ? { target: "_blank", rel: "noopener noreferrer" } : {})
+    };
+
+    return <Link {...commonProps}>{children}</Link>;
+}
+
+export const DisabledButton = ({text, extraClasses}) => {
+    return <div className={`justify-center items-center leading-none bg-black text-sm p-3 text-gray-medium cursor-not-allowed font-semibold ${extraClasses}`}>{text}</div>
 }
 
 export function Button({children, onClick}) {

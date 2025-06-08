@@ -14,9 +14,9 @@ export async function POST(req) {
 
         const author = session.user;
 
-        const { title, subject, semester, teacher, university, resourceUrl } = await req.json();
+        const { title, subject, semester, teacher, university, url } = await req.json();
 
-        if (!title || !subject || !semester || !teacher || !university || !resourceUrl) {
+        if (!title || !subject || !semester || !teacher || !university || !url) {
             return NextResponse.json({ success: false, message: "Missing required fields" }, { status: 400 });
         }
 
@@ -29,7 +29,7 @@ export async function POST(req) {
             teacher,
             author: author.username,
             university,
-            resourceUrl,
+            url,
             likes: 0,
             createdAt: new Date(),
         };

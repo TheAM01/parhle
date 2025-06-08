@@ -4,61 +4,78 @@
 import {Check, Upload} from "lucide-react";
 import {useState} from "react";
 import Sidebar from "@/components/layout/Sidebar";
-import {DashboardScrollable, DashboardWorkspace, PageTitle} from "@/components/ui/Structure";
+import ContentGuidelines, {
+    DashboardHeading, DashboardParent,
+    DashboardScrollable,
+    DashboardWorkspace,
+    DashboardWorkspaceBlock, ExpandableSelectInputGroup, ExpandableTextInputGroup,
+    PageTitle, SmallIconTextButton
+} from "@/components/ui/Structure";
 import StatusToast from "@/components/ui/StatusToast";
+import {HorizontalRule} from "@/components/ui/HorizontalRule";
+import Spinner from "@/components/ui/Spinner";
+import {ResourceGuidelines} from "@/components/ui/Guidelines";
 
 
-export default function AddResource({user, sidebarStatus}) {
+export default function AddResourceClient({user, sidebarStatus}) {
 
+    const [error, setError] = useState("")
+    const [loading, setLoading] = useState(false);
     const [toast, setToast] = useState(null);
     const [formData, setFormData] = useState({
         title: "",
         subject: "",
-        semester: "non-specific",
+        semester: "",
         teacher: "",
         author: user.username,
-        university: "University of Karachi",
-        resourceUrl: "",
+        university: "",
+        url: "",
     });
 
+
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        setFormData({...formData, [e.target.name]: e.target.value});
     };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        setError("")
+        setLoading(true);
 
-        // Extract form data
-        const { title, subject, semester, teacher, author, university, resourceUrl } = formData;
+        try {
 
-        const response = await fetch("/api/resource/upload", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ title, subject, semester, teacher, author, university, resourceUrl }),
-        });
+            const response = await fetch("/api/resource/upload", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify(formData),
+            });
 
-        const status = response.status;
+            const result = await response.json();
 
-        setFormData({
-            title: "",
-            subject: "",
-            semester: "non-specific",
-            teacher: "",
-            author: user.username,
-            university: "University of Karachi",
-            resourceUrl: "",
-        });
-
-        setToast({ message: 'Upload successful!', icon: Check });
-
-        return status;
-
+            if (response.ok && result.success) {
+                setToast({message: "Resource uploaded successfully!", icon: Check});
+                setFormData({
+                    title: "",
+                    subject: "",
+                    semester: "non-specific",
+                    teacher: "",
+                    author: user.username,
+                    university: "University of Karachi",
+                    url: "",
+                });
+            } else {
+                setError(result.message || "Upload failed.");
+            }
+        } catch (error) {
+            console.error("Error uploading book:", error);
+            setError("An error occurred. Please try again.");
+        } finally {
+            setLoading(false);
+        }
     };
 
-
     return (
-        <div className={"w-screen bg-black flex-row text-white min-h-screen pt-8 lg:pt-0 texture-mosaic"}>
-
+        <DashboardParent>
             <Sidebar user={user} sidebarStatus={sidebarStatus}/>
             <DashboardScrollable>
                 <DashboardWorkspace>
@@ -66,120 +83,96 @@ export default function AddResource({user, sidebarStatus}) {
                         heading={"Add Resource"}
                         description={"Index New Resources"}
                     />
-
-                    <div className="flex-col bg-gray-900 border border-border-color p-5 w-full">
-
-                    <div className="font-semibold text-2xl">Upload New Resource</div>
-
-                    <div className="flex-wrap gap-5 mb-5">
-                        <div className="flex-col flex-1">
-                            <div className="font-light">Title *</div>
-                            <input
-                                name={"title"}
-                                className={"flex-1 flex border-gray-700 border bg-gray-800 text-white placeholder-gray-medium p-2"}
-                                type={"text"}
-                                value={formData.title}
-                                onChange={handleChange}
-                                required={true}
-                                placeholder={"[Resource Type] [Subject] [Teacher] [Year]"}
-                            />
-                        </div>
-                        <div className="flex-col flex-1">
-                            <div className="font-light">Subject *</div>
-                            <input
-                                name={"subject"}
-                                className={"flex-1 flex border-gray-700 border bg-gray-800 text-white placeholder-gray-medium p-2"}
-                                type={"text"}
-                                value={formData.subject}
-                                onChange={handleChange}
-                                required={true}
-                                placeholder={"e.g. Software Requirements Engineering"}
-                            />
-                        </div>
-                    </div>
-
-                    <div className="flex-wrap gap-5 mb-5">
-                        <div className="flex-col flex-1">
-                            <div className="font-light">Semester *</div>
-                            <select
-                                name={"semester"}
-                                className={"flex-1 flex border-gray-700 border bg-gray-800 text-white placeholder-gray-medium p-2"}
-                                value={formData.semester}
-                                required={true}
-                                onChange={handleChange}
-                            >
-                                <option value={"non-specific"} >Non-Specific</option>
-                                <option value={"1"}>1</option>
-                                <option value={"2"}>2</option>
-                                <option value={"3"}>3</option>
-                                <option value={"4"}>4</option>
-                                <option value={"5"}>5</option>
-                                <option value={"6"}>6</option>
-                                <option value={"7"}>7</option>
-                                <option value={"8"}>8</option>
-                            </select>
-                        </div>
-                        <div className="flex-col flex-1">
-                            <div className="font-light">Teacher *</div>
-                            <input
-                                name={"teacher"}
-                                className={"flex-1 flex border-gray-700 border bg-gray-800 text-white placeholder-gray-medium p-2"}
-                                type={"text"}
-                                value={formData.teacher}
-                                onChange={handleChange}
-                                required={true}
-                                placeholder={"e.g. Sir Asim Ali"}
-                            />
-                        </div>
-                    </div>
-
-                    <div className="flex-wrap gap-5 mb-5">
-                        <div className="flex-col flex-1">
-                            <div className="font-light">University *</div>
-                            <input
-                                name={"university"}
-                                className={"flex-1 flex border-gray-700 border bg-gray-800 text-white placeholder-gray-medium p-2"}
-                                type={"text"}
+                    <div className="flex-col gap-6">
+                        <DashboardWorkspaceBlock extraClasses={"gap-3"}>
+                            <DashboardHeading>Upload New Resource</DashboardHeading>
+                            <div className="flex-col md:flex-row gap-4">
+                                <ExpandableTextInputGroup
+                                    title={"Title"}
+                                    value={formData.title}
+                                    onChange={handleChange}
+                                    isRequired={true}
+                                    placeholder={"e.g. Past Paper Discrete Mathematics MKR 2022"}
+                                />
+                                <ExpandableTextInputGroup
+                                    title={"Subject"}
+                                    value={formData.subject}
+                                    onChange={handleChange}
+                                    isRequired={true}
+                                    placeholder={"Discrete Mathematics"}
+                                />
+                            </div>
+                            <div className="flex-col md:flex-row gap-4">
+                                <ExpandableTextInputGroup
+                                    title={"Teacher"}
+                                    value={formData.teacher}
+                                    onChange={handleChange}
+                                    isRequired={true}
+                                    placeholder={"e.g. Mukesh Kumar"}
+                                />
+                                <ExpandableSelectInputGroup
+                                    name={"semester"}
+                                    defaultValue={"non-specific"}
+                                    isRequired={true}
+                                    onChange={handleChange}
+                                    title={"Semester"}
+                                    options={[
+                                        {name: "Non Specific", value: "non-specific"},
+                                        {name: 1, value: 1},
+                                        {name: 2, value: 2},
+                                        {name: 3, value: 3},
+                                        {name: 4, value: 4},
+                                        {name: 5, value: 5},
+                                        {name: 6, value: 6},
+                                        {name: 7, value: 7},
+                                        {name: 8, value: 8},
+                                    ]}
+                                />
+                            </div>
+                            <ExpandableTextInputGroup
+                                title={"University"}
                                 value={formData.university}
                                 onChange={handleChange}
-                                required={true}
+                                isRequired={true}
+                                placeholder={"e.g. University of Karachi"}
                             />
-                        </div>
+                            <ExpandableTextInputGroup
+                                title={"Resource URL"}
+                                value={formData.url}
+                                onChange={handleChange}
+                                isRequired={true}
+                                placeholder={"https://..."}
+                            />
+
+                            <div className="py-2 flex-col">
+                                <HorizontalRule/>
+                                {!!error &&
+                                    <div className="text-sm text-red-500">{error}</div>
+                                }
+                            </div>
+
+
+                            {loading ? <Spinner/> :
+                                <SmallIconTextButton
+                                    Icon={Upload}
+                                    text={"Upload Resource"}
+                                    onClick={handleSubmit}
+                                />
+                            }
+                        </DashboardWorkspaceBlock>
+                        <ResourceGuidelines/>
                     </div>
-
-                    <div className="flex-col flex-1">
-                        <div className="font-light">Resource URL *</div>
-                        <input
-                            name={"resourceUrl"}
-                            className={"flex-1 flex border-gray-700 border bg-gray-800 text-white placeholder-gray-medium p-2"}
-                            type={"url"}
-                            value={formData.resourceUrl}
-                            onChange={handleChange}
-                            required={true}
-                            placeholder={"https://..."}
-                        />
-                        <div className="mt-1 text-gray-dark text-xs">Link to your Google Drive, Dropbox, or any other publicly accessible URL</div>
-                    </div>
-
-                    <button
-                        className={"bg-white items-center font-gray-medium  duration-100 text-black flex text-nowrap w-min p-2 mt-4 hover:cursor-pointer hover:font-gray-dark"}
-                        onClick={handleSubmit}
-                    >
-                        <Upload size={18}/>
-                        <div className="ml-2 text-sm">Upload Resource</div>
-                    </button>
-
-                </div>
-                    {toast && (
-                        <StatusToast
-                            message={toast.message}
-                            type={toast.type}
-                            icon={toast.icon}
-                            onClose={() => setToast(null)}
-                        />
-                    )}
                 </DashboardWorkspace>
             </DashboardScrollable>
-        </div>
-    )
+            {toast && (
+                <StatusToast
+                    marginTop={10}
+                    message={toast.message}
+                    type={toast.type}
+                    icon={toast.icon}
+                    onClose={() => setToast(null)}
+                />
+            )}
+        </DashboardParent>
+    );
 }

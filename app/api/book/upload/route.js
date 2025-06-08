@@ -4,9 +4,9 @@ import db from "@/lib/database";
 export async function POST(req) {
     try {
         const body = await req.json();
-        const { title, subject, semester, bookAuthor, author, university, bookUrl } = body;
+        const { title, subject, semester, bookAuthor, author, university, url } = body;
 
-        if (!title || !subject || !semester || !bookAuthor || !author || !university || !bookUrl) {
+        if (!title || !subject || !semester || !bookAuthor || !author || !university || !url) {
             return NextResponse.json({ success: false, message: "Missing required fields" }, { status: 400 });
         }
 
@@ -19,7 +19,7 @@ export async function POST(req) {
             bookAuthor,
             author,
             university,
-            bookUrl,
+            url,
             createdAt: new Date(),
         };
 

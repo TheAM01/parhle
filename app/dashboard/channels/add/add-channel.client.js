@@ -7,13 +7,13 @@ import axios from "axios";
 import StatusToast from "@/components/ui/StatusToast";
 import {DashboardScrollable, DashboardWorkspace, PageTitle} from "@/components/ui/Structure";
 
-export default function AddChannel({user, sidebarStatus}) {
+export default function AddChannelClient({user, sidebarStatus}) {
 
     const [formData, setFormData] = useState({
         title: "",
         subject: "",
         author: user.username,
-        university: "University of Karachi",
+        university: "",
         description: "",
         url: "",
     });

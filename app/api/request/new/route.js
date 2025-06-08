@@ -21,10 +21,23 @@ export async function POST(req) {
             author,
             priority,
             description,
+            status: 'Open',
             createdAt: new Date(),
         };
         // return console.log(newRequest)
         const result = await collection.insertOne(newRequest);
+
+        if (author !== "anonymous") {
+            const user = await db.collection("users").findOne({username: author});
+            if (!user) return;
+
+            await db.collection("users").updateOne(
+                {username: author},
+                {
+                    $push: { 'contributions.requests.created': result.insertedId }
+                }
+            )
+        }
 
         return NextResponse.json({ success: true, message: "Request added successfully", insertedId: result.insertedId }, { status: 201 });
     } catch (error) {

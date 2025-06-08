@@ -7,7 +7,7 @@ import {HorizontalRule} from "@/components/ui/HorizontalRule";
 import {PageTitle} from "@/components/ui/Structure";
 import StatusToast from "@/components/ui/StatusToast";
 
-export default function RequestResource({user}) {
+export default function RequestClient({user}) {
 
     const [formData, setFormData] = useState({
         title: "",
@@ -69,12 +69,9 @@ export default function RequestResource({user}) {
 
                     <RadioGroup
                         options={[
-                            { name: "Notes", value: "Notes" },
-                            { name: "Books", value: "Books" },
-                            { name: "Past Papers", value: "Past Papers" },
-                            { name: "Slides", value: "Slides" },
-                            { name: "Lectures", value: "Lectures" },
-                            { name: "Other", value: "Other" }
+                            { name: "Resource", value: "Resource" },
+                            { name: "Book", value: "Book" },
+                            { name: "Channel", value: "Channel" },
                         ]}
                         name="resourceType"
                         value={formData.resourceType}
@@ -165,9 +162,9 @@ export default function RequestResource({user}) {
 
                     <RadioGroup
                         options={[
-                            { name: "Not Urgent", value: "1" },
-                            { name: "Somewhat Urgent", value: "2" },
-                            { name: "Very Urgent", value: "3" }
+                            { name: "Not Urgent", value: "Low" },
+                            { name: "Somewhat Urgent", value: "Medium" },
+                            { name: "Very Urgent", value: "High" }
                         ]}
                         name="priority"
                         value={formData.priority}

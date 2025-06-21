@@ -3,13 +3,17 @@
 import {useState} from "react";
 import {useRouter} from "next/navigation";
 import Link from "next/link";
+import Spinner from "@/components/ui/Spinner";
+import {HorizontalRule} from "@/components/ui/HorizontalRule";
 
 export default function LoginClient() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [loading, setLoading] = useState(false);
     const router = useRouter();
 
     const handleLogin = async () => {
+        setLoading(true);
         const res = await fetch("/api/user/login", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -22,6 +26,7 @@ export default function LoginClient() {
             router.push("/dashboard");
         } else {
             alert(data.message || "Login failed");
+            setLoading(false);
         }
     };
 
@@ -51,11 +56,17 @@ export default function LoginClient() {
                         onChange={(e) => setPassword(e.target.value)}
                     />
                 </div>
-                <button
-                    onClick={handleLogin}
-                    className={"flex bg-white text-black text-sm items-center justify-center p-2 font-semibold text-center mt-4 cursor-pointer duration-200 hover:shadow-lg shadow-white/20"}
-                >Login</button>
-                <div className="text-base text-gray-dark font-semibold justify-center mt-5 gap-1">Don't have an account? <Link href={"/user/signup"} className={"hover:text-white"}>Sign up</Link></div>
+                <HorizontalRule/>
+                {
+                    loading ?
+                        <div className="flex-1 justify-center p-2"><Spinner/></div>
+                        :
+                        <button
+                            onClick={handleLogin}
+                            className={"flex bg-white text-black text-sm items-center justify-center p-2 font-semibold text-center mt-4 cursor-pointer duration-200 hover:shadow-lg shadow-white/20"}
+                        >Login</button>
+                }
+                <div className="text-base text-gray-dark font-semibold justify-center mt-5 gap-1">Don't have an account? <Link href={"/user/signup"} className={"hover:text-white duration-150 text-gray-medium"}>Sign up</Link></div>
             </div>
         </div>
     )

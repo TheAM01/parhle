@@ -174,11 +174,11 @@ export const links = [
             },
             {
                 name: "Contribute",
-                href: "#"
+                href: "/docs/guide"
             },
             {
-                name: "Help",
-                href: "#"
+                name: "Contact",
+                href: "/docs/contact"
             }
         ]
     },
@@ -204,15 +204,15 @@ export const links = [
         items: [
             {
                 name: "Cookies",
-                href: "#"
+                href: "/docs/policies/cookies"
             },
             {
                 name: "Content",
-                href: "#"
+                href: "/docs/policies/content"
             },
             {
                 name: "Copyright",
-                href: "#"
+                href: "/docs/policies/copyright"
             }
         ]
     },

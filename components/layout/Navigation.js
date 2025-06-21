@@ -39,12 +39,15 @@ export default function Navigation({}) {
         </LinkButton>
     )
 
+    const navigationItemTailwindClass = "flex m-3.5 uppercase text-base no-underline text-gray-light font-normal duration-100 hover:text-gray-medium"
+
     const navigationItems = [
-        <Link key={"1"} href={"/books"} onClick={() => setOpen(false)} className={"flex m-3.5 uppercase text-base no-underline text-gray-light font-normal duration-100 hover:text-gray-medium"}>Books</Link>,
-        <Link key={"2"} href={"/channels"} onClick={() => setOpen(false)} className={"flex m-3.5 uppercase text-base no-underline text-gray-light font-normal duration-100 hover:text-gray-medium"}>Channels</Link>,
-        <Link key={"3"} href={"/resources"} onClick={() => setOpen(false)} className={"flex m-3.5 uppercase text-base no-underline text-gray-light font-normal duration-100 hover:text-gray-medium"}>Resources</Link>,
-        <Link key={"5"} href={"/request"} onClick={() => setOpen(false)} className={"flex m-3.5 uppercase text-base no-underline text-gray-light font-normal duration-100 hover:text-gray-medium"}>Request</Link>,
-        <Link key={"6"} href={"/about"} onClick={() => setOpen(false)} className={"flex m-3.5 uppercase text-base no-underline text-gray-light font-normal duration-100 hover:text-gray-medium"}>About</Link>
+        <Link key={"1"} href={"/books"} onClick={() => setOpen(false)} className={navigationItemTailwindClass}>Books</Link>,
+        <Link key={"2"} href={"/channels"} onClick={() => setOpen(false)} className={navigationItemTailwindClass}>Channels</Link>,
+        <Link key={"3"} href={"/resources"} onClick={() => setOpen(false)} className={navigationItemTailwindClass}>Resources</Link>,
+        <Link key={"5"} href={"/request"} onClick={() => setOpen(false)} className={navigationItemTailwindClass}>Request</Link>,
+        <Link key={"6"} href={"/docs/guide"} onClick={() => setOpen(false)} className={navigationItemTailwindClass}>Guide</Link>,
+        <Link key={"7"} href={"/about"} onClick={() => setOpen(false)} className={navigationItemTailwindClass}>About</Link>
     ];
 
     return (

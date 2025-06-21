@@ -48,8 +48,9 @@ export default function DashboardClient({user, sidebarStatus}) {
                             <DashboardHeading>To Do</DashboardHeading>
                             <div className="text-gray-dark mb-3">These are automatically generated suggestions.</div>
                             <div className={"flex-col "}>
-                                <li className={"text-gray-medium mb-2"}>[Optional] Announcements page, Aura Leaderboard</li>
-                                <li className={"text-gray-medium mb-2"}>my-requests.client.js, uske baad sirf utils ko sahi jaga rakhna phir uske baad guidlins sahi se likhniin, guidelines ka alag se page banana, announcements banana (optional), notifications add krna, (optional leaderboard), baqi abad me abi mujhe kutta neend arahi, </li>
+                                {/*<li className={"text-gray-medium mb-2"}>[Optional] Announcements page, Aura Leaderboard</li>*/}
+                                {/*<li className={"text-gray-medium mb-2"}>my-requests.client.js, uske baad sirf utils ko sahi jaga rakhna phir uske baad guidlins sahi se likhniin, guidelines ka alag se page banana, announcements banana (optional), notifications add krna, (optional leaderboard), baqi abad me abi mujhe kutta neend arahi, </li>*/}
+                                <li className={"text-gray-medium mb-2"}>Read the Guide.</li>
                                 <li className={"text-gray-medium mb-2"}>Add new resources.</li>
                                 <li className={"text-gray-medium mb-2"}>Check requests and try to resolve some to gain community points.</li>
                                 <li className={"text-gray-medium mb-2"}>Join the community Discord Server!</li>
@@ -67,15 +68,19 @@ export default function DashboardClient({user, sidebarStatus}) {
                             <DashboardHeading>Notifications</DashboardHeading>
                             <DashboardNotification
                                 sender={"System"}
-                                message={"Requests system is temporarily taken down to manage moderation queue."}
+                                message={"Made an addition of a section to the homepage."}
                             />
                             <DashboardNotification
                                 sender={"System"}
-                                message={"Added ability to edit uploaded resources & books."}
+                                message={"Added a contact page."}
                             />
                             <DashboardNotification
                                 sender={"System"}
-                                message={"Added the ability to edit profile."}
+                                message={"Fixed a minor login bug."}
+                            />
+                            <DashboardNotification
+                                sender={"System"}
+                                message={"Added 'Guide' page."}
                             />
                         </DashboardWorkspaceBlock>
                     </div>

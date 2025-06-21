@@ -1,13 +1,11 @@
 import "./globals.css";
+import ClientLayout from "./client-layout";
+
 
 export const metadata = {
   title: "Parhle - Fail Hojayega",
   description: "Fail Hojayega",
 };
-
-import { Suspense } from "react";
-import ClientLayout from "./client-layout";
-
 
 export default function RootLayout({ children }) {
     return (

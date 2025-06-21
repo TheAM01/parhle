@@ -8,6 +8,7 @@ import {priorities, requestStatuses, rewards} from "@/public/data";
 import {SmallIconTextButton} from "@/components/ui/Structure";
 import {useEffect, useState} from "react";
 import Spinner from "@/components/ui/Spinner";
+import Link from "next/link"
 
 export const RequestsCard = ({request, index}) => {
     const priority = priorities[request.priority.toLowerCase()];
@@ -288,4 +289,24 @@ export const ChannelCard = ({channel, index}) => {
             </div>
         </motion.a>
     )
+}
+
+export const ContactMeCard = ({method}) => {
+    const commonProps = {
+        href: method.url,
+        className: "flex border-2 border-gray-300 p-4 gap-2 hover:bg-black hover:text-white duration-200 cursor-pointer hover:scale-105",
+        ...(method.url !== "#" ? { target: "_blank", rel: "noopener noreferrer" } : {})
+    };
+
+    return (
+        <Link {...commonProps}>
+            {method.icon}
+            <div className="flex-col gap-2">
+                <div className="font-semibold">{method.title}</div>
+                <div className="text-sm text-gray-dark">{method.description}</div>
+                <div className="text-sm font-code">{method.contact}</div>
+            </div>
+        </Link>
+    )
+
 }

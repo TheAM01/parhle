@@ -18,7 +18,7 @@ import {
     GitPullRequestArrow,
     MonitorPlay,
     Pencil,
-    User, Send, ClipboardList, FileText, Upload, FilePenLine
+    User, Send, ClipboardList, FileText, Upload, FilePenLine, BadgeCheck, Bell
 } from "lucide-react";
 import {usePathname, useRouter} from "next/navigation";
 import {useState} from "react";
@@ -39,6 +39,11 @@ export default function Sidebar({user, sidebarStatus}) {
                     icon: Home
                 },
                 {
+                  title: "Guide",
+                  href: "/docs/guide",
+                  icon: BadgeCheck,
+                },
+                {
                     title: "Exit Dashboard",
                     href: "/",
                     icon: LogOut
@@ -52,6 +57,11 @@ export default function Sidebar({user, sidebarStatus}) {
                     title: "Profile",
                     href: "/dashboard/profile",
                     icon: User
+                },
+                {
+                    title: "Notifications",
+                    href: "#",
+                    icon: Bell,
                 }
             ]
         },

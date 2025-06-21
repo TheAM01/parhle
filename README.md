@@ -27,7 +27,20 @@ Whether you're sharing notes, discovering new study content, or engaging with yo
 
 ## Version History
 
-### v1.3 (Latest)
+### v1.4 (Latest)
+
+**New Features:**
+- Added documentation; guides, contact among other things.
+
+**Improvement & Fixes:**
+- Many bugs eliminated including the login bug.
+- Added another section to the homepage.
+- Added `Geist Mono` as a font.
+- A lot of unnoticeable but major fixes.
+
+
+
+### v1.3
 
 **New Features:**
 - Dashboard sidebar now displays the currently logged-in user for a personalized experience.

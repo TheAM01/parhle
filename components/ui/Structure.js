@@ -28,7 +28,7 @@ export const DashboardParent = ({children}) => {
 }
 
 export const DashboardHeading = ({children}) => {
-    return <div className="text-2xl mb-1 font-bold">{children}</div>
+    return <div className="text-2xl mb-1 font-bold gap-2">{children}</div>
 }
 
 export const ExpandableTextInputGroup = ({title, isRequired=true, name, value, onChange, placeholder, readonly=false}) => {

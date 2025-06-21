@@ -1,11 +1,10 @@
-
 "use client";
 
 import { useEffect, useRef } from "react"
 import {LinkButton} from "@/components/ui/Buttons";
 import {motion, useScroll, useTransform} from "framer-motion"
 import * as data from "@/public/data";
-
+import {Check} from "lucide-react";
 
 
 export default function Home() {
@@ -15,8 +14,6 @@ export default function Home() {
 
     const opacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
     const scale = useTransform(scrollYProgress, [0, 1], [1, 0.3]);
-
-
 
 
     useEffect(() => {
@@ -145,9 +142,102 @@ export default function Home() {
                 </div>
             </div>
 
-            <div className="bg-black h-min flex-col items-center p-2 sm:p-5 lg:p-10">
+            <div className="bg-black text-white h-min flex-col items-center p-2 sm:p-5 lg:p-10 texture-hero">
+
                 <motion.div
                     className="font-semibold text-white text-2xl sm:text-3xl m-4 text-center"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                    viewport={{ once: true }}
+                >
+                    Join Our Knowledge Ecosystem
+                </motion.div>
+
+                <div className="gap-6">
+                    <div className="flex-col justify-center">
+                        <motion.div
+                            className="p-6 bg-gray-800 border border-gray-700 flex-col gap-4 w-120"
+                            initial={{ opacity: 0, x: -40 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 1 }}
+                            viewport={{ once: true }}
+                        >
+                            <div className="text-white text-2xl font-semibold">
+                                Why Contribute?
+                            </div>
+                            <div className="flex-col gap-4">
+                                {[
+                                    "Help others while reinforcing your own understanding",
+                                    "Build your academic reputation and portfolio",
+                                    "Connect with like-minded students and educators",
+                                    "Earn recognition and rewards for quality contributions",
+                                    "Access premium resources by becoming an active contributor",
+                                ].map((reason, i) => (
+                                    <div className="gap-2 items-center" key={i+"lkhg"}>
+                                        <div className=" text-black bg-white p-1 flex-shrink-0 w-6 h-6 justify-center leading-none rounded-full items-center">
+                                            <Check/>
+                                        </div>
+                                        <div className="text-gray-medium">{reason}</div>
+                                    </div>
+                                ))}
+                            </div>
+                        </motion.div>
+                    </div>
+
+                    <div className="flex-col gap-6  w-120">
+                        <motion.div
+                            className="flex-col p-6 bg-white gap-4"
+                            initial={{ opacity: 0, x: 40 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 1 }}
+                            viewport={{ once: true }}
+                        >
+                            <div className="text-black text-2xl font-semibold">
+                                How Parhle Works
+                            </div>
+                            <div className="text-gray-600 mb-2">Our platform is powered by students like you. Every note, book, and resource shared strengthens our collective knowledge base.</div>
+                            <div className="flex-col gap-4">
+                                {[
+                                    "Sign up and create your academic profile",
+                                    "Upload your notes, books, or study materials",
+                                    "Connect with peers from your university",
+                                    "Access resources shared by others",
+                                    "Collaborate and improve together",
+                                ].map((working, i) => (
+                                    <div className={"gap-2 items-center"} key={i+"wokr"}>
+                                        <div className=" text-white bg-black p-1 flex-shrink-0 w-6 h-6 justify-center leading-none font-bold items-center">
+                                            {i+1}
+                                        </div>
+                                        <div className="text-black">{working}</div>
+                                    </div>
+                                ))}
+                            </div>
+                        </motion.div>
+
+                        <motion.div
+                            className="p-6 bg-gray-800 border border-gray-700 gap-4 flex-col text-white "
+                            initial={{ opacity: 0, x: 40 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 1 }}
+                            viewport={{ once: true }}
+                        >
+                            <div className="font-bold text-lg">
+                                Community Testimonial
+                            </div>
+                            <div className="text-gray-dark italic">
+                                "I started by uploading my SRE notes, and within a week I had access to quality materials for all my courses. The exchange of knowledge has transformed my academic performance."
+                            </div>
+                            <div className="w-full">— Ahmed H., UBIT </div>
+                        </motion.div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div className="bg-white h-min flex-col items-center p-2 sm:p-5 lg:p-10">
+                <motion.div
+                    className="font-semibold text-black text-2xl sm:text-3xl m-4 text-center"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
@@ -156,7 +246,7 @@ export default function Home() {
                     Ready to Revolutionize Your Study Experience?
                 </motion.div>
                 <motion.div
-                    className="text-gray-400 mb-8 text-center"
+                    className="text-gray-600 mb-8 text-center"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.1 }}
@@ -170,7 +260,7 @@ export default function Home() {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.2 }}
                     viewport={{ once: true }}
-                    className={"mb-4"}
+                    className={"mb-4 border-2 border-black"}
                 >
                     <LinkButton href={"/user/signup"}>
                         Get Started

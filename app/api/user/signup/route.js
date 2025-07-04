@@ -21,13 +21,13 @@ export async function POST(req) {
             return NextResponse.json({ success: false, message: "Email already exists" }, { status: 400 });
         }
 
-        const existingUser = await db.collection("users").findOne({ username });
+        const existingUser = await db.collection("users").findOne({ username: username.toLowerCase() });
         if (existingUser) {
             return NextResponse.json({ success: false, message: "Username already exists" }, { status: 400 });
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
-        const createdUser = new User(fullName, username, email, hashedPassword, university, semester, degree, course, "student")
+        const createdUser = new User(fullName, username.toLowerCase(), email, hashedPassword, university, semester, degree, course, "student")
         await db.collection("users").insertOne(createdUser);
 
         return NextResponse.json({ success: true, message: "User registered successfully", user: username }, { status: 201 });

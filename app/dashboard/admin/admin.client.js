@@ -13,6 +13,8 @@ import {Button} from "@/components/ui/Buttons";
 import {CalendarPlus} from "lucide-react";
 
 export default function AdminClient({user, sidebarStatus}) {
+
+
     
     
     return (
@@ -34,11 +36,11 @@ export default function AdminClient({user, sidebarStatus}) {
                                 </Button>
                                 <Button eventOnClick={() => {}}>
                                     <CalendarPlus size={17}/>
-                                    Increment Users' Semesters
+                                    Placeholder
                                 </Button>
                                 <Button eventOnClick={() => {}}>
                                     <CalendarPlus size={17}/>
-                                    Increment Users' Semesters
+                                    Placeholder
                                 </Button>
                             </div>
                         </DashboardWorkspaceBlock>

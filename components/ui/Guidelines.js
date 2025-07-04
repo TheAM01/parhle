@@ -137,7 +137,9 @@ export const ChannelGuidelines = () => {
     return (
         <DashboardWorkspaceBlock>
 
-            <DashboardHeading>CHANNEL Guidelines</DashboardHeading>
+            <DashboardHeading>Guidelines</DashboardHeading>
+
+            <div className="text-sm text-gray-medium gap-1 inline! mb-2">PLEASE READ: This page is for sharing YouTube CHANNELS only. If you are interested in sharing a video or playlist, please do so in Resources.</div>
 
             <div className="text-sm text-gray-dark gap-1 inline! mb-4 ">Please read these guidelines to comply with our content policy. All content will be moderated; resources not complying with our policies will be removed and users will be banned whereas minor mistakes will be automatically corrected. Your resource may be sent to a moderation queue for upto 5 days. Fields marked with a (<span className={" inline text-red-500"}>*</span>) are mandatory. All fields must be in compliance with the rules below.</div>
 

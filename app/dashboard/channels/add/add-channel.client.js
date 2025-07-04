@@ -1,6 +1,6 @@
 "use client";
 
-import {Upload, Check, X} from "lucide-react";
+import {Upload, Check, X, Save} from "lucide-react";
 import {useState} from "react";
 import Sidebar from "@/components/layout/Sidebar";
 import axios from "axios";
@@ -10,9 +10,12 @@ import {
     DashboardParent,
     DashboardScrollable,
     DashboardWorkspace,
-    DashboardWorkspaceBlock,
-    PageTitle
+    DashboardWorkspaceBlock, ExpandableTextAreaGroup, ExpandableTextInputGroup,
+    PageTitle, SmallIconTextButton
 } from "@/components/ui/Structure";
+import {HorizontalRule} from "@/components/ui/HorizontalRule";
+import Spinner from "@/components/ui/Spinner";
+import {ChannelGuidelines} from "@/components/ui/Guidelines";
 
 export default function AddChannelClient({user, sidebarStatus}) {
 
@@ -26,6 +29,8 @@ export default function AddChannelClient({user, sidebarStatus}) {
     });
 
     const [toast, setToast] = useState(null); // { message: '', icon: </>}
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     const handleChange = async (e) => {
 
@@ -105,8 +110,68 @@ export default function AddChannelClient({user, sidebarStatus}) {
                     <div className="gap-6 flex-col">
                         <DashboardWorkspaceBlock>
                             <DashboardHeading>Details</DashboardHeading>
-                            <div className="gap-4"></div>
+                            <div className="gap-4 flex-col">
+                                <div className={"gap-4 flex-col md:flex-row"}>
+                                    <ExpandableTextInputGroup
+                                        title={"Title"}
+                                        isRequired={true}
+                                        name={"title"}
+                                        onChange={handleChange}
+                                        value={formData.title}
+                                        placeholder={"e.g. Linus Tech Tips"}
+                                        readonly={true}
+                                    />
+                                    <ExpandableTextInputGroup
+                                        title={"Subject"}
+                                        isRequired={true}
+                                        name={"subject"}
+                                        onChange={handleChange}
+                                        value={formData.subject}
+                                        placeholder={"e.g. Digital Logic Design"}
+                                    />
+                                </div>
+                                <ExpandableTextInputGroup
+                                    title={"University"}
+                                    isRequired={true}
+                                    name={"university"}
+                                    onChange={handleChange}
+                                    value={formData.university}
+                                    placeholder={"e.g. University of Karachi"}
+                                />
+                                <ExpandableTextInputGroup
+                                    title={"Channel URL"}
+                                    isRequired={true}
+                                    name={"url"}
+                                    onChange={handleChange}
+                                    value={formData.url}
+                                    placeholder={"https://youtube.com/@LinusTechTips"}
+                                />
+                                <ExpandableTextAreaGroup
+                                    title={"Description"}
+                                    name={"description"}
+                                    onChange={handleChange}
+                                    isRequired={false}
+                                    placeholder={"(Optional) Describe in a few words about what this video/playlist does and why it's worth sharing..."}
+                                    value={formData.description}
+                                />
+                            </div>
+
+                            <div className="py-2 flex-col">
+                                <HorizontalRule/>
+                                {!!error &&
+                                    <div className="text-sm text-red-500">{error}</div>
+                                }
+                            </div>
+
+                            {loading ? <Spinner/> :
+                                <SmallIconTextButton
+                                    Icon={Save}
+                                    text={"Save Changes"}
+                                    onClick={handleSubmit}
+                                />
+                            }
                         </DashboardWorkspaceBlock>
+                        <ChannelGuidelines/>
                     </div>
 
                 </DashboardWorkspace>

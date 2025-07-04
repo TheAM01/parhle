@@ -9,7 +9,7 @@ import {
     MessageCircleQuestion,
     MessageCircle,
     Users,
-    BookOpenText, PersonStanding, Search, CloudUpload, DownloadCloud, Heart, Shield, PackagePlus
+    BookOpenText, PersonStanding, Search, CloudUpload, DownloadCloud, Heart, Shield, PackagePlus, Text
 } from "lucide-react";
 import {DashboardHeading, DashboardWorkspace} from "@/components/ui/Structure";
 import {HorizontalRule} from "@/components/ui/HorizontalRule";
@@ -242,7 +242,7 @@ export default function GuidePage({}) {
                     </div>
                     <div className="gap-4 p-4 flex-col">
                         <div className="text-lg font-bold">Dashboard Features</div>
-                        <div className="gap-4 ">
+                        <div className="gap-4 flex-col sm:flex-row ">
                             <div className="flex-col flex-1">
                                 <div className="font-semibold mb-2 text-green-400">For Contributors</div>
                                 <li className={"text-gray-medium text-sm"}>Upload and manage your resources</li>
@@ -267,6 +267,18 @@ export default function GuidePage({}) {
                                 <div className="text-sm text-gray-medium">{feature.description}</div>
                             </div>
                         ))}
+                    </div>
+                </div>
+            )
+        },
+        "project-details": {
+            title: "Project Details",
+            icon: <Text size={20}/>,
+            content: (
+                <div className="flex-col gap-2 p-6">
+                    <DashboardHeading>Project Details</DashboardHeading>
+                    <div className={"text-gray-medium mb-4 gap-2 flex-col"}>
+                        All the meta details about this project if you would like to know more. Coming soon...
                     </div>
                 </div>
             )

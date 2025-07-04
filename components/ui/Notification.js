@@ -1,8 +1,8 @@
 import {Check, Trash} from "lucide-react";
 import {useState} from "react";
 
-export const DashboardNotification = ({sender, message}) => {
-    const [read, setRead] = useState(false);
+export const DashboardNotification = ({sender, message, isRead=true}) => {
+    const [read, setRead] = useState(isRead);
     const [visible, setVisible] = useState(true);
     return (
         <div className={`${visible ? "flex!" : "hidden!"} ${read ? "bg-gray-900 border border-gray-800" : "bg-gray-800"}  p-1 gap-2 justify-between flex-col sm:flex-row`}>
@@ -21,6 +21,3 @@ export const DashboardNotification = ({sender, message}) => {
         </div>
     )
 }
-
-// w-[100px]
-// w-[100px]

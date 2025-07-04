@@ -24,7 +24,7 @@ export const DisabledButton = ({text, extraClasses}) => {
 
 export function Button({children, onClick}) {
     return (
-        <button onClick={onClick} className={"px-3.5 py-2.5 capitalize bg-white text-gray-dark duration-100 text-sm font-semibold no-underline border-0 hover:text-black hover:cursor-pointer"}>{children}</button>
+        <button onClick={onClick} className={"flex items-center gap-2 bg-white text-black p-2 text-nowrap cursor-pointer shadow-black hover:shadow-md duration-100"}>{children}</button>
     )
 }
 

@@ -1,4 +1,3 @@
-// app/api/books/route.js
 import db from "@/lib/database";
 import { NextResponse } from "next/server";
 

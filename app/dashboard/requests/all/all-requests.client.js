@@ -1,12 +1,12 @@
 "use client";
 
+
 import {useEffect, useState} from "react";
-import {Search, Filter} from "lucide-react";
-import {Input} from "@/components/ui/Inputs";
 import Spinner from "@/components/ui/Spinner";
 import Sidebar from "@/components/layout/Sidebar";
 import {DashboardParent, DashboardScrollable, DashboardWorkspace, PageTitle} from "@/components/ui/Structure";
 import {RequestsCard} from "@/components/ui/Cards";
+
 
 export default function AllRequestsClient({user, sidebarStatus}) {
     const [filter, setFilter] = useState("");

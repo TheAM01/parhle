@@ -1,14 +1,12 @@
 "use server";
 
-
 import { redirect } from 'next/navigation';
-import MyResourcesClient from './my-resources.client';
+import AdminClient from './admin.client';
 import {getSession} from "@/lib/get-session";
 import {cookies} from "next/headers";
 import db from "@/lib/database";
 
-
-export default async function MyResourcesPage() {
+export default async function MyChannelsPage() {
 
     const session = await getSession();
     const cookieStore = await cookies();
@@ -16,11 +14,14 @@ export default async function MyResourcesPage() {
 
     if (sidebarStatus !== undefined) sidebarStatus.value = sidebarStatus.value !== "false";
     if (!session.user) {
-        return redirect(`/user/login?login-first=true&redirect-to=${encodeURIComponent("dashboard/resources/my")}`);
+        return redirect(`/user/login?login-first=true&redirect-to=${encodeURIComponent("dashboard/admin")}`);
     }
 
     const userData = await db.collection("users").findOne({username: session.user.username});
     delete userData.password;
 
-    return <MyResourcesClient user={JSON.parse(JSON.stringify(userData))} sidebarStatus={sidebarStatus?.value || false}/>;
+    if (userData.role !== "admin")
+        return redirect("dashboard");
+
+    return <AdminClient user={JSON.parse(JSON.stringify(userData))} sidebarStatus={sidebarStatus?.value || false}/>;
 }

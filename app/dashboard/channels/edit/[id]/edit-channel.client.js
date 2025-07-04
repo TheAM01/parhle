@@ -7,7 +7,6 @@ import ContentGuidelines, {
     DashboardScrollable,
     DashboardWorkspace,
     DashboardWorkspaceBlock,
-    ExpandableSelectInputGroup,
     ExpandableTextAreaGroup,
     ExpandableTextInputGroup,
     PageTitle,

@@ -1,14 +1,10 @@
 "use client";
 
 import {useEffect, useState} from "react";
-import {Search, Filter, BookOpen, Heart, Calendar, University, User} from "lucide-react";
-import {motion} from "framer-motion";
+import {Search, Filter} from "lucide-react";
 import {Input} from "@/components/ui/Inputs";
 import Spinner from "@/components/ui/Spinner";
 import {DashboardWorkspace} from "@/components/ui/Structure";
-import {ScreenSizeGetter} from "@/components/utility";
-import {HorizontalRule} from "@/components/ui/HorizontalRule";
-import {VisitResourceButton} from "@/components/ui/Buttons";
 import {BooksCard} from "@/components/ui/Cards";
 
 
@@ -99,11 +95,9 @@ export default function BooksPage() {
 
                 </div>
 
-                <ScreenSizeGetter/>
-                {/*grid! grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4*/}
                 <div className={`${loading ? "justify-center pt-10" : "flex-col gap-6"} mt-2`}>
                     {(!loading ? filteredNotes.map((book, index) => (
-                        <BooksCard book={book} index={index}/>
+                        <BooksCard book={book} index={index} key={index}/>
                     )) : <Spinner/>)}
                 </div>
             </DashboardWorkspace>

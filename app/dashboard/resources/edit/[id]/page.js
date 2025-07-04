@@ -1,11 +1,13 @@
 "use server";
 
+
 import { redirect } from 'next/navigation';
 import EditResourceClient from './edit-resource.client';
 import {getSession} from "@/lib/get-session";
 import {cookies} from "next/headers";
 import db from "@/lib/database";
 import {ObjectId} from "mongodb";
+
 
 export default async function EditResourcePage({params}) {
     const { id } = await params;

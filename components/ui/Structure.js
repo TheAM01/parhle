@@ -1,18 +1,19 @@
-import {FileText, User} from "lucide-react";
-
 export const DashboardScrollable = ({children}) => {
     return (
         <div className="w-full h-screen overflow-y-scroll">{children}</div>
     )
 }
 
+
 export const DashboardWorkspace = ({extraClasses, children}) => {
     return <div className={`flex-col w-full max-w-screen-xl p-4 lg:p-10 mx-auto ${extraClasses}`}>{children}</div>
 }
 
+
 export const DashboardWorkspaceBlock = ({extraClasses, children}) => {
     return <div className={`w-full bg-gray-900 border border-gray-800 p-6 flex-col ${extraClasses}`}>{children}</div>
 }
+
 
 export const PageTitle = ({heading, description}) => {
     return (
@@ -23,13 +24,16 @@ export const PageTitle = ({heading, description}) => {
     )
 }
 
+
 export const DashboardParent = ({children}) => {
     return <div className="w-screen bg-black flex-row text-white min-h-screen pt-8 lg:pt-0 texture-mosaic">{children}</div>
 }
 
+
 export const DashboardHeading = ({children}) => {
     return <div className="text-2xl mb-1 font-bold gap-2">{children}</div>
 }
+
 
 export const ExpandableTextInputGroup = ({title, isRequired=true, name, value, onChange, placeholder, readonly=false}) => {
     return (
@@ -40,7 +44,7 @@ export const ExpandableTextInputGroup = ({title, isRequired=true, name, value, o
                 name={name}
                 className={` ${readonly ? "bg-gray-700 text-gray-medium" : "bg-gray-800 text-white" }  text-sm flex-1 flex border-gray-700 border  placeholder-gray-medium p-2 outline-0`}
                 type={"text"}
-                value={value}
+                value={value ?? ""}
                 onChange={onChange}
                 required={isRequired}
                 placeholder={placeholder}
@@ -48,6 +52,7 @@ export const ExpandableTextInputGroup = ({title, isRequired=true, name, value, o
         </div>
     )
 }
+
 
 export const ExpandableSelectInputGroup = ({title, isRequired=true, name, defaultValue, onChange, options}) => {
     return (
@@ -70,6 +75,7 @@ export const ExpandableSelectInputGroup = ({title, isRequired=true, name, defaul
     )
 }
 
+
 export const ExpandableTextAreaGroup = ({title, name, value, onChange, isRequired=true, placeholder}) => {
     return (
         <div className="flex-col flex-1">
@@ -87,12 +93,14 @@ export const ExpandableTextAreaGroup = ({title, name, value, onChange, isRequire
     )
 }
 
+
 export const SmallIconTextButton = ({Icon, text, onClick, extraClasses}) => {
     return <button onClick={onClick} className={`gap-1 text-sm bg-white text-gray-dark items-center w-min text-nowrap flex p-2 font-semibold duration-200 cursor-pointer hover:text-black ${extraClasses} `}>
         {Icon && <Icon size={15} className={"flex items-center"}/>}
         {text}
     </button>
 }
+
 
 export default function ContentGuidelines({ title, lines }) {
     return (
@@ -104,6 +112,7 @@ export default function ContentGuidelines({ title, lines }) {
         </div>
     );
 }
+
 
 export const DashboardStatsBlock = ({title, count, Icon}) => {
     return (

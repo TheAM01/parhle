@@ -15,7 +15,7 @@ import {
     Layers,
     Home,
     ListTodo,
-    GitPullRequestArrow,
+    LayoutDashboard,
     MonitorPlay,
     Pencil,
     User, Send, ClipboardList, FileText, Upload, FilePenLine, BadgeCheck, Bell
@@ -28,7 +28,7 @@ import {IconButton, IconLinkButton} from "@/components/ui/Buttons";
 export default function Sidebar({user, sidebarStatus}) {
     const pathname = usePathname();
     const router = useRouter();
-
+    console.log(user)
     const pages = [
         {
             title: "Dashboard",
@@ -146,6 +146,15 @@ export default function Sidebar({user, sidebarStatus}) {
             ]
         }
     ];
+
+    if (user.role === "admin")
+        pages[1].items.push(
+            {
+                title: "Admin Panel",
+                href: "/dashboard/admin",
+                icon: LayoutDashboard
+            }
+        )
 
     const toggleSidebar = () => {
         const newStatus = !isOpen;

@@ -1,10 +1,13 @@
 "use client";
+
+
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import {HorizontalRule} from "@/components/ui/HorizontalRule";
 import StatusToast from "@/components/ui/StatusToast";
 import Spinner from "@/components/ui/Spinner";
 import { universityData} from "@/public/data";
+
 
 export default function SignupClient() {
     const [formData, setFormData] = useState({
@@ -58,7 +61,7 @@ export default function SignupClient() {
         setFormData((prev) => ({ ...prev, [name]: value }));
 
         if (name === "username") {
-            const filtered = value.replace(/[^a-zA-Z0-9_]/g, "");
+            const filtered = value.replace(/[^a-zA-Z0-9_]/g, "").toLowerCase();
             setFormData((prev) => ({
                 ...prev,
                 username: filtered,

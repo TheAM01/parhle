@@ -1,7 +1,7 @@
 'use client';
 
 
-import ContentGuidelines, {
+import {
     DashboardHeading,
     DashboardParent,
     DashboardScrollable,
@@ -16,7 +16,6 @@ import StatusToast from "@/components/ui/StatusToast";
 import Spinner from "@/components/ui/Spinner";
 import {useRouter} from "next/navigation";
 import {priorities, requestStatuses} from "@/public/data";
-import {ScreenSizeGetter} from "@/components/utility";
 import {BookGuidelines, ChannelGuidelines, ResourceGuidelines} from "@/components/ui/Guidelines";
 import axios from "axios";
 
@@ -187,7 +186,6 @@ export default function FulfillRequestClient({user, sidebarStatus, request}) {
                             </div>
                         </DashboardWorkspaceBlock>
 
-                        <ScreenSizeGetter/>
 
                         <DashboardWorkspaceBlock>
                             <DashboardHeading>Response</DashboardHeading>

@@ -1,4 +1,3 @@
-// app/api/logout/route.js
 import { getSession } from "@/lib/get-session";
 
 export async function POST() {

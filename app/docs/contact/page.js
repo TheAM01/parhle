@@ -7,6 +7,7 @@ import {HorizontalRule} from "@/components/ui/HorizontalRule";
 import {QuestionCircle} from "@geist-ui/icons";
 
 export default function ContactPage({}) {
+
     const contactMethods = [
         {
             title: "Email",
@@ -51,6 +52,7 @@ export default function ContactPage({}) {
             url: "#"
         },
     ];
+
     const contactDetails = [
         {
             icon: <Clock/>,
@@ -65,6 +67,7 @@ export default function ContactPage({}) {
             description: "Best reached via email or Discord"
         }
     ];
+
 
     return (
         <div className={"flex-col min-h-screen text-black pt-10 sm:pt-20 bg-white items-center gap-4 "}>
@@ -105,7 +108,7 @@ export default function ContactPage({}) {
                 <div className="bg-gray-100 p-4 flex-col gap-6">
                     <div className="w-full font-bold text-xl justify-center text-center">Before You Contact</div>
 
-                    <div className="gap-6">
+                    <div className="gap-6 flex-col md:flex-row">
                         <div className="flex-col flex-1">
                             <div className="font-semibold">For Bug Reports</div>
                             <li>Include your browser and device info</li>
@@ -120,12 +123,12 @@ export default function ContactPage({}) {
                         </div>
                     </div>
 
-                    <div className="gap-6">
+                    <div className="gap-6 flex-col md:flex-row">
                         <div className="flex-col flex-1">
                             <div className="font-semibold">For Contributions</div>
                             <li>Check the Guide page for contribution methods</li>
                             <li>Mention your skills and availability</li>
-                            <li>nclude examples of previous work if relevant</li>
+                            <li>Include examples of previous work if relevant</li>
                         </div>
                         <div className="flex-col flex-1">
                             <div className="font-semibold">For General Inquiries</div>

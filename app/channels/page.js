@@ -1,12 +1,9 @@
 "use client";
 
 import {useEffect, useState} from "react";
-import {Search, Filter, BookOpen, Heart, Calendar, University, User} from "lucide-react";
-import {motion} from "framer-motion";
+import {Search, Filter} from "lucide-react";
 import {Input} from "@/components/ui/Inputs";
-import axios from "axios";
 import Spinner from "@/components/ui/Spinner";
-import {HorizontalRule} from "@/components/ui/HorizontalRule";
 import {DashboardWorkspace} from "@/components/ui/Structure";
 import {ChannelCard} from "@/components/ui/Cards";
 
@@ -51,7 +48,7 @@ export default function ChannelsPage() {
                 note.university.toLowerCase().includes(searchTerm.toLowerCase()))
     );
 
-
+    console.log(filteredNotes)
     return (
         <div className="flex-col min-h-screen texture-mosaic text-white pt-10 sm:pt-20 bg-black items-center ">
             <DashboardWorkspace>
@@ -95,7 +92,7 @@ export default function ChannelsPage() {
 
                 <div className={`${loading ? "justify-center pt-10" : "grid! grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"} mt-2`}>
                     {(!loading ? filteredNotes.map((channel, index) => (
-                        <ChannelCard channel={channel} index={index}/>
+                        <ChannelCard channel={channel} index={index} key={index}/>
                     )) : <Spinner/>)}
                 </div>
 

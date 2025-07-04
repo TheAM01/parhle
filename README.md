@@ -23,7 +23,16 @@ Whether you're sharing notes, discovering new study content, or engaging with yo
 - **Persistent Sidebar:** Conveniently navigate with a sidebar that remembers your preferences.
 - **Secure Authentication:** Enhanced sign-up with additional fields to capture your academic info.
 
+
+### Upcoming Features:
+- Notifications
+- Fixed requests
+- Content Guide
+- Likes
+
 ---
+
+
 
 ## Version History
 

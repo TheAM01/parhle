@@ -1,4 +1,5 @@
 'use client';
+
 import { useEffect } from 'react';
 
 export default function StatusToast({ message, icon, onClose, marginTop=5 }) {

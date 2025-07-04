@@ -8,7 +8,7 @@ import {Input} from "@/components/ui/Inputs";
 import Spinner from "@/components/ui/Spinner";
 import Sidebar from "@/components/layout/Sidebar";
 import {HorizontalRule} from "@/components/ui/HorizontalRule";
-import {DashboardScrollable, DashboardWorkspace, PageTitle, SmallIconTextButton} from "@/components/ui/Structure";
+import {DashboardScrollable, DashboardWorkspace, PageTitle} from "@/components/ui/Structure";
 import Link from "next/link"
 
 

@@ -1,4 +1,3 @@
-// app/api/login/route.js
 import db from "@/lib/database";
 import bcrypt from "bcrypt";
 import { getSession } from "@/lib/get-session";

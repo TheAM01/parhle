@@ -1,8 +1,7 @@
-// app/api/signup/route.js
 import db from "@/lib/database";
 import bcrypt from "bcrypt";
 import { NextResponse } from "next/server";
-import {User} from "@/components/utility";
+import {User} from "@/lib/schemas";
 
 export async function POST(req) {
     try {

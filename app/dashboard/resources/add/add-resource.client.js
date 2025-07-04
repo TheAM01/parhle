@@ -4,7 +4,7 @@
 import {Check, Upload} from "lucide-react";
 import {useState} from "react";
 import Sidebar from "@/components/layout/Sidebar";
-import ContentGuidelines, {
+import {
     DashboardHeading, DashboardParent,
     DashboardScrollable,
     DashboardWorkspace,
@@ -34,6 +34,7 @@ export default function AddResourceClient({user, sidebarStatus}) {
 
 
     const handleChange = (e) => {
+        console.log("detected change")
         setFormData({...formData, [e.target.name]: e.target.value});
     };
 
@@ -88,6 +89,7 @@ export default function AddResourceClient({user, sidebarStatus}) {
                             <DashboardHeading>Upload New Resource</DashboardHeading>
                             <div className="flex-col md:flex-row gap-4">
                                 <ExpandableTextInputGroup
+                                    name={"title"}
                                     title={"Title"}
                                     value={formData.title}
                                     onChange={handleChange}
@@ -95,6 +97,7 @@ export default function AddResourceClient({user, sidebarStatus}) {
                                     placeholder={"e.g. Past Paper Discrete Mathematics MKR 2022"}
                                 />
                                 <ExpandableTextInputGroup
+                                    name={"subject"}
                                     title={"Subject"}
                                     value={formData.subject}
                                     onChange={handleChange}
@@ -104,6 +107,7 @@ export default function AddResourceClient({user, sidebarStatus}) {
                             </div>
                             <div className="flex-col md:flex-row gap-4">
                                 <ExpandableTextInputGroup
+                                    name={"teacher"}
                                     title={"Teacher"}
                                     value={formData.teacher}
                                     onChange={handleChange}
@@ -130,6 +134,7 @@ export default function AddResourceClient({user, sidebarStatus}) {
                                 />
                             </div>
                             <ExpandableTextInputGroup
+                                name={"university"}
                                 title={"University"}
                                 value={formData.university}
                                 onChange={handleChange}
@@ -137,6 +142,7 @@ export default function AddResourceClient({user, sidebarStatus}) {
                                 placeholder={"e.g. University of Karachi"}
                             />
                             <ExpandableTextInputGroup
+                                name={"url"}
                                 title={"Resource URL"}
                                 value={formData.url}
                                 onChange={handleChange}

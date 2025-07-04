@@ -5,7 +5,14 @@ import {useState} from "react";
 import Sidebar from "@/components/layout/Sidebar";
 import axios from "axios";
 import StatusToast from "@/components/ui/StatusToast";
-import {DashboardScrollable, DashboardWorkspace, PageTitle} from "@/components/ui/Structure";
+import {
+    DashboardHeading,
+    DashboardParent,
+    DashboardScrollable,
+    DashboardWorkspace,
+    DashboardWorkspaceBlock,
+    PageTitle
+} from "@/components/ui/Structure";
 
 export default function AddChannelClient({user, sidebarStatus}) {
 
@@ -84,6 +91,28 @@ export default function AddChannelClient({user, sidebarStatus}) {
 
         return status;
     };
+
+    return (
+        <DashboardParent>
+            <Sidebar user={user} sidebarStatus={sidebarStatus}/>
+            <DashboardScrollable>
+                <DashboardWorkspace>
+                    <PageTitle
+                        heading={"Add YouTube Channels"}
+                        description={"Share a channel about a specific subject, lecture, problem, question, exercise, book or any other helpful material."}
+                    />
+
+                    <div className="gap-6 flex-col">
+                        <DashboardWorkspaceBlock>
+                            <DashboardHeading>Details</DashboardHeading>
+                            <div className="gap-4"></div>
+                        </DashboardWorkspaceBlock>
+                    </div>
+
+                </DashboardWorkspace>
+            </DashboardScrollable>
+        </DashboardParent>
+    )
 
     return (
         <div className={"w-screen bg-black flex-row text-white min-h-screen pt-8 lg:pt-0 texture-mosaic"}>

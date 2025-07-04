@@ -4,7 +4,6 @@
 import Sidebar from "@/components/layout/Sidebar";
 import {FileText, Heart, SquareCheck} from "lucide-react";
 import {DashboardNotification} from "@/components/ui/Notification";
-import {HorizontalRule} from "@/components/ui/HorizontalRule";
 import {
     DashboardHeading,
     DashboardParent,
@@ -16,6 +15,9 @@ import {
 
 
 export default function DashboardClient({user, sidebarStatus}) {
+
+    const notifications = user.notifications.reverse();
+
     return (
         <DashboardParent>
             <Sidebar user={user} sidebarStatus={sidebarStatus}/>
@@ -66,22 +68,19 @@ export default function DashboardClient({user, sidebarStatus}) {
 
                         <DashboardWorkspaceBlock extraClasses={"gap-2"}>
                             <DashboardHeading>Notifications</DashboardHeading>
-                            <DashboardNotification
-                                sender={"System"}
-                                message={"Made an addition of a section to the homepage."}
-                            />
-                            <DashboardNotification
-                                sender={"System"}
-                                message={"Added a contact page."}
-                            />
-                            <DashboardNotification
-                                sender={"System"}
-                                message={"Fixed a minor login bug."}
-                            />
-                            <DashboardNotification
-                                sender={"System"}
-                                message={"Added 'Guide' page."}
-                            />
+                            {
+                                user.notifications[0] ? notifications.map((notification, i) => (
+                                    <DashboardNotification
+                                        sender={notification.sender}
+                                        message={notification.message}
+                                        isRead={notification.read}
+                                        key={i}
+                                    />
+                                )) :
+                                <div className="bg-black p-3 text-sm text-gray-medium">
+                                    You have no new notifications.
+                                </div>
+                            }
                         </DashboardWorkspaceBlock>
                     </div>
                 </DashboardWorkspace>

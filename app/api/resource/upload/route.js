@@ -1,7 +1,7 @@
-// app/api/resources/upload/route.js
 import db from "@/lib/database";
 import { NextResponse } from "next/server";
 import {getSession} from "@/lib/get-session";
+import {rewards} from "@/public/data";
 
 export async function POST(req) {
     try {
@@ -47,7 +47,10 @@ export async function POST(req) {
             { _id: user._id },
             {
                 $push: { 'contributions.resources': id },
-                $inc: { 'contributions.count': 1 }
+                $inc: {
+                    'contributions.count': 1,
+                    aura: rewards.resource
+                }
             }
         );
 

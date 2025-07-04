@@ -4,7 +4,7 @@
 import {Check, Upload} from "lucide-react";
 import {useState} from "react";
 import Sidebar from "@/components/layout/Sidebar";
-import ContentGuidelines, {
+import {
     DashboardHeading,
     DashboardParent,
     DashboardScrollable,

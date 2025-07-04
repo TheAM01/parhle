@@ -17,6 +17,7 @@ import {
     DashboardWorkspaceBlock
 } from "@/components/ui/Structure";
 
+
 export default function ProfileClient({user, sidebarStatus}) {
 
     const router = useRouter();

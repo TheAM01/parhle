@@ -1,10 +1,12 @@
 "use server";
 
+
 import { redirect } from 'next/navigation';
 import AddResourceClient from './add-resource.client';
 import {getSession} from "@/lib/get-session";
 import {cookies} from "next/headers";
 import db from "@/lib/database";
+
 
 export default async function AddResourcePage() {
 

@@ -5,17 +5,6 @@ export async function GET() {
         const collection = db.collection("books");
         const allBooks = await collection.find({}).toArray();
 
-        const allChannels = await db.collection("channels").find({}).toArray();
-        // for (const channel of allChannels) {
-        //
-        //     await db.collection("users").updateOne(
-        //        {username: channel.author},
-        //         {
-        //             $push: { "contributions.channels": channel._id },
-        //             $inc: { "contributions.count": 1 }
-        //         }
-        //     );
-        // }
 
 
         return Response.json(allBooks, { status: 200 });

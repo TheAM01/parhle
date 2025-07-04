@@ -1,7 +1,7 @@
 'use client';
 
 
-import ContentGuidelines, {
+import {
     DashboardHeading,
     DashboardParent,
     DashboardScrollable,

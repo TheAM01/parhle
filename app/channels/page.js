@@ -48,7 +48,6 @@ export default function ChannelsPage() {
                 note.university.toLowerCase().includes(searchTerm.toLowerCase()))
     );
 
-    console.log(filteredNotes)
     return (
         <div className="flex-col min-h-screen texture-mosaic text-white pt-10 sm:pt-20 bg-black items-center ">
             <DashboardWorkspace>

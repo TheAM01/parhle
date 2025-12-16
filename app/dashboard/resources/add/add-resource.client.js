@@ -34,7 +34,6 @@ export default function AddResourceClient({user, sidebarStatus}) {
 
 
     const handleChange = (e) => {
-        console.log("detected change")
         setFormData({...formData, [e.target.name]: e.target.value});
     };
 

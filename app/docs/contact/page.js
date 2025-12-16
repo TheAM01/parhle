@@ -111,30 +111,38 @@ export default function ContactPage({}) {
                     <div className="gap-6 flex-col md:flex-row">
                         <div className="flex-col flex-1">
                             <div className="font-semibold">For Bug Reports</div>
-                            <li>Include your browser and device info</li>
-                            <li>Describe steps to reproduce the issue</li>
-                            <li>Screenshots are very helpful</li>
+                            <ul className={"pl-4 list-disc"}>
+                                <li>Include your browser and device info</li>
+                                <li>Describe steps to reproduce the issue</li>
+                                <li>Screenshots are very helpful</li>
+                            </ul>
                         </div>
                         <div className="flex-col flex-1">
                             <div className="font-semibold">For Feature Requests</div>
-                            <li>Explain the problem you're trying to solve</li>
-                            <li>Describe your proposed solution</li>
-                            <li>Consider how it benefits other students</li>
+                            <ul className={"pl-4 list-disc"}>
+                                <li>Explain the problem you're trying to solve</li>
+                                <li>Describe your proposed solution</li>
+                                <li>Consider how it benefits other students</li>
+                            </ul>
                         </div>
                     </div>
 
                     <div className="gap-6 flex-col md:flex-row">
                         <div className="flex-col flex-1">
                             <div className="font-semibold">For Contributions</div>
-                            <li>Check the Guide page for contribution methods</li>
-                            <li>Mention your skills and availability</li>
-                            <li>Include examples of previous work if relevant</li>
+                            <ul className={"pl-4 list-disc"}>
+                                <li>Check the Guide page for contribution methods</li>
+                                <li>Mention your skills and availability</li>
+                                <li>Include examples of previous work if relevant</li>
+                            </ul>
                         </div>
                         <div className="flex-col flex-1">
                             <div className="font-semibold">For General Inquiries</div>
-                            <li>Be specific about what you need help with</li>
-                            <li>Check the FAQ section first</li>
-                            <li>Include relevant context or background</li>
+                            <ul className={"pl-4 list-disc"}>
+                                <li>Be specific about what you need help with</li>
+                                <li>Check the FAQ section first</li>
+                                <li>Include relevant context or background</li>
+                            </ul>
                         </div>
                     </div>
 

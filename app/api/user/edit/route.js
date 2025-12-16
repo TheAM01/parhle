@@ -16,7 +16,7 @@ export async function POST(req) {
 
     try {
         const { currentUsername, username, fullName, university, semester, degree, course } = await req.json();
-        // return console.log({ currentUsername, username, fullName, university, semester, degree, course })
+
         // Validate required fields
         if (!currentUsername || !username || !fullName || !university || !semester || !degree || !course) {
             return NextResponse.json({ success: false, message: "Missing parameters" }, { status: 400 });

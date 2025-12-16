@@ -9,8 +9,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
     return (
-        <html lang="en" className={""}>
-            <body className={`font-primary antialiased w-screen overflow-x-hidden bg-black`}>
+        <html lang="en" className={"overflow-x-hidden"}>
+            <body className={`font-primary antialiased  overflow-x-hidden bg-black`}>
                 {/* <Suspense fallback={null}> */}
                     <ClientLayout>
                         {children}

@@ -65,7 +65,6 @@ export default function EditChannelClient({user, sidebarStatus, channel}) {
             return res.data.channelName;
         } catch (err) {
             console.log('Error:', err.message);
-            console.log('Could not fetch name');
             return null;
         } finally {
             setLoading(false)

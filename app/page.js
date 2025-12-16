@@ -6,25 +6,34 @@ import {LinkButton} from "@/components/ui/Buttons";
 import {motion, useScroll, useTransform} from "framer-motion"
 import * as data from "@/public/data";
 import {Check} from "lucide-react";
+import {ScreenSizeGetter} from "@/components/utility";
 
 
 export default function Home() {
 
     const targetRef = useRef(null)
-    const { scrollYProgress } = useScroll()
+    const { scrollYProgress } = useScroll({
+        target: targetRef,
+        offset: ['start start', 'end start'],
+    });
 
     const opacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
-    const scale = useTransform(scrollYProgress, [0, 1], [1, 0.3]);
+    const scale = useTransform(scrollYProgress, [0, 1], [1, 0.8]);
+
 
 
     useEffect(() => {
         const smoothScroll = (e) => {
             e.preventDefault()
             const href = e.currentTarget.getAttribute("href");
-            if (href) {
-                document.querySelector(href)?.scrollIntoView({
-                    behavior: "smooth",
-                })
+            if (href && href.startsWith('#')) {
+                const targetId = href.slice(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: "smooth",
+                    })
+                }
             }
         }
 
@@ -42,7 +51,7 @@ export default function Home() {
     return (
         <div className={"w-full bg-black flex-col"}>
 
-            <div className="bg-black flex-col items-center justify-center text-white h-screen sm:h-screen">
+            <div className="bg-black flex-col items-center justify-center text-white h-screen">
                 <Hero targetRef={targetRef} opacity={opacity} scale={scale}/>
             </div>
 
@@ -143,6 +152,8 @@ export default function Home() {
                 </div>
             </div>
 
+            {/*ecosys*/}
+
             <div className="bg-black text-white h-min flex-col items-center p-2 sm:p-5 lg:p-10 texture-hero">
 
                 <motion.div
@@ -155,10 +166,12 @@ export default function Home() {
                     Join Our Knowledge Ecosystem
                 </motion.div>
 
-                <div className="gap-6">
-                    <div className="flex-col justify-center">
+                <div className="gap-6 flex-col w-screen lg:flex-row items-center justify-center"> {/*screen-wide auto wrapper for both columns*/}
+
+                    <div className="flex-col justify-center"> {/*first vertical column with only 1 item*/}
+
                         <motion.div
-                            className="p-6 bg-gray-800 border border-gray-700 flex-col gap-4 w-120"
+                            className="p-6 bg-gray-800 border border-gray-700 flex-col gap-4 w-screen sm:w-120 "
                             initial={{ opacity: 0, x: -40 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             transition={{ duration: 1 }}
@@ -184,11 +197,13 @@ export default function Home() {
                                 ))}
                             </div>
                         </motion.div>
+
                     </div>
 
-                    <div className="flex-col gap-6  w-120">
+                    <div className="flex-col gap-6 items-center"> {/*second vertical column with 2 items*/}
+
                         <motion.div
-                            className="flex-col p-6 bg-white gap-4"
+                            className="flex-col p-6 bg-white gap-4 w-screen sm:w-120"
                             initial={{ opacity: 0, x: 40 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             transition={{ duration: 1 }}
@@ -217,7 +232,7 @@ export default function Home() {
                         </motion.div>
 
                         <motion.div
-                            className="p-6 bg-gray-800 border border-gray-700 gap-4 flex-col text-white "
+                            className="p-6 bg-gray-800 border border-gray-700 gap-4 flex-col text-white w-screen sm:w-120 "
                             initial={{ opacity: 0, x: 40 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             transition={{ duration: 1 }}
@@ -233,7 +248,9 @@ export default function Home() {
                         </motion.div>
 
                     </div>
+
                 </div>
+
             </div>
 
             <div className="bg-white h-min flex-col items-center p-2 sm:p-5 lg:p-10">
@@ -292,14 +309,14 @@ function Hero({targetRef, opacity, scale}) {
             >
                 Power Multiplied
             </motion.div>
-            <div className="mt-4">
+            {/*<div className="mt-4">*/}
 
-                <input type="text" name="search" id="search"
-                       className="mr-4 p-2.5 whitespace-nowrap border-2 border-white w-[35ch]"
-                       placeholder={"Search for notes, books & resources..."}/>
-                <LinkButton href={"#features"}>Explore</LinkButton>
+            {/*    <input type="text" name="search" id="search"*/}
+            {/*           className="mr-4 p-2.5 whitespace-nowrap border-2 border-white w-[35ch]"*/}
+            {/*           placeholder={"Search for notes, books & resources..."}/>*/}
+            {/*    <LinkButton href={"#features"}>Explore</LinkButton>*/}
 
-            </div>
+            {/*</div>*/}
             <div className="mt-4 text-gray-medium">
                 Connect with peers, access curated study materials & resources
                 and elevate your academic journey. Parhle -

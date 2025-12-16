@@ -54,7 +54,6 @@ export default function SignupClient() {
     };
 
     const handleChange = (e) => {
-        console.log(formData)
         const { name, value } = e.target;
 
         // Generic update

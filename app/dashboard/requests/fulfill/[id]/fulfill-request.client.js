@@ -87,7 +87,6 @@ export default function FulfillRequestClient({user, sidebarStatus, request}) {
         event.preventDefault();
         setError("")
         setLoading(true);
-        console.log(formData)
         try {
             const response = await fetch(`/api/request/fulfill/${request._id}`, {
                 method: 'POST',
@@ -376,7 +375,6 @@ function BookForm({formData, handleChange}) {
 function ChannelForm({formData, setFormData, handleChange}) {
 
     const fetchChannelName = async (url) => {
-        console.log("fetcing...")
         if (!url) return;
 
         try {
@@ -384,7 +382,6 @@ function ChannelForm({formData, setFormData, handleChange}) {
             return res.data.channelName;
         } catch (err) {
             console.log('Error:', err.message);
-            console.log('Could not fetch name');
             return null;
         }
     }

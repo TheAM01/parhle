@@ -26,7 +26,6 @@ export default function BooksPage() {
                 const result = await response.json();
                 setNotesData(result);
                 const uniq = [...new Set(result.map(item => item.subject))];
-                console.log(uniq);
                 setUniqueSubjects(uniq)
 
             } catch (error) {

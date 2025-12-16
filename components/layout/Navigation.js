@@ -4,13 +4,15 @@ import {useCallback, useEffect, useState} from "react";
 
 import Link from "next/link";
 import {LinkButton} from "@/components/ui/Buttons";
-import {Menu, LayoutDashboard, LogIn} from "lucide-react";
-import Spinner from "@/components/ui/Spinner";
+import {Menu, LayoutDashboard, LogIn, Loader} from "lucide-react";
 
 export default function Navigation({}) {
 
     const [open, setOpen] = useState(false);
     const [session, setSession] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+
 
     const toggleMenu = useCallback(() => {
         setOpen((prevState) => !prevState);
@@ -26,17 +28,32 @@ export default function Navigation({}) {
                 } else {
                     setSession(data.session);
                 }
-            });
+            })
+            .finally(() => {
+                setLoading(false)
+            })
     }, []);
 
-    const button = (!session ?
-        <LinkButton href="/user/login">
-            <LogIn size={16} /> Join Now
-        </LinkButton>
-        :
-        <LinkButton href="/dashboard">
-            <LayoutDashboard size={16} /> Dashboard
-        </LinkButton>
+
+    const button = (loading ?
+            <div onClick={() => setOpen(false)}>
+                <LinkButton href="#">
+                    <Loader size={16} className={"animate-spin-slow duration-10"} /> Loading...
+                </LinkButton>
+            </div>
+            :
+            !session ?
+                <div onClick={() => setOpen(false)}>
+                    <LinkButton href="/user/login">
+                        <LogIn size={16} /> Join Now
+                    </LinkButton>
+                </div>
+                :
+                <div onClick={() => setOpen(false)}>
+                    <LinkButton href="/dashboard">
+                        <LayoutDashboard size={16} /> Dashboard
+                    </LinkButton>
+                </div>
     )
 
     const navigationItemTailwindClass = "flex m-3.5 uppercase text-base no-underline text-gray-light font-normal duration-100 hover:text-gray-medium"
@@ -75,7 +92,7 @@ export default function Navigation({}) {
             </div>
 
             {open && (
-                <div className="flex-col sm:hidden top-11 absolute w-full bg-black text-white border-solid border-border border-b border-border-color z-10" onClick={() => setOpen(false)}>
+                <div className="flex-col sm:hidden top-11 absolute w-full bg-black text-white border-solid border-border border-b border-border-color z-10">
                     {navigationItems}
                     {button}
                 </div>

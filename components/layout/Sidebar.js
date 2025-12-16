@@ -28,7 +28,7 @@ import {IconButton, IconLinkButton} from "@/components/ui/Buttons";
 export default function Sidebar({user, sidebarStatus}) {
     const pathname = usePathname();
     const router = useRouter();
-    console.log(user)
+
     const pages = [
         {
             title: "Dashboard",
@@ -194,16 +194,16 @@ export default function Sidebar({user, sidebarStatus}) {
 
             <div className={`${isOpen ? "flex! pt-2" : "hidden! lg:flex! w-min!"} shadow-[0px_5px_15px_rgba(0,0,0,0.35)] flex-col fixed lg:static top-0 w-3/5 lg:w-2/7 xl:w-2/10 2xl:w-1/7 md:w-1/4 bg-gray-900 lg:border-r lg:border-border-color h-screen overflow-x-hidden z-200`}>
 
-                <div className={`font-logo  text-gray-medium font-light text-2xl lg:text-4xl p-2 ${isOpen ? "border-b" : ""} border-border-color justify-between items-center`}>
+                <div className={`font-logo  text-gray-medium font-light text-2xl lg:text-4xl p-2 ${isOpen ? "border-b justify-between" : "justify-center"} border-border-color items-center`}>
 
                     <span className={isOpen ? "flex!" : "hidden!"}>Parhle</span>
 
-                    <button onClick={toggleSidebar} className={"flex items-center justify-center"}>
+                    <button onClick={toggleSidebar} className={"flex items-center justify-center "}>
 
                         {isOpen ? (
-                            <ChevronLeft className="hover:bg-gray-800 duration-100 p-1 hover:cursor-pointer -translate-x-0.25  text-white rounded-md" size={30} />
+                            <ChevronLeft className="hover:bg-gray-800 duration-100 p-1 hover:cursor-pointer -translate-x-0.25  text-white" size={30} />
                         ) : (
-                            <ChevronRight className="hover:bg-gray-800 duration-100 p-1 hover:cursor-pointer -translate-x-0.25  text-white rounded-md" size={30} />
+                            <ChevronRight className="hover:bg-gray-800 duration-100 p-1 hover:cursor-pointer -translate-x-0.25  text-white" size={30} />
                         )}
                     </button>
 
@@ -256,8 +256,8 @@ function SideBarHeading({display, children}) {
 
 function SideBarLink({icon: Icon, href, isSelected, showText, children}) {
     return (
-        <Link href={href} className={`text-gray-medium items-center flex ${showText ? "px-4 py-3" : "p-2"} duration-150 text-base ${isSelected ? "bg-white text-black!": "hover:bg-gray-800 hover:text-white!"} my-1 mx-2`}>
-            <span className={`${showText ? "mr-2" : ""} items-center flex`}>
+        <Link href={href} className={`text-gray-medium items-center flex ${showText ? "px-3.5 py-2.5" : "p-2"} gap-2 duration-150 text-base ${isSelected ? "bg-white text-black!": "hover:bg-gray-800 hover:text-white!"} my-1 mx-2`}>
+            <span className={`items-center flex`}>
                 <Icon size={showText ? 18 : 22}/>
             </span>
             <span className={showText ? "flex! text-nowrap" : "hidden!"}>

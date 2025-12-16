@@ -30,7 +30,6 @@ export default function Resources() {
                 const sorted = result.reverse()
                 setNotesData(sorted);
                 const uniq = [...new Set(sorted.map(item => item.subject))];
-                console.log(uniq);
                 setUniqueSubjects(uniq)
 
             } catch (error) {

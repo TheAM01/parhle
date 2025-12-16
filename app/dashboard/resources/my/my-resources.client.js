@@ -21,7 +21,6 @@ export default function MyResourcesClient({user, sidebarStatus}) {
     const [uniqueSubjects, setUniqueSubjects] = useState([])
 
     useEffect(() => {
-        // return console.log(user.username)
 
         async function fetchData() {
 
@@ -32,7 +31,6 @@ export default function MyResourcesClient({user, sidebarStatus}) {
                 const sorted = result.reverse()
                 setNotesData(sorted);
                 const uniq = [...new Set(sorted.map(item => item.subject))];
-                console.log(uniq);
                 setUniqueSubjects(uniq)
 
             } catch (error) {

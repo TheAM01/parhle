@@ -19,6 +19,10 @@
 }
 
 
+* {
+    @apply selection:bg-black selection:text-white;
+}
+
 div {
     @apply flex;
 }
@@ -26,6 +30,12 @@ div {
 @layer base {
     * {
         box-sizing: border-box;
+    }
+}
+
+@layer utilities {
+    .animate-spin-slow {
+        animation: spin 2s linear infinite;
     }
 }
 

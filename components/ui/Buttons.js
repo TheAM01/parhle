@@ -18,16 +18,6 @@ export function VisitResourceButton({ href, extraClasses, children, openInNew = 
     return <Link {...commonProps}>{children}</Link>;
 }
 
-export const DisabledButton = ({text, extraClasses}) => {
-    return <div className={`justify-center items-center leading-none bg-black text-sm p-3 text-gray-medium cursor-not-allowed font-semibold ${extraClasses}`}>{text}</div>
-}
-
-export function Button({children, onClick}) {
-    return (
-        <button onClick={onClick} className={"flex items-center gap-2 bg-white text-black p-2 text-nowrap cursor-pointer shadow-black hover:shadow-md duration-100"}>{children}</button>
-    )
-}
-
 export function IconLinkButton({href, Icon}) {
     return (
         <Link href={href} className={"flex flex-1 items-center leading-none p-2 h-[2.5em] bg-gray-950 cursor-pointer hover:bg-gray-800 duration-100 justify-center "}>{<Icon size={15}/>}</Link>
@@ -40,5 +30,12 @@ export function IconButton({eventOnClick, Icon}) {
     )
 }
 
+export const DisabledButton = ({text, extraClasses}) => {
+    return <div className={`justify-center items-center leading-none bg-black text-sm p-3 text-gray-medium cursor-not-allowed font-semibold ${extraClasses}`}>{text}</div>
+}
 
-
+export function Button({children, onClick}) {
+    return (
+        <button onClick={onClick} className={"flex items-center gap-2 bg-white text-gray-dark p-2 text-nowrap cursor-pointer shadow-black hover:shadow-md hover:text-black font-semibold duration-100"}>{children}</button>
+    )
+}

@@ -24,9 +24,6 @@ export async function POST(req, {params}) {
     const { type } = body
     if (type !== "resource" && type !== "book" && type !== "channel") return NextResponse.json({ success: false, message: "Missing required fields" }, { status: 400 });
 
-    // return await updateUsers(db)
-    // return console.log(body.request)
-
     try {
 
         let result;
@@ -237,10 +234,8 @@ async function updateUsers(db) {
                 { $set: { solution: { isSolution: false, requestData: null} } }
             );
 
-            console.log(`✅ ${resource._id} updated.`);
         }
 
-        console.log("🎉 Finished updating all resources.");
 
     } catch (error) {
         console.error("❌ Error updating users:", error);

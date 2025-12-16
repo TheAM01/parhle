@@ -23,7 +23,7 @@ export async function POST(req) {
             status: 'Open',
             createdAt: new Date(),
         };
-        // return console.log(newRequest)
+
         const result = await collection.insertOne(newRequest);
 
         if (author !== "anonymous") {

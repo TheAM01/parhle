@@ -28,7 +28,6 @@ export const RequestsCard = ({request, index}) => {
 
             const response = await fetch(`/api/${request.resourceType.toLowerCase()}/get/${request.solution}`);
             const result = await response.json();
-            console.log("randi ka bacha", result)
             setSolutionData(JSON.parse(JSON.stringify(result)));
 
         } catch (error) {

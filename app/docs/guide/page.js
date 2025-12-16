@@ -206,9 +206,9 @@ export default function GuidePage({}) {
                         <div className="text-lg font-semibold text-blue-400">Quick Start Steps</div>
                         {[
                             "Create your account and complete your profile",
-                            "Browse resources by subject, university, or semester",
+                            "Browse resources, books or channels",
                             "Download materials that help with your studies",
-                            "Upload your own notes and resources to help others",
+                            "Upload your own resources & content to help others",
                             "Engage with the community through likes and requests",
                         ].map((step, i) => (
                             <div className={"items-center gap-2"} key={i}>

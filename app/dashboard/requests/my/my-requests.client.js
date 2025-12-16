@@ -59,7 +59,6 @@ export default function MyRequestsClient({user, sidebarStatus}) {
                 const response = await fetch(`/api/request/user/${user.username}`);
                 const result = await response.json();
                 setRequestsData(result);
-                console.log(result);
             } catch (error) {
                 console.error("Error fetching data:", error);
             } finally {

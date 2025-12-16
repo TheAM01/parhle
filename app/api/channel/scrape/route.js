@@ -11,7 +11,6 @@ export async function POST(req) {
     }
 
     try {
-        console.log(url)
         const { data } = await axios.get(url, {
             headers: {
                 'User-Agent': 'Mozilla/5.0',
@@ -20,7 +19,7 @@ export async function POST(req) {
 
         const $ = cheerio.load(data);
         const title = $('title').text().replace(' - YouTube', '').trim();
-        console.log(title)
+
         return NextResponse.json({ channelName: title }, { status: 200 });
 
     } catch (err) {

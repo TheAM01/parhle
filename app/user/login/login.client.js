@@ -44,7 +44,7 @@ export default function LoginClient() {
                         type={"username"}
                         required={true}
                         className={"flex bg-gray-800 p-2 flex-1 border border-gray-700 text-base"}
-                        onChange={(e) => setUsername(e.target.value)}
+                        onChange={(e) => setUsername(e.target.value.toLowerCase())}
                     />
                 </div>
                 <div className="flex-col w-full mt-4">

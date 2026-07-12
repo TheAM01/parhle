@@ -1,15 +1,13 @@
 import db from "@/lib/database";
-import { NextResponse } from "next/server";
+import { ok, fail } from "@/lib/api-response";
+import { requestNewSchema, validate } from "@/lib/validation";
 
 export async function POST(req) {
     try {
-        const { title, subject, university,  semester, resourceType, author, priority, description } = await req.json();
+        const parsed = validate(requestNewSchema, await req.json());
+        if (!parsed.success) return fail(parsed.message, 400);
 
-        if (!title || !subject || !university || !semester || !resourceType || !author || !priority || !description) {
-            return NextResponse.json({ success: false, message: "Missing required fields" }, { status: 400 });
-        }
-
-        const collection = db.collection("requests");
+        const { title, subject, university, semester, resourceType, author, priority, description } = parsed.data;
 
         const newRequest = {
             title,
@@ -20,27 +18,29 @@ export async function POST(req) {
             author,
             priority,
             description,
-            status: 'Open',
+            status: "Open",
             createdAt: new Date(),
         };
 
-        const result = await collection.insertOne(newRequest);
+        const result = await db.collection("requests").insertOne(newRequest);
 
         if (author !== "anonymous") {
-            const user = await db.collection("users").findOne({username: author});
-            if (!user) return;
-
-            await db.collection("users").updateOne(
-                {username: author},
-                {
-                    $push: { 'contributions.requests.created': result.insertedId }
-                }
-            )
+            // Best-effort: legacy users may have contributions.requests stored as
+            // an array, which makes this dotted push fail. Don't let request
+            // tracking fail the creation itself.
+            try {
+                await db.collection("users").updateOne(
+                    { username: author },
+                    { $push: { "contributions.requests.created": result.insertedId } }
+                );
+            } catch (err) {
+                console.warn("Could not record created request (legacy contributions shape):", err.message);
+            }
         }
 
-        return NextResponse.json({ success: true, message: "Request added successfully", insertedId: result.insertedId }, { status: 201 });
+        return ok({ message: "Request added successfully", insertedId: result.insertedId }, 201);
     } catch (error) {
         console.error("Error adding request:", error);
-        return NextResponse.json({ success: false, message: "Internal Server Error" }, { status: 500 });
+        return fail("Internal Server Error", 500);
     }
 }

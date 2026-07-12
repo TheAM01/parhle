@@ -1,27 +1,34 @@
 import db from "@/lib/database";
 import bcrypt from "bcrypt";
 import { getSession } from "@/lib/get-session";
-import { NextResponse } from "next/server";
+import { ok, fail } from "@/lib/api-response";
+import { loginSchema, validate } from "@/lib/validation";
+import { rateLimit, clientIp } from "@/lib/rate-limit";
 
 export async function POST(req) {
     try {
-        const { username, password } = await req.json();
+        const limit = rateLimit(`login:${clientIp(req)}`, 10, 15 * 60 * 1000);
+        if (!limit.ok) {
+            return fail(`Too many attempts. Try again in ${limit.retryAfter}s.`, 429);
+        }
+
+        const parsed = validate(loginSchema, await req.json());
+        if (!parsed.success) return fail(parsed.message, 400);
+
+        const { username, password } = parsed.data;
         const user = await db.collection("users").findOne({ username });
 
         if (!user || !(await bcrypt.compare(password, user.password))) {
-            return NextResponse.json({ success: false, message: "Invalid credentials" }, { status: 400 });
+            return fail("Invalid credentials", 400);
         }
 
-        delete user.password;
-        delete user._id;
-
         const session = await getSession();
-        session.user = user;
+        session.user = { username: user.username, role: user.role };
         await session.save();
 
-        return NextResponse.json({ success: true, message: "Logged in successfully", user: session.user }, { status: 201 });
+        return ok({ message: "Logged in successfully", user: session.user }, 201);
     } catch (error) {
-        console.error("Creation error:", error);
-        return NextResponse.json({ success: false, message: "Internal Server Error" }, { status: 500 });
+        console.error("Login error:", error);
+        return fail("Internal Server Error", 500);
     }
 }

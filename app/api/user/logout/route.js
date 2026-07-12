@@ -1,7 +1,8 @@
 import { getSession } from "@/lib/get-session";
+import { ok } from "@/lib/api-response";
 
 export async function POST() {
     const session = await getSession();
     session.destroy();
-    return new Response(JSON.stringify({ message: "Logged out" }), { status: 200 });
+    return ok({ message: "Logged out" });
 }

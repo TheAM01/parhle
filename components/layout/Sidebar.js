@@ -18,7 +18,7 @@ import {
     LayoutDashboard,
     MonitorPlay,
     Pencil,
-    User, Send, ClipboardList, FileText, Upload, FilePenLine, BadgeCheck, Bell
+    User, Send, ClipboardList, FileText, Upload, FilePenLine, BadgeCheck, Bell, Bookmark
 } from "lucide-react";
 import {usePathname, useRouter} from "next/navigation";
 import {useState} from "react";
@@ -57,6 +57,11 @@ export default function Sidebar({user, sidebarStatus}) {
                     title: "Profile",
                     href: "/dashboard/profile",
                     icon: User
+                },
+                {
+                    title: "Saved",
+                    href: "/dashboard/saved",
+                    icon: Bookmark,
                 },
                 {
                     title: "Notifications",

@@ -9,6 +9,8 @@ import Spinner from "@/components/ui/Spinner";
 import {DashboardWorkspace} from "@/components/ui/Structure";
 import {HorizontalRule} from "@/components/ui/HorizontalRule";
 import {VisitResourceButton} from "@/components/ui/Buttons";
+import LikeButton from "@/components/ui/LikeButton";
+import {SolutionBadge} from "@/components/ui/Cards";
 
 
 export default function Resources() {
@@ -18,6 +20,8 @@ export default function Resources() {
     const [notesData, setNotesData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [uniqueSubjects, setUniqueSubjects] = useState([])
+    const [likedSet, setLikedSet] = useState([])
+    const [loggedIn, setLoggedIn] = useState(false)
 
     useEffect(() => {
 
@@ -25,12 +29,18 @@ export default function Resources() {
 
             try {
 
-                const response = await fetch("/api/resource/all");
+                const [response, likeRes] = await Promise.all([
+                    fetch("/api/resource/all"),
+                    fetch("/api/like"),
+                ]);
                 const result = await response.json();
+                const likeData = await likeRes.json();
                 const sorted = result.reverse()
                 setNotesData(sorted);
                 const uniq = [...new Set(sorted.map(item => item.subject))];
                 setUniqueSubjects(uniq)
+                setLikedSet(likeData.resources || []);
+                setLoggedIn(!!likeData.loggedIn);
 
             } catch (error) {
                 console.error("Error fetching data:", error);
@@ -112,10 +122,17 @@ export default function Resources() {
 
                             <div className={"justify-between flex-1 items-center"}>
                                 <div className={"text-xl font-semibold"}>{note.title}</div>
-                                <div className={"text-gray-400 text-sm"}><Heart size={14} className={"mr-1"}/> {note.likes ? note.likes : "2"}</div>
+                                <LikeButton
+                                    type="resource"
+                                    id={note._id}
+                                    initialLiked={likedSet.includes(note._id)}
+                                    initialCount={note.likes || 0}
+                                    loggedIn={loggedIn}
+                                />
                             </div>
 
-                            <span className="text-gray-dark text-xs mb-4 hover:underline">{note.author}</span>
+                            <span className="text-gray-dark text-xs mb-2 hover:underline">{note.author}</span>
+                            {note.solution?.isSolution && <SolutionBadge extraClasses={"mb-2"}/>}
 
                             <div className={"flex-col mt-4"}>
 

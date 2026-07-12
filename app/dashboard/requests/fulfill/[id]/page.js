@@ -18,9 +18,12 @@ export default async function FulfillRequestPage({params}) {
         return redirect(`/user/login?login-first=true&redirect-to=${encodeURIComponent(`dashboard/request/fulfill/${id}`)}`);
     }
 
+    if (!ObjectId.isValid(id)) return redirect('/dashboard/requests/all');
+
     const request = await db.collection("requests").findOne({ _id: new ObjectId(id) });
 
-    if (request.status.toLowerCase() === "closed") return redirect('/dashboard/requests/my')
+    if (!request) return redirect('/dashboard/requests/all');
+    if ((request.status || "").toLowerCase() === "closed") return redirect('/dashboard/requests/my')
 
     const requestCleaned = {
         ...request,

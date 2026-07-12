@@ -109,7 +109,7 @@ export default function MyBooksClient({user, sidebarStatus}) {
 
                             <div className={"justify-between flex-1 items-center"}>
                                 <div className={"text-xl font-semibold"}>{note.title}</div>
-                                <div className={"text-gray-400 text-sm"}><Heart size={14} className={"mr-1"}/> {note.likes ? note.likes : "2"}</div>
+                                <div className={"text-gray-400 text-sm items-center"}><Heart size={14} className={"mr-1"}/> {note.likes || 0}</div>
                             </div>
 
                             <div className={"flex-col mt-4"}>

@@ -1,42 +1,37 @@
 import { getIronSession } from "iron-session";
+import { NextResponse } from "next/server";
 import { sessionOptions } from "@/lib/session";
 import db from "@/lib/database";
-import { NextResponse } from "next/server";
-import {getSession} from "@/lib/get-session";
-
+import { fail } from "@/lib/api-response";
+import { editUserSchema, validate } from "@/lib/validation";
 
 export async function POST(req) {
-
     const res = new NextResponse();
     const session = await getIronSession(req, res, sessionOptions);
 
     if (!session.user) {
-        return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 401 });
+        return fail("Unauthorized", 401);
     }
 
     try {
-        const { currentUsername, username, fullName, university, semester, degree, course } = await req.json();
+        const parsed = validate(editUserSchema, await req.json());
+        if (!parsed.success) return fail(parsed.message, 400);
 
-        // Validate required fields
-        if (!currentUsername || !username || !fullName || !university || !semester || !degree || !course) {
-            return NextResponse.json({ success: false, message: "Missing parameters" }, { status: 400 });
+        const { currentUsername, username, fullName, university, semester, degree, course } = parsed.data;
+
+        // A user may only edit their own account.
+        if (session.user.username !== currentUsername) {
+            return fail("Forbidden", 403);
         }
 
-        // Check if current user exists
         const existingUser = await db.collection("users").findOne({ username: currentUsername });
-        if (!existingUser) {
-            return NextResponse.json({ success: false, message: "User not found" }, { status: 404 });
-        }
+        if (!existingUser) return fail("User not found", 404);
 
-        // Check if new username is already taken (by someone else)
         if (currentUsername !== username) {
             const usernameTaken = await db.collection("users").findOne({ username });
-            if (usernameTaken) {
-                return NextResponse.json({ success: false, message: "Username already exists" }, { status: 400 });
-            }
+            if (usernameTaken) return fail("Username already exists", 400);
         }
 
-        // Perform update
         await db.collection("users").updateOne(
             { username: currentUsername },
             {
@@ -47,24 +42,21 @@ export async function POST(req) {
                     "academicDetails.semester": semester,
                     "academicDetails.degree": degree,
                     "academicDetails.course": course,
-                    avatarImg: `https://api.dicebear.com/9.x/lorelei-neutral/svg?seed=${encodeURIComponent(username)}&eyebrowsColor=ffffff&eyesColor=ffffff&mouthColor=ffffff&noseColor=ffffff&glassesColor=ffffff&backgroundColor=1d1d1d`
-                }
+                    avatarImg: `https://api.dicebear.com/9.x/lorelei-neutral/svg?seed=${encodeURIComponent(username)}&eyebrowsColor=ffffff&eyesColor=ffffff&mouthColor=ffffff&noseColor=ffffff&glassesColor=ffffff&backgroundColor=1d1d1d`,
+                },
             }
         );
 
-        const newUser = await db.collection("users").findOne({username});
-
-        const session = await getSession();
-        session.user = newUser;
+        // Keep the (slim) session in sync with the new username.
+        session.user = { username, role: session.user.role };
         await session.save();
 
-        return NextResponse.json({ success: true, message: "User data updated successfully" }, {
-            status: 200,
-            headers: res.headers, // ⚠️ Important: carries the Set-Cookie
-        });
-
+        return NextResponse.json(
+            { success: true, message: "User data updated successfully" },
+            { status: 200, headers: res.headers } // carries the refreshed Set-Cookie
+        );
     } catch (error) {
         console.error("Update error:", error);
-        return NextResponse.json({ success: false, message: "Internal Server Error" }, { status: 500 });
+        return fail("Internal Server Error", 500);
     }
 }

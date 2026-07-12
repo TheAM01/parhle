@@ -1,6 +1,6 @@
 "use client";
 
-import {BookOpen, Calendar, Heart, Layers, MapPin, University, User, X, Zap} from "lucide-react";
+import {BadgeCheck, BookOpen, Calendar, Heart, Layers, MapPin, University, User, X, Zap} from "lucide-react";
 import {HorizontalRule} from "@/components/ui/HorizontalRule";
 import {DisabledButton, VisitResourceButton} from "@/components/ui/Buttons";
 import {motion} from "framer-motion";
@@ -9,6 +9,13 @@ import {SmallIconTextButton} from "@/components/ui/Structure";
 import {useEffect, useState} from "react";
 import Spinner from "@/components/ui/Spinner";
 import Link from "next/link"
+import LikeButton from "@/components/ui/LikeButton";
+
+export const SolutionBadge = ({extraClasses = ""}) => (
+    <div className={`items-center gap-1 text-xs text-green-400 bg-green-950 border border-green-800 px-2 py-0.5 w-min text-nowrap font-semibold ${extraClasses}`}>
+        <BadgeCheck size={12}/> Answers a request
+    </div>
+);
 
 export const RequestsCard = ({request, index}) => {
     const priority = priorities[request.priority.toLowerCase()];
@@ -214,7 +221,7 @@ export const RequestsCard = ({request, index}) => {
     )
 }
 
-export const BooksCard = ({book, index}) => {
+export const BooksCard = ({book, index, liked = false, loggedIn = false}) => {
     return (
         <motion.div
             key={book._id}
@@ -224,6 +231,7 @@ export const BooksCard = ({book, index}) => {
             className={"flex-row justify-between bg-gray-900 p-6 border border-border-color hover:border-gray-700 transition-colors hover:cursor-pointer w-full gap-2"}
         >
             <div className="flex-col gap-2">
+                {book.solution?.isSolution && <SolutionBadge extraClasses={"mb-1"}/>}
                 <div className={"text-xl font-semibold"}>{book.title}</div>
                 <div className="text-sm text-gray-dark mb-2">{book.bookAuthor}</div>
                 <div className="space-x-2 inline-block!">
@@ -235,14 +243,21 @@ export const BooksCard = ({book, index}) => {
                 </div>
             </div>
 
-            <div className="items-center">
+            <div className="flex-col items-end justify-between gap-3">
+                <LikeButton
+                    type="book"
+                    id={book._id}
+                    initialLiked={liked}
+                    initialCount={book.likes || 0}
+                    loggedIn={loggedIn}
+                />
                 <VisitResourceButton href={book.url} extraClasses={"h-min"}>View Book</VisitResourceButton>
             </div>
         </motion.div>
     )
 }
 
-export const ChannelCard = ({channel, index}) => {
+export const ChannelCard = ({channel, index, liked = false, loggedIn = false}) => {
     return (
         <motion.a
             download
@@ -257,12 +272,20 @@ export const ChannelCard = ({channel, index}) => {
 
         >
             {/*     ${channel.url === "https://www.youtube.com/@VaneezaTanveer" ? "after:content-['⭐'] after:absolute after:top-1 after:right-1 after:text-yellow-400 after:text-sm after:animate-pulse" : ""}*/}
-            <div className={"justify-between flex-1 items-center"}>
+            <div className={"justify-between flex-1 items-center gap-2"}>
 
                 <div className={"text-xl font-semibold"}>{channel.title}</div>
+                <LikeButton
+                    type="channel"
+                    id={channel._id}
+                    initialLiked={liked}
+                    initialCount={channel.likes || 0}
+                    loggedIn={loggedIn}
+                />
             </div>
 
-            <span className="text-gray-dark text-xs mb-4">{channel.author}</span>
+            <span className="text-gray-dark text-xs mb-2">{channel.author}</span>
+            {channel.solution?.isSolution && <SolutionBadge extraClasses={"mb-2"}/>}
 
             <div className={"flex-col mt-4"}>
 

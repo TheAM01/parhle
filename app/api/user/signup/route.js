@@ -1,38 +1,38 @@
 import db from "@/lib/database";
 import bcrypt from "bcrypt";
-import { NextResponse } from "next/server";
-import {User} from "@/lib/schemas";
+import { User } from "@/lib/schemas";
+import { ok, fail } from "@/lib/api-response";
+import { signupSchema, validate } from "@/lib/validation";
+import { rateLimit, clientIp } from "@/lib/rate-limit";
 
 export async function POST(req) {
     try {
-        const { fullName, username, email, password, confirmPassword, university, semester, degree, course } = await req.json();
-
-        if ( !fullName || !username || !email || !password || !confirmPassword || !university || !semester || !degree || !course ) {
-            return NextResponse.json({ success: false, message: "Missing parameters" }, { status: 400 });
+        const limit = rateLimit(`signup:${clientIp(req)}`, 5, 60 * 60 * 1000);
+        if (!limit.ok) {
+            return fail(`Too many attempts. Try again in ${limit.retryAfter}s.`, 429);
         }
 
-        const same = password !== confirmPassword;
-        if (same) {
-            return NextResponse.json({ success: false, message: "Passwords mismatch" }, { status: 400 });
-        }
+        const parsed = validate(signupSchema, await req.json());
+        if (!parsed.success) return fail(parsed.message, 400);
+
+        const { fullName, username, email, password, university, semester, degree, course } = parsed.data;
+        const normalizedUsername = username.toLowerCase();
 
         const existingEmail = await db.collection("users").findOne({ email });
-        if (existingEmail) {
-            return NextResponse.json({ success: false, message: "Email already exists" }, { status: 400 });
-        }
+        if (existingEmail) return fail("Email already exists", 400);
 
-        const existingUser = await db.collection("users").findOne({ username: username.toLowerCase() });
-        if (existingUser) {
-            return NextResponse.json({ success: false, message: "Username already exists" }, { status: 400 });
-        }
+        const existingUser = await db.collection("users").findOne({ username: normalizedUsername });
+        if (existingUser) return fail("Username already exists", 400);
 
-        const hashedPassword = await bcrypt.hash(password, 10);
-        const createdUser = new User(fullName, username.toLowerCase(), email, hashedPassword, university, semester, degree, course, "student")
+        const hashedPassword = await bcrypt.hash(password, 12);
+        const createdUser = new User(
+            fullName, normalizedUsername, email, hashedPassword, university, semester, degree, course, "student"
+        );
         await db.collection("users").insertOne(createdUser);
 
-        return NextResponse.json({ success: true, message: "User registered successfully", user: username }, { status: 201 });
+        return ok({ message: "User registered successfully", user: normalizedUsername }, 201);
     } catch (error) {
-        console.error("Creation error:", error);
-        return NextResponse.json({ success: false, message: "Internal Server Error" }, { status: 500 });
+        console.error("Signup error:", error);
+        return fail("Internal Server Error", 500);
     }
 }

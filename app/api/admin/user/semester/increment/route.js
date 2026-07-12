@@ -1,26 +1,21 @@
 import db from "@/lib/database";
+import { NextResponse } from "next/server";
+import { requireAdmin } from "@/lib/auth";
+import { ok, fail } from "@/lib/api-response";
 
-export async function GET() {
+export async function POST() {
     try {
-        const collection = db.collection("users");
+        const admin = await requireAdmin();
+        if (admin instanceof NextResponse) return admin;
 
-        await collection.updateMany(
-            {
-                "academicDetails.semester": { $lt: 8 }
-            },
-            {
-                $inc: {
-                    "academicDetails.semester": 1
-                }
-            }
-        )
-
-        return Response.json("Success", { status: 200 });
-    } catch (error) {
-        console.error("Fetch error:", error);
-        return Response.json(
-            { success: false, message: "Internal Server Error" },
-            { status: 500 }
+        const result = await db.collection("users").updateMany(
+            { "academicDetails.semester": { $lt: 8 } },
+            { $inc: { "academicDetails.semester": 1 } }
         );
+
+        return ok({ message: "Semesters incremented", modified: result.modifiedCount });
+    } catch (error) {
+        console.error("Semester increment error:", error);
+        return fail("Internal Server Error", 500);
     }
 }

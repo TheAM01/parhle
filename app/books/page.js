@@ -15,6 +15,8 @@ export default function BooksPage() {
     const [notesData, setNotesData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [uniqueSubjects, setUniqueSubjects] = useState([])
+    const [likedSet, setLikedSet] = useState([])
+    const [loggedIn, setLoggedIn] = useState(false)
 
     useEffect(() => {
 
@@ -22,11 +24,17 @@ export default function BooksPage() {
 
             try {
 
-                const response = await fetch("/api/book/all");
+                const [response, likeRes] = await Promise.all([
+                    fetch("/api/book/all"),
+                    fetch("/api/like"),
+                ]);
                 const result = await response.json();
+                const likeData = await likeRes.json();
                 setNotesData(result);
                 const uniq = [...new Set(result.map(item => item.subject))];
                 setUniqueSubjects(uniq)
+                setLikedSet(likeData.books || []);
+                setLoggedIn(!!likeData.loggedIn);
 
             } catch (error) {
                 console.error("Error fetching data:", error);
@@ -96,7 +104,7 @@ export default function BooksPage() {
 
                 <div className={`${loading ? "justify-center pt-10" : "flex-col gap-6"} mt-2`}>
                     {(!loading ? filteredNotes.map((book, index) => (
-                        <BooksCard book={book} index={index} key={index}/>
+                        <BooksCard book={book} index={index} key={index} liked={likedSet.includes(book._id)} loggedIn={loggedIn}/>
                     )) : <Spinner/>)}
                 </div>
             </DashboardWorkspace>

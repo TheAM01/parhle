@@ -1,243 +1,112 @@
-import db from "@/lib/database";
 import { NextResponse } from "next/server";
-import {getIronSession} from "iron-session";
-import {sessionOptions} from "@/lib/session";
-import {ObjectId} from "mongodb";
-import {priorities, rewards} from "@/public/data";
+import { ObjectId } from "mongodb";
+import db from "@/lib/database";
+import { requireUser } from "@/lib/auth";
+import { ok, fail } from "@/lib/api-response";
+import { rewards } from "@/public/data";
+import { CONTENT_COLLECTION } from "@/lib/content";
+import { bookUploadSchema, resourceUploadSchema, channelUploadSchema, validate } from "@/lib/validation";
 
-export async function POST(req, {params}) {
+const SCHEMA = {
+    resource: resourceUploadSchema,
+    book: bookUploadSchema,
+    channel: channelUploadSchema,
+};
 
-    const {id} = await params;
-    const res = new NextResponse();
-    const session = await getIronSession(req, res, sessionOptions);
-
-    if (!session.user) {
-        return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 401 });
+function buildDoc(type, data, username, requestId) {
+    const solution = { isSolution: true, requestData: requestId };
+    if (type === "book") {
+        return { title: data.title, subject: data.subject, semester: data.semester, bookAuthor: data.bookAuthor, author: username, university: data.university, url: data.url, likes: 0, createdAt: new Date(), solution };
     }
-
-    if (!ObjectId.isValid(id)) {
-        return NextResponse.json({ success: false, message: "Invalid channel ID" }, { status: 400 });
+    if (type === "channel") {
+        return { title: data.title, subject: data.subject, author: username, university: data.university, description: data.description, url: data.url, likes: 0, createdAt: new Date(), solution };
     }
+    return { title: data.title, subject: data.subject, semester: data.semester, teacher: data.teacher, author: username, university: data.university, url: data.url, likes: 0, createdAt: new Date(), solution };
+}
 
-    const body = await req.json();
-
-    const { type } = body
-    if (type !== "resource" && type !== "book" && type !== "channel") return NextResponse.json({ success: false, message: "Missing required fields" }, { status: 400 });
-
+// Best-effort: legacy users may have contributions.requests stored as an array
+// (schema drift) which makes the dotted $addToSet fail. Don't let request
+// tracking sink the whole fulfilment.
+async function recordSolved(userId, requestId) {
     try {
+        await db.collection("users").updateOne(
+            { _id: userId },
+            { $addToSet: { "contributions.requests.solved": requestId } }
+        );
+    } catch (err) {
+        console.warn("Could not record solved request (legacy contributions shape):", err.message);
+    }
+}
 
-        let result;
-        if (type === "resource") {
-            result = await handleResourceUpload(body, session);
-        } else if (type === "channel") {
-            result = await handleChannelUpload(body, session);
+export async function POST(req, { params }) {
+    try {
+        const user = await requireUser();
+        if (user instanceof NextResponse) return user;
+
+        const { id } = await params;
+        if (!ObjectId.isValid(id)) return fail("Invalid request id", 400);
+
+        const request = await db.collection("requests").findOne({ _id: new ObjectId(id) });
+        if (!request) return fail("Request not found", 404);
+        if ((request.status || "").toLowerCase() === "closed") return fail("This request has already been fulfilled", 400);
+
+        const type = (request.resourceType || "").toLowerCase();
+        const collectionName = CONTENT_COLLECTION[type];
+        if (!collectionName) return fail("Unknown request type", 400);
+
+        const requestId = request._id;
+        const priority = (request.priority || "low").toLowerCase();
+        const bonus = rewards.request?.[priority] ?? 0;
+
+        const body = await req.json();
+        const mode = body.mode === "link" ? "link" : "new";
+
+        let contentId;
+
+        if (mode === "link") {
+            if (!ObjectId.isValid(body.contentId)) return fail("Please select one of your uploads", 400);
+            const content = await db.collection(collectionName).findOne({ _id: new ObjectId(body.contentId) });
+            if (!content) return fail("Selected content not found", 404);
+            if (content.author !== user.username) return fail("You can only link your own uploads", 403);
+
+            contentId = content._id;
+            await db.collection(collectionName).updateOne(
+                { _id: contentId },
+                { $set: { solution: { isSolution: true, requestData: requestId } } }
+            );
+            // Linking already-uploaded content only earns the request bonus
+            // (the upload reward was granted when it was first added).
+            await db.collection("users").updateOne(
+                { _id: user._id },
+                { $inc: { aura: bonus } }
+            );
+            await recordSolved(user._id, requestId);
         } else {
-            result = await handleBookUpload(body, session);
-        }
+            const parsed = validate(SCHEMA[type], body);
+            if (!parsed.success) return fail(parsed.message, 400);
 
-        const { request } = body;
+            const doc = buildDoc(type, parsed.data, user.username, requestId);
+            const result = await db.collection(collectionName).insertOne(doc);
+            contentId = result.insertedId;
+
+            await db.collection("users").updateOne(
+                { _id: user._id },
+                {
+                    $push: { [`contributions.${collectionName}`]: contentId },
+                    $inc: { "contributions.count": 1, aura: (rewards[type] ?? 0) + bonus },
+                }
+            );
+            await recordSolved(user._id, requestId);
+        }
 
         await db.collection("requests").updateOne(
-            {_id: new ObjectId(request._id)},
-            {
-                $set: {
-                    "solution": result.insertedId,
-                    'status': 'Closed',
-                    'solvedAt': new Date(),
-                }
-            }
-        )
-
-        return NextResponse.json({ success: true, message: "Request fulfilled successfully", insertedId: result.insertedId }, { status: 201 });
-    } catch (error) {
-        console.error("Upload error:", error);
-        return NextResponse.json({ success: false, message: "Internal Server Error" }, { status: 500 });
-    }
-}
-
-async function handleResourceUpload(body, session) {
-    try {
-        const author = session.user;
-
-        const {title, subject, semester, teacher, university, url} = body;
-
-        if (!title || !subject || !semester || !teacher || !university || !url) {
-            return NextResponse.json({success: false, message: "Missing required fields"}, {status: 400});
-        }
-
-        const collection = db.collection("resources");
-
-        const newResource = {
-            title,
-            subject,
-            semester,
-            teacher,
-            author: author.username,
-            university,
-            url,
-            likes: 0,
-            createdAt: new Date(),
-            solution: {
-                isSolution: true,
-                requestData: new ObjectId(body.request._id),
-            }
-        };
-
-        const result = await collection.insertOne(newResource);
-        const id = result.insertedId;
-
-        const user = await db.collection("users").findOne({username: author.username})
-
-        if (!user) {
-            return NextResponse.json({success: false, message: "User not found"}, {status: 404});
-        }
-
-        await db.collection('users').updateOne(
-            {_id: user._id},
-            {
-                $push: {
-                    'contributions.resources': id,
-                    'contributions.requests.solved': new ObjectId(body.request._id)
-                },
-                $inc: {
-                    'contributions.count': 1,
-                    'aura': (rewards[body.type] + rewards.request[body.request.priority.toLowerCase()])
-                },
-            }
+            { _id: requestId },
+            { $set: { solution: contentId, status: "Closed", solvedAt: new Date() } }
         );
 
-        return result;
+        return ok({ message: "Request fulfilled successfully", insertedId: contentId }, 201);
     } catch (error) {
-        console.error(error)
-    }
-}
-
-async function handleBookUpload(body, session) {
-    try {
-        const author = session.user;
-
-        const {title, subject, semester, bookAuthor, university, url} = body
-
-        if (!title || !subject || !semester || !bookAuthor || !university || !url) {
-            return NextResponse.json({success: false, message: "Missing required fields"}, {status: 400});
-        }
-
-        const collection = db.collection("books");
-
-        const newBook = {
-            title,
-            subject,
-            semester,
-            bookAuthor,
-            author: author.username,
-            university,
-            url,
-            createdAt: new Date(),
-            solution: {
-                isSolution: true,
-                requestData: new ObjectId(body.request._id),
-            }
-        };
-
-        const result = await collection.insertOne(newBook);
-        const id = result.insertedId;
-
-        const user = await db.collection("users").findOne({username: author.username})
-
-        if (!user) {
-            return NextResponse.json({success: false, message: "User not found"}, {status: 404});
-        }
-
-        await db.collection('users').updateOne(
-            {_id: user._id},
-            {
-                $push: {
-                    'contributions.books': id,
-                    'contributions.requests.solved': new ObjectId(body.request._id)
-                },
-                $inc: {
-                    'contributions.count': 1,
-                    'aura': (rewards[body.type] + rewards.request[body.request.priority.toLowerCase()])
-                },
-            }
-        );
-        return result;
-    } catch (error) {
-        console.error(error)
-    }
-
-}
-
-async function handleChannelUpload(body, session) {
-    try {
-        const author = session.user;
-        const { title, subject, university, description, url } = body;
-        if (!title || !subject || !university || !description || !url) {
-            return NextResponse.json({ success: false, message: "Missing required fields" }, { status: 400 });
-        }
-        const collection = db.collection("channels");
-
-        const newChannel = {
-            title,
-            subject,
-            author: author.username,
-            university,
-            description,
-            url,
-            createdAt: new Date(),
-            solution: {
-                isSolution: true,
-                requestData: new ObjectId(body.request._id),
-            }
-        };
-
-        const result = await collection.insertOne(newChannel);
-        const id = result.insertedId;
-
-        const user = await db.collection("users").findOne({username: author.username});
-
-        if (!user) {
-            return NextResponse.json({success: false, message: "User not found"}, {status: 404});
-        }
-
-        await db.collection('users').updateOne(
-            {_id: user._id},
-            {
-                $push: {
-                    'contributions.channels': id,
-                    'contributions.requests.solved': new ObjectId(body.request._id)
-                },
-                $inc: {
-                    'contributions.count': 1,
-                    'aura': (rewards[body.type] + rewards.request[body.request.priority.toLowerCase()])
-                },
-            }
-        );
-        return result;
-    } catch (error) {
-        console.error(error)
-    }
-}
-
-async function updateUsers(db) {
-    return;
-    try {
-        const resources = db.collection("channels");
-
-        const cursor = resources.find({});
-        while (await cursor.hasNext()) {
-            const resource = await cursor.next();
-
-
-            await resources.updateOne(
-                { _id: resource._id },
-                { $set: { solution: { isSolution: false, requestData: null} } }
-            );
-
-        }
-
-
-    } catch (error) {
-        console.error("❌ Error updating users:", error);
+        console.error("Fulfill error:", error);
+        return fail("Internal Server Error", 500);
     }
 }

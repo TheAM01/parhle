@@ -15,6 +15,8 @@ export default function ChannelsPage() {
     const [notesData, setNotesData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [uniqueSubjects, setUniqueSubjects] = useState([])
+    const [likedSet, setLikedSet] = useState([])
+    const [loggedIn, setLoggedIn] = useState(false)
 
 
     useEffect(() => {
@@ -23,11 +25,17 @@ export default function ChannelsPage() {
 
             try {
 
-                const response = await fetch("/api/channel/all");
+                const [response, likeRes] = await Promise.all([
+                    fetch("/api/channel/all"),
+                    fetch("/api/like"),
+                ]);
                 const result = await response.json();
+                const likeData = await likeRes.json();
                 setNotesData(result);
                 const uniq = [...new Set(result.map(item => item.subject))];
                 setUniqueSubjects(uniq)
+                setLikedSet(likeData.channels || []);
+                setLoggedIn(!!likeData.loggedIn);
             } catch (error) {
                 console.error("Error fetching data:", error);
             } finally {
@@ -44,8 +52,8 @@ export default function ChannelsPage() {
         (note) =>
             (selectedResource === "All" || note.subject === selectedResource) &&
             (note.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                note.bookAuthor.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                note.university.toLowerCase().includes(searchTerm.toLowerCase()))
+                (note.author || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
+                (note.university || "").toLowerCase().includes(searchTerm.toLowerCase()))
     );
 
     return (
@@ -91,7 +99,7 @@ export default function ChannelsPage() {
 
                 <div className={`${loading ? "justify-center pt-10" : "grid! grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"} mt-2`}>
                     {(!loading ? filteredNotes.map((channel, index) => (
-                        <ChannelCard channel={channel} index={index} key={index}/>
+                        <ChannelCard channel={channel} index={index} key={index} liked={likedSet.includes(channel._id)} loggedIn={loggedIn}/>
                     )) : <Spinner/>)}
                 </div>
 

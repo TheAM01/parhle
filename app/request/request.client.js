@@ -1,7 +1,7 @@
 "use client";
 
 
-import {Check, Send} from "lucide-react";
+import {Check, Send, X} from "lucide-react";
 import {useState} from "react";
 import {RadioGroup} from "@/components/ui/Inputs";
 import {HorizontalRule} from "@/components/ui/HorizontalRule";
@@ -22,37 +22,52 @@ export default function RequestClient({user}) {
         description: ""
     });
     const [toast, setToast] = useState(null);
+    const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
     const handleSubmit = async (event) => {
-
         event.preventDefault();
+        setError("");
 
         const { title, subject, university, semester, resourceType, author, priority, description } = formData;
 
-        const response = await fetch("/api/request/new", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ title, subject, university, semester, resourceType, author, priority, description }),
-        });
+        if (!resourceType) return setError("Please choose what type of resource you're looking for.");
+        if (!priority) return setError("Please choose how urgent your request is.");
 
-        const status = response.status;
+        setLoading(true);
+        try {
+            const response = await fetch("/api/request/new", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ title, subject, university, semester, resourceType, author, priority, description }),
+            });
+            const result = await response.json();
 
-        setFormData({
-            title: "",
-            subject: "",
-            university: "",
-            semester: "non-specific",
-            resourceType: "",
-            author: (user?.username || "anonymous"),
-            priority: "",
-            description: ""
-        });
-
-        setToast({ message: 'Request added successfully!', icon: Check });
-        return status;
+            if (response.ok && result.success) {
+                setToast({ message: 'Request added successfully!', icon: Check });
+                setFormData({
+                    title: "",
+                    subject: "",
+                    university: "",
+                    semester: "non-specific",
+                    resourceType: "",
+                    author: (user?.username || "anonymous"),
+                    priority: "",
+                    description: ""
+                });
+            } else {
+                setError(result.message || "Failed to submit request.");
+                setToast({ message: 'Failed to submit request.', icon: X });
+            }
+        } catch (err) {
+            console.error("Error submitting request:", err);
+            setError("An error occurred. Please try again.");
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -177,12 +192,15 @@ export default function RequestClient({user}) {
                     <HorizontalRule/>
                     {/*<div className="w-full border-b border-border-color mt-5 mb-2"></div>*/}
 
+                    {!!error && <div className="text-sm text-red-500 mt-3">{error}</div>}
+
                     <button
-                        className={"bg-white items-center font-gray-medium  duration-100 text-black flex text-nowrap w-min p-2 mt-4 hover:cursor-pointer hover:font-semibold"}
+                        disabled={loading}
+                        className={"bg-white items-center font-gray-medium duration-100 text-black flex text-nowrap w-min p-2 mt-4 hover:cursor-pointer hover:font-semibold disabled:opacity-60"}
                         onClick={handleSubmit}
                     >
                         <Send size={18}/>
-                        <div className="ml-2 text-sm">Submit Request</div>
+                        <div className="ml-2 text-sm">{loading ? "Submitting..." : "Submit Request"}</div>
                     </button>
 
                 </div>

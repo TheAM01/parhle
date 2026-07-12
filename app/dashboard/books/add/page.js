@@ -6,7 +6,7 @@ import {getSession} from "@/lib/get-session";
 import {cookies} from "next/headers";
 import db from "@/lib/database";
 
-export default async function AddResourcePage() {
+export default async function AddBookPage() {
 
     const session = await getSession()
     const cookieStore = await cookies();
@@ -14,7 +14,7 @@ export default async function AddResourcePage() {
 
     if (sidebarStatus !== undefined) sidebarStatus.value = sidebarStatus.value !== "false";
     if (!session.user) {
-        return redirect(`/user/login?login-first=true&redirect-to=${encodeURIComponent("dashboard/books/my")}`);
+        return redirect(`/user/login?login-first=true&redirect-to=${encodeURIComponent("dashboard/books/add")}`);
     }
 
     const userData = await db.collection("users").findOne({username: session.user.username});

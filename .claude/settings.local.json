@@ -1,0 +1,42 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm outdated *)",
+      "Bash(npm -v)",
+      "Bash(npm install *)",
+      "Bash(npm run *)",
+      "Bash(npx next *)",
+      "Bash(node -e \"console.log\\(require\\('./node_modules/zod/package.json'\\).version\\)\")",
+      "Bash(MONGO_URI=\"mongodb://localhost:27017/parhle\" SESSION_PASSWORD=\"0123456789abcdef0123456789abcdef0123456789\" npm run build)",
+      "Bash(node -e \"console.log\\(require\\('typescript'\\).version\\)\")",
+      "Bash(MONGO_URI=\"x\" SESSION_PASSWORD=\"x\" npx tsc --noEmit)",
+      "Bash(echo \"=== exit: $? ===\")",
+      "Bash(git check-ignore *)",
+      "Bash(curl -s -m 20 -o /dev/null -w \"HTTP %{http_code}\\\\n\" http://localhost:4000/api/book/all)",
+      "Bash(curl -s -m 20 -o /dev/null -w \"HTTP %{http_code}\\\\n\" -X POST http://localhost:4000/api/admin/user/semester/increment)",
+      "Bash(curl -s -m 20 -X POST http://localhost:4000/api/user/login -H \"Content-Type: application/json\" -d '{\"username\":\"x\"}')",
+      "Bash(curl -s -m 20 -o /dev/null -w \"book/all: HTTP %{http_code}\\\\n\" http://localhost:4000/api/book/all)",
+      "Bash(curl -s -m 20 -o /dev/null -w \"login: HTTP %{http_code}\\\\n\" -X POST http://localhost:4000/api/user/login -H \"Content-Type: application/json\" -d '{\"username\":\"x\",\"password\":\"y\"}')",
+      "Bash(curl -s -m 20 -o /dev/null -w \"session: HTTP %{http_code}\\\\n\" http://localhost:4000/api/session)",
+      "Bash(curl -s -m 40 -o /dev/null -w \"/ : HTTP %{http_code}\\\\n\" http://localhost:4000/)",
+      "Bash(curl -s -m 40 -o /dev/null -w \"/api/session : HTTP %{http_code}\\\\n\" http://localhost:4000/api/session)",
+      "Bash(curl -s -m 60 -o /dev/null -w \"/api/session : HTTP %{http_code}\\\\n\" http://localhost:4000/api/session)",
+      "Bash(curl -s -m 30 -o /dev/null -w \"GET /api/book/all : HTTP %{http_code}\\\\n\" http://localhost:4000/api/book/all)",
+      "Bash(curl -s -m 30 -o /dev/null -w \"POST /api/admin/.../increment : HTTP %{http_code}\\\\n\" -X POST http://localhost:4000/api/admin/user/semester/increment)",
+      "Bash(curl -s -m 30 -w \"\\\\n-> HTTP %{http_code}\\\\n\" -X POST http://localhost:4000/api/user/login -H \"Content-Type: application/json\" -d '{\"username\":\"x\"}')",
+      "Bash(curl -s -m 30 -w \"\\\\n-> HTTP %{http_code}\\\\n\" -X POST http://localhost:4000/api/user/login -H \"Content-Type: application/json\" -d '{\"username\":\"nobody\",\"password\":\"wrongpass\"}')",
+      "Bash(curl -s -m 30 -o /dev/null -w \"POST /api/book/upload : HTTP %{http_code}\\\\n\" -X POST http://localhost:4000/api/book/upload -H \"Content-Type: application/json\" -d '{}')",
+      "Bash(curl -s -m 30 -o /dev/null -w \"HTTP %{http_code}\\\\n\" -X POST http://localhost:4000/api/like -H \"Content-Type: application/json\" -d '{\"type\":\"resource\",\"id\":\"aaaaaaaaaaaaaaaaaaaaaaaa\"}')",
+      "Bash(curl -s -m 40 -o /dev/null -w \"HTTP %{http_code}\\\\n\" http://localhost:4000/books)",
+      "Bash(curl -s -m 40 -o /dev/null -w \"HTTP %{http_code}\\\\n\" http://localhost:4000/channels)",
+      "Bash(curl -s -m 40 -o /dev/null -w \"HTTP %{http_code}\\\\n\" http://localhost:4000/dashboard/saved)",
+      "Bash(grep -vE \"^\\\\s*$\")",
+      "Bash(curl -s -m 40 -w \"\\\\n-> HTTP %{http_code}\\\\n\" -X POST http://localhost:4000/api/request/new -H \"Content-Type: application/json\" -d '{\"title\":\"Test req \\(smoke\\)\",\"subject\":\"Smoke Test\",\"university\":\"Test U\",\"semester\":\"1\",\"resourceType\":\"Resource\",\"author\":\"anonymous\",\"priority\":\"High\",\"description\":\"automated smoke test - please ignore\"}')",
+      "Bash(curl -s -m 40 -w \"\\\\n-> HTTP %{http_code}\\\\n\" -X POST http://localhost:4000/api/request/new -H \"Content-Type: application/json\" -d '{\"title\":\"t\",\"subject\":\"s\",\"university\":\"u\",\"semester\":\"1\",\"resourceType\":\"Resource\",\"author\":\"anonymous\",\"priority\":\"urgent\",\"description\":\"d\"}')",
+      "Bash(node cleanup-smoke.mjs)",
+      "Bash(node migrate-contributions.mjs)",
+      "Bash(node -e \"console.log\\('@vercel/analytics', require\\('@vercel/analytics/package.json'\\).version\\)\")",
+      "Bash(curl -s -m 60 -o /dev/null -w \"/ : HTTP %{http_code}\\\\n\" http://localhost:4000/)"
+    ]
+  }
+}

@@ -4,6 +4,7 @@
 import {useEffect, useState} from "react";
 import {Search, Filter, BookOpen, Heart, Calendar, University, User} from "lucide-react";
 import {motion} from "framer-motion";
+import Link from "next/link";
 import {Input} from "@/components/ui/Inputs";
 import Spinner from "@/components/ui/Spinner";
 import {DashboardWorkspace} from "@/components/ui/Structure";
@@ -69,7 +70,7 @@ export default function Resources() {
         <div className="flex-col min-h-screen texture-mosaic text-white pt-10 sm:pt-20 bg-black items-center ">
             <DashboardWorkspace>
                 <div className="font-bold text-4xl mb-5 md:mb-10">Explore Resources</div>
-                <div className="text-xl mb-5 md:mb-10">Click on card to open resource</div>
+                <div className="text-xl mb-5 md:mb-10">Open a resource directly, or see its details</div>
 
                 {/* Search and filter */}
 
@@ -121,7 +122,7 @@ export default function Resources() {
                         >
 
                             <div className={"justify-between flex-1 items-center"}>
-                                <div className={"text-xl font-semibold"}>{note.title}</div>
+                                <Link href={`/resources/${note._id}`} className={"text-xl font-semibold hover:underline"}>{note.title}</Link>
                                 <LikeButton
                                     type="resource"
                                     id={note._id}
@@ -161,7 +162,15 @@ export default function Resources() {
                                     </div>
                                 </div>
                                 <HorizontalRule/>
-                                <VisitResourceButton href={note.url}>View Resource</VisitResourceButton>
+                                <div className={"gap-2"}>
+                                    <VisitResourceButton href={note.url} extraClasses={"flex-1"}>View Resource</VisitResourceButton>
+                                    <Link
+                                        href={`/resources/${note._id}`}
+                                        className={"flex items-center justify-center p-3 text-sm font-semibold border border-gray-700 text-gray-light hover:bg-gray-800 transition-colors"}
+                                    >
+                                        Details
+                                    </Link>
+                                </div>
                             </div>
                         </motion.div>
                     )) : <Spinner/>)}

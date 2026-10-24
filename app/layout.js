@@ -1,8 +1,20 @@
 import "./globals.css";
 import ClientLayout from "./client-layout";
 import { Analytics } from "@vercel/analytics/next";
+import { Space_Grotesk, Space_Mono, Chelsea_Market } from "next/font/google";
 import { SITE_URL, SITE_NAME, SITE_DESCRIPTION, SITE_KEYWORDS } from "@/lib/site";
 
+// Self-hosted at build time by next/font. The CSS variables feed the
+// font-primary / font-code / font-logo utilities in globals.css.
+const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-space-grotesk", display: "swap" });
+const spaceMono = Space_Mono({
+    subsets: ["latin"],
+    weight: ["400", "700"],
+    style: ["normal", "italic"],
+    variable: "--font-space-mono",
+    display: "swap",
+});
+const chelseaMarket = Chelsea_Market({ subsets: ["latin"], weight: "400", variable: "--font-chelsea-market", display: "swap" });
 
 export const metadata = {
     metadataBase: new URL(SITE_URL),
@@ -76,7 +88,7 @@ const jsonLd = {
 
 export default function RootLayout({ children }) {
     return (
-        <html lang="en" className={"overflow-x-hidden"}>
+        <html lang="en" className={`overflow-x-hidden ${spaceGrotesk.variable} ${spaceMono.variable} ${chelseaMarket.variable}`}>
             <body className={`font-primary antialiased  overflow-x-hidden bg-black`}>
                 <script
                     type="application/ld+json"
